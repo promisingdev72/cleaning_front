@@ -234,22 +234,6 @@ function MenuDesktopItem({ item, isHome, isOpen, isOffset, onOpen, onClose }) {
     );
   }
 
-  if (title === 'Documentation') {
-    return (
-      <LinkStyle
-        href={path}
-        target="_blank"
-        rel="noopener"
-        sx={{
-          ...(isHome && { color: 'common.white' }),
-          ...(isOffset && { color: 'text.primary' }),
-        }}
-      >
-        {title}
-      </LinkStyle>
-    );
-  }
-
   return (
     <LinkStyle
       to={path}
