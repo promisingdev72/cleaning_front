@@ -31,16 +31,12 @@ export default function NewPassword() {
 
       <Container>
         <ContentStyle sx={{ textAlign: 'center' }}>
-          <SentIcon sx={{ mb: 5, mx: 'auto', height: 120 }} />
-
           <Typography variant="h3" gutterBottom>
             Request sent successfully!
           </Typography>
 
           <Typography sx={{ color: 'text.secondary' }}>
             We've sent a 6-digit confirmation email to your email.
-            <br />
-            Please enter the code in below box to verify your email.
           </Typography>
 
           <Box sx={{ mt: 5, mb: 3 }}>
@@ -49,7 +45,12 @@ export default function NewPassword() {
 
           <Typography variant="body2">
             Don’t have a code? &nbsp;
-            <Link variant="subtitle2" onClick={() => {}}>
+            <Link
+              variant="subtitle2"
+              onClick={() => {
+                console.log('clicked');
+              }}
+            >
               Resend code
             </Link>
           </Typography>

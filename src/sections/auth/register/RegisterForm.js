@@ -23,15 +23,13 @@ export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().required('First name required'),
-    lastName: Yup.string().required('Last name required'),
+    fullName: Yup.string().required('Full name required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
   });
 
   const defaultValues = {
-    firstName: '',
-    lastName: '',
+    fullName: '',
     email: '',
     password: '',
   };
@@ -50,7 +48,7 @@ export default function RegisterForm() {
 
   const onSubmit = async (data) => {
     try {
-      await register(data.email, data.password, data.firstName, data.lastName);
+      await register(data.email, data.password, data.fullName);
     } catch (error) {
       console.error(error);
       reset();
@@ -65,9 +63,8 @@ export default function RegisterForm() {
       <Stack spacing={3}>
         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-          <RHFTextField name="firstName" label="First name" />
-          <RHFTextField name="lastName" label="Last name" />
+        <Stack direction={{ xs: 'column', sm: 'row' }}>
+          <RHFTextField name="fullName" label="Full name" />
         </Stack>
 
         <RHFTextField name="email" label="Email address" />

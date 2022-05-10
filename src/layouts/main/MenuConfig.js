@@ -1,7 +1,5 @@
-// routes
-import { PATH_AUTH, PATH_PAGE } from '../../routes/paths';
-// components
-import { PATH_AFTER_LOGIN } from '../../config';
+// Path
+import { PATH_AUTH } from '../../routes/paths';
 // components
 import Iconify from '../../components/Iconify';
 
@@ -16,7 +14,7 @@ const menuConfig = [
   {
     title: 'LogIn',
     icon: <Iconify icon={'eva:home-fill'} {...ICON_SIZE} />,
-    path: '/auth/login',
+    path: PATH_AUTH.login,
   },
 ];
 

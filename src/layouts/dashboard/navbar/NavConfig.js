@@ -8,22 +8,22 @@ import SvgIconStyle from '../../../components/SvgIconStyle';
 const getIcon = (name) => <SvgIconStyle src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
 
 const ICONS = {
-  cart: getIcon('ic_cart'),
   user: getIcon('ic_user'),
   calendar: getIcon('ic_calendar'),
-  analytics: getIcon('ic_analytics'),
   dashboard: getIcon('ic_dashboard'),
-  menuItem: getIcon('ic_menu_item'),
 };
 
 const navConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
-    subheader: 'general',
-    items: [{ title: 'app', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard }],
+    subheader: 'order',
+    items: [{ title: 'Order List', path: PATH_DASHBOARD.order.orderlist, icon: ICONS.dashboard }],
   },
-
+  {
+    subheader: 'employee',
+    items: [{ title: 'Employee List', path: PATH_DASHBOARD.employee.employeelist, icon: ICONS.dashboard }],
+  },
   // MANAGEMENT
   // ----------------------------------------------------------------------
   {
@@ -44,13 +44,6 @@ const navConfig = [
         ],
       },
     ],
-  },
-
-  // APP
-  // ----------------------------------------------------------------------
-  {
-    subheader: 'app',
-    items: [{ title: 'calendar', path: PATH_DASHBOARD.calendar, icon: ICONS.calendar }],
   },
 ];
 

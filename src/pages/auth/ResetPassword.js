@@ -32,13 +32,8 @@ export default function ResetPassword() {
 
       <Container>
         <ContentStyle sx={{ textAlign: 'center' }}>
-          <Typography variant="h3" paragraph>
+          <Typography variant="h3" sx={{ mb: 5 }} paragraph>
             Forgot your password?
-          </Typography>
-
-          <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-            Please enter the email address associated with your account and We will email you a link to reset your
-            password.
           </Typography>
 
           <ResetPasswordForm />

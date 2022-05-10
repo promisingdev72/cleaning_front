@@ -65,9 +65,8 @@ export default function Router() {
       ),
       children: [
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
-        { path: 'app', element: <GeneralAnalytics /> },
-        { path: 'analytics', element: <GeneralAnalytics /> },
-
+        { path: 'employee', element: <Employees /> },
+        { path: 'order', element: <Orders /> },
         {
           path: 'user',
           children: [
@@ -80,7 +79,6 @@ export default function Router() {
             { path: 'account', element: <UserAccount /> },
           ],
         },
-        { path: 'calendar', element: <Calendar /> },
         { path: 'permission-denied', element: <PermissionDenied /> },
       ],
     },
@@ -119,7 +117,8 @@ const VerifyCode = Loadable(lazy(() => import('../pages/auth/VerifyCode')));
 // DASHBOARD
 
 // GENERAL
-const GeneralAnalytics = Loadable(lazy(() => import('../pages/dashboard/GeneralAnalytics')));
+const Employees = Loadable(lazy(() => import('../pages/dashboard/Employees')));
+const Orders = Loadable(lazy(() => import('../pages/dashboard/Orders')));
 
 // USER
 const UserProfile = Loadable(lazy(() => import('../pages/dashboard/UserProfile')));
@@ -127,9 +126,6 @@ const UserCards = Loadable(lazy(() => import('../pages/dashboard/UserCards')));
 const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
 const UserAccount = Loadable(lazy(() => import('../pages/dashboard/UserAccount')));
 const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')));
-
-// APP
-const Calendar = Loadable(lazy(() => import('../pages/dashboard/Calendar')));
 
 // TEST RENDER PAGE BY ROLE
 const PermissionDenied = Loadable(lazy(() => import('../pages/dashboard/PermissionDenied')));

@@ -30,10 +30,12 @@ export const PATH_PAGE = {
 
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
-  general: {
-    app: path(ROOTS_DASHBOARD, '/app'),
+  employee: {
+    employeelist: path(ROOTS_DASHBOARD, '/employee'),
   },
-  calendar: path(ROOTS_DASHBOARD, '/calendar'),
+  order: {
+    orderlist: path(ROOTS_DASHBOARD, '/order'),
+  },
   permissionDenied: path(ROOTS_DASHBOARD, '/permission-denied'),
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),
