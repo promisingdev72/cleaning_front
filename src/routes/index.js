@@ -90,10 +90,6 @@ export default function Router() {
       path: '*',
       element: <LogoOnlyLayout />,
       children: [
-        { path: 'coming-soon', element: <ComingSoon /> },
-        { path: 'maintenance', element: <Maintenance /> },
-        { path: 'pricing', element: <Pricing /> },
-        { path: 'payment', element: <Payment /> },
         { path: '500', element: <Page500 /> },
         { path: '404', element: <Page404 /> },
         { path: '403', element: <Page403 /> },
@@ -107,7 +103,6 @@ export default function Router() {
         { element: <HomePage />, index: true },
         { path: 'about-us', element: <About /> },
         { path: 'contact-us', element: <Contact /> },
-        { path: 'faqs', element: <Faqs /> },
       ],
     },
     { path: '*', element: <Navigate to="/404" replace /> },
@@ -143,11 +138,6 @@ const PermissionDenied = Loadable(lazy(() => import('../pages/dashboard/Permissi
 const HomePage = Loadable(lazy(() => import('../pages/Home')));
 const About = Loadable(lazy(() => import('../pages/About')));
 const Contact = Loadable(lazy(() => import('../pages/Contact')));
-const Faqs = Loadable(lazy(() => import('../pages/Faqs')));
-const ComingSoon = Loadable(lazy(() => import('../pages/ComingSoon')));
-const Maintenance = Loadable(lazy(() => import('../pages/Maintenance')));
-const Pricing = Loadable(lazy(() => import('../pages/Pricing')));
-const Payment = Loadable(lazy(() => import('../pages/Payment')));
 const Page500 = Loadable(lazy(() => import('../pages/Page500')));
 const Page403 = Loadable(lazy(() => import('../pages/Page403')));
 const Page404 = Loadable(lazy(() => import('../pages/Page404')));
