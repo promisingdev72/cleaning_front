@@ -18,10 +18,10 @@ const Role = db.role;
 // db.sequelize.sync({ force: true }).then(() => {
 //   const User = db.user;
 //   User.create({
-//     name: 'tetianaberina',
-//     email: 'tetianaberina@gmail.com',
+//     name: 'admin',
+//     email: 'admin@admin.com',
 //     role: 1,
-//     password: bcrypt.hashSync('root', 8),
+//     password: bcrypt.hashSync('admin', 8),
 //   });
 //   initial();
 // });

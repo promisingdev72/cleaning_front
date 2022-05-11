@@ -49,7 +49,7 @@ exports.updateProfile = (req, res) => {
 exports.getProfile = (req, res) => {
   const { authorization } = req.headers;
   if (!authorization) {
-    return res.status(400).send([]);
+    return res.status(400).send('Not authorization!');
   }
 
   const accessToken = authorization.split(' ')[1];
@@ -59,14 +59,18 @@ exports.getProfile = (req, res) => {
     where: {
       id: userId,
     },
-  }).then((userData) => {
-    const user = {
-      id: userData.id,
-      name: userData.name,
-      email: userData.email,
-      roles: ROLES[userData.roleId - 1].toUpperCase(),
-    };
-
-    res.status(200).send({ user });
-  });
+  })
+    .then((userData) => {
+      const user = {
+        id: userData.id,
+        name: userData.name,
+        email: userData.email,
+        role: ROLES[userData.role - 1].toUpperCase(),
+      };
+      res.status(200).send({ user });
+    })
+    .catch((error) => {
+      return res.status(200).send({ message: 'token is not' });
+      //   console.log('token is undefined');
+    });
 };

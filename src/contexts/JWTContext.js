@@ -76,7 +76,6 @@ function AuthProvider({ children }) {
 
           const response = await axios.get('/api/account/profile');
           const { user } = response.data;
-
           dispatch({
             type: 'INITIALIZE',
             payload: {
@@ -125,11 +124,11 @@ function AuthProvider({ children }) {
     });
   };
 
-  const register = async (email, password, fullName) => {
+  const register = async (email, password, name) => {
     const response = await axios.post('/api/account/register', {
       email,
       password,
-      fullName,
+      name,
     });
     const { accessToken, user } = response.data;
 

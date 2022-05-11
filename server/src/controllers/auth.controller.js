@@ -70,7 +70,7 @@ exports.register = (req, res) => {
         id: userData.id,
         name: userData.name,
         email: userData.email,
-        roleId: ROLES[userData.role - 1].toUpperCase(),
+        role: ROLES[userData.role - 1].toUpperCase(),
       };
       res.status(200).send({ accessToken, user });
     })
