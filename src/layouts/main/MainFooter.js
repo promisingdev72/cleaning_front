@@ -57,8 +57,7 @@ export default function MainFooter() {
           </Grid>
           <Grid item xs={8} md={3}>
             <Typography variant="body2" sx={{ pr: { md: 5 } }}>
-              The starting point for your next project with Minimal UI Kit, built on the newest
-              version of Material-UI ©, ready to be customized to your style.
+              Cleaning Web Site
             </Typography>
 
             <Stack
@@ -71,11 +70,7 @@ export default function MainFooter() {
           </Grid>
 
           <Grid item xs={12} md={7}>
-            <Stack
-              spacing={5}
-              direction={{ xs: 'column', md: 'row' }}
-              justifyContent="space-between"
-            >
+            <Stack spacing={5} direction={{ xs: 'column', md: 'row' }} justifyContent="space-between">
               {LINKS.map((list) => (
                 <Stack key={list.headline} spacing={2}>
                   <Typography component="p" variant="overline">
