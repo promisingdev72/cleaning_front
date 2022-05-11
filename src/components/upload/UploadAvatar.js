@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
 // @mui
@@ -64,6 +65,11 @@ UploadAvatar.propTypes = {
 };
 
 export default function UploadAvatar({ error, file, helperText, sx, ...other }) {
+  const [previewImage, setPreviewImage] = useState('');
+  useEffect(() => {
+    const tmpImage = typeof file === 'string' ? '/assets/avatar.png' : file;
+    setPreviewImage(tmpImage);
+  }, [file]);
   const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone({
     multiple: false,
     ...other,
@@ -87,12 +93,18 @@ export default function UploadAvatar({ error, file, helperText, sx, ...other }) 
         >
           <input {...getInputProps()} />
 
-          {file && <Image alt="avatar" src={typeof file === 'string' ? file : file.preview} sx={{ zIndex: 8 }} />}
+          {previewImage && (
+            <Image
+              alt="avatar"
+              src={typeof previewImage === 'string' ? previewImage : previewImage.preview}
+              sx={{ zIndex: 8 }}
+            />
+          )}
 
           <PlaceholderStyle
             className="placeholder"
             sx={{
-              ...(file && {
+              ...(previewImage && {
                 opacity: 0,
                 color: 'common.white',
                 bgcolor: 'grey.900',
@@ -104,7 +116,7 @@ export default function UploadAvatar({ error, file, helperText, sx, ...other }) 
             }}
           >
             <Iconify icon={'ic:round-add-a-photo'} sx={{ width: 24, height: 24, mb: 1 }} />
-            <Typography variant="caption">{file ? 'Update photo' : 'Upload photo'}</Typography>
+            <Typography variant="caption">{previewImage ? 'Update photo' : 'Upload photo'}</Typography>
           </PlaceholderStyle>
         </DropZoneStyle>
       </RootStyle>

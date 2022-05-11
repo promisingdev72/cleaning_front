@@ -23,24 +23,6 @@ const navConfig = [
       { title: 'Customer List', path: PATH_DASHBOARD.customer.customerlist, icon: ICONS.dashboard },
     ],
   },
-  // MANAGEMENT
-  // ----------------------------------------------------------------------
-  {
-    subheader: 'management',
-    items: [
-      // USER
-      {
-        title: 'user',
-        path: PATH_DASHBOARD.user.root,
-        icon: ICONS.user,
-        children: [
-          { title: 'list', path: PATH_DASHBOARD.user.list },
-          { title: 'create', path: PATH_DASHBOARD.user.new },
-          { title: 'edit', path: PATH_DASHBOARD.user.demoEdit },
-        ],
-      },
-    ],
-  },
 ];
 
 export default navConfig;

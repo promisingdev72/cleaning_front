@@ -35,6 +35,7 @@ export const PATH_DASHBOARD = {
   },
   order: {
     orderlist: path(ROOTS_DASHBOARD, '/order'),
+    new: path(ROOTS_DASHBOARD, '/order/new'),
   },
   customer: {
     customerlist: path(ROOTS_DASHBOARD, '/customer'),
@@ -44,7 +45,6 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/user'),
     new: path(ROOTS_DASHBOARD, '/user/new'),
     list: path(ROOTS_DASHBOARD, '/user/list'),
-    cards: path(ROOTS_DASHBOARD, '/user/cards'),
     profile: path(ROOTS_DASHBOARD, '/user/profile'),
     account: path(ROOTS_DASHBOARD, '/user/account'),
     edit: (name) => path(ROOTS_DASHBOARD, `/user/${name}/edit`),

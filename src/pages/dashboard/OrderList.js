@@ -146,7 +146,7 @@ export default function OrderList() {
             <Button
               variant="contained"
               component={RouterLink}
-              to={PATH_DASHBOARD.user.new}
+              to={PATH_DASHBOARD.order.new}
               startIcon={<Iconify icon={'eva:plus-fill'} />}
             >
               New User

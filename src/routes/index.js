@@ -65,18 +65,17 @@ export default function Router() {
       ),
       children: [
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
-        { path: 'employee', element: <Employees /> },
-        { path: 'order', element: <Orders /> },
-        { path: 'customer', element: <Customers /> },
         {
-          path: 'user',
+          path: 'order',
           children: [
-            { element: <Navigate to="/dashboard/user/profile" replace />, index: true },
-            { path: 'list', element: <UserList /> },
-            { path: 'new', element: <UserCreate /> },
-            { path: ':name/edit', element: <UserCreate /> },
+            { element: <Navigate to="/dashboard/order/list" replace />, index: true },
+            { path: 'list', element: <Orders /> },
+            { path: 'new', element: <OrderCreate /> },
+            { path: ':name/edit', element: <OrderCreate /> },
           ],
         },
+        { path: 'employee', element: <Employees /> },
+        { path: 'customer', element: <Customers /> },
         { path: 'permission-denied', element: <PermissionDenied /> },
       ],
     },
@@ -118,6 +117,7 @@ const VerifyCode = Loadable(lazy(() => import('../pages/auth/VerifyCode')));
 const Employees = Loadable(lazy(() => import('../pages/dashboard/Employees')));
 const Orders = Loadable(lazy(() => import('../pages/dashboard/Orders')));
 const Customers = Loadable(lazy(() => import('../pages/dashboard/Customers')));
+const OrderCreate = Loadable(lazy(() => import('../pages/dashboard/OrderCreate')));
 
 // USER
 const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
