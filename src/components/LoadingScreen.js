@@ -47,7 +47,7 @@ export default function LoadingScreen({ isDashboard, ...other }) {
               repeat: Infinity,
             }}
           >
-            <Logo disabledLink sx={{ width: 64, height: 64 }} isloading="true" />
+            <Logo disabledLink sx={{ width: 64, height: 64 }} isloading />
           </m.div>
 
           <Box

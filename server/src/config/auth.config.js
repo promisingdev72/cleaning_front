@@ -1,3 +1,3 @@
 module.exports = {
-  secret: 'restaurant-secret-key',
+  secret: 'cleaning-secret-key',
 };
