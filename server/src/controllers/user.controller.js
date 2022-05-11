@@ -69,8 +69,7 @@ exports.getProfile = (req, res) => {
       };
       res.status(200).send({ user });
     })
-    .catch((error) => {
-      return res.status(200).send({ message: 'token is not' });
-      //   console.log('token is undefined');
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
     });
 };
