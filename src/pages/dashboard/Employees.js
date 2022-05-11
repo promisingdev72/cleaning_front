@@ -1,5 +1,4 @@
 // @mui
-import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // hooks
 import useSettings from '../../hooks/useSettings';

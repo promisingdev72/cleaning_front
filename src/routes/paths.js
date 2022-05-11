@@ -36,6 +36,9 @@ export const PATH_DASHBOARD = {
   order: {
     orderlist: path(ROOTS_DASHBOARD, '/order'),
   },
+  customer: {
+    customerlist: path(ROOTS_DASHBOARD, '/customer'),
+  },
   permissionDenied: path(ROOTS_DASHBOARD, '/permission-denied'),
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),

@@ -67,6 +67,7 @@ export default function Router() {
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
         { path: 'employee', element: <Employees /> },
         { path: 'order', element: <Orders /> },
+        { path: 'customer', element: <Customers /> },
         {
           path: 'user',
           children: [
@@ -119,6 +120,7 @@ const VerifyCode = Loadable(lazy(() => import('../pages/auth/VerifyCode')));
 // GENERAL
 const Employees = Loadable(lazy(() => import('../pages/dashboard/Employees')));
 const Orders = Loadable(lazy(() => import('../pages/dashboard/Orders')));
+const Customers = Loadable(lazy(() => import('../pages/dashboard/Customers')));
 
 // USER
 const UserProfile = Loadable(lazy(() => import('../pages/dashboard/UserProfile')));

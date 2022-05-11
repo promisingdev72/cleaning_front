@@ -9,7 +9,6 @@ const getIcon = (name) => <SvgIconStyle src={`/assets/icons/navbar/${name}.svg`}
 
 const ICONS = {
   user: getIcon('ic_user'),
-  calendar: getIcon('ic_calendar'),
   dashboard: getIcon('ic_dashboard'),
 };
 
@@ -17,12 +16,12 @@ const navConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
-    subheader: 'order',
-    items: [{ title: 'Order List', path: PATH_DASHBOARD.order.orderlist, icon: ICONS.dashboard }],
-  },
-  {
-    subheader: 'employee',
-    items: [{ title: 'Employee List', path: PATH_DASHBOARD.employee.employeelist, icon: ICONS.dashboard }],
+    subheader: 'Dashboard',
+    items: [
+      { title: 'Order List', path: PATH_DASHBOARD.order.orderlist, icon: ICONS.dashboard },
+      { title: 'Employee List', path: PATH_DASHBOARD.employee.employeelist, icon: ICONS.dashboard },
+      { title: 'Customer List', path: PATH_DASHBOARD.customer.customerlist, icon: ICONS.dashboard },
+    ],
   },
   // MANAGEMENT
   // ----------------------------------------------------------------------
