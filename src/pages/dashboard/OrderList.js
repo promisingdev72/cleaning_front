@@ -137,7 +137,7 @@ export default function OrderList() {
     (!dataFiltered.length && !!filterStatus);
 
   return (
-    <Page title="Order: List">
+    <Page title="Order">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading="Order List"
