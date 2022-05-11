@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
-import { useTheme } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
 import Image from './Image';
@@ -11,11 +10,11 @@ import Image from './Image';
 Logo.propTypes = {
   disabledLink: PropTypes.bool,
   sx: PropTypes.object,
+  isloading: PropTypes.bool,
+  iscollapse: PropTypes.bool,
 };
 
 export default function Logo({ disabledLink = false, sx, isloading, iscollapse }) {
-  const theme = useTheme();
-
   // OR
   // const logo = '/logo/logo_single.svg';
 
