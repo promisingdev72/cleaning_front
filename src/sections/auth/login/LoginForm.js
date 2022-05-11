@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
+import { useSnackbar } from 'notistack';
 import { Link as RouterLink } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
@@ -20,7 +21,7 @@ import { FormProvider, RHFTextField, RHFCheckbox } from '../../../components/hoo
 
 export default function LoginForm() {
   const { login } = useAuth();
-
+  const { enqueueSnackbar } = useSnackbar();
   const isMountedRef = useIsMountedRef();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -51,11 +52,9 @@ export default function LoginForm() {
   const onSubmit = async (data) => {
     try {
       await login(data.email, data.password);
+      enqueueSnackbar('Success Login!');
     } catch (error) {
-      console.error(error);
-
       reset();
-
       if (isMountedRef.current) {
         setError('afterSubmit', { ...error, message: error.message });
       }

@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
+import { useSnackbar } from 'notistack';
+
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,6 +19,7 @@ import { FormProvider, RHFTextField } from '../../../components/hook-form';
 
 export default function RegisterForm() {
   const { register } = useAuth();
+  const { enqueueSnackbar } = useSnackbar();
 
   const isMountedRef = useIsMountedRef();
 
@@ -49,6 +52,7 @@ export default function RegisterForm() {
   const onSubmit = async (data) => {
     try {
       await register(data.email, data.password, data.fullName);
+      enqueueSnackbar('Sucess Register!');
     } catch (error) {
       console.error(error);
       reset();
