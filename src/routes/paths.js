@@ -29,23 +29,20 @@ export const PATH_DASHBOARD = {
   order: {
     orderlist: path(ROOTS_DASHBOARD, '/order'),
     new: path(ROOTS_DASHBOARD, '/order/new'),
+    edit: (name) => path(ROOTS_DASHBOARD, `/order/${name}/edit`),
   },
   employee: {
     employeelist: path(ROOTS_DASHBOARD, '/employee'),
     new: path(ROOTS_DASHBOARD, '/employee/new'),
+    edit: (name) => path(ROOTS_DASHBOARD, `/employee/${name}/edit`),
   },
   customer: {
     customerlist: path(ROOTS_DASHBOARD, '/customer'),
     new: path(ROOTS_DASHBOARD, '/customer/new'),
+    edit: (name) => path(ROOTS_DASHBOARD, `/customer/${name}/edit`),
   },
   permissionDenied: path(ROOTS_DASHBOARD, '/permission-denied'),
-  // user: {
-  //   root: path(ROOTS_DASHBOARD, '/user'),
-  //   new: path(ROOTS_DASHBOARD, '/user/new'),
-  //   list: path(ROOTS_DASHBOARD, '/user/list'),
-  //   profile: path(ROOTS_DASHBOARD, '/user/profile'),
-  //   account: path(ROOTS_DASHBOARD, '/user/account'),
-  //   edit: (name) => path(ROOTS_DASHBOARD, `/user/${name}/edit`),
-  //   demoEdit: path(ROOTS_DASHBOARD, `/user/reece-chung/edit`),
-  // },
+  user: {
+    profile: path(ROOTS_DASHBOARD, '/profile'),
+  },
 };

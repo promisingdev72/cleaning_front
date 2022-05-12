@@ -93,6 +93,10 @@ export default function Router() {
           ],
         },
         { path: 'permission-denied', element: <PermissionDenied /> },
+        {
+          path: 'profile',
+          element: <AccountSetting />,
+        },
       ],
     },
 
@@ -124,6 +128,10 @@ const NewPassword = Loadable(lazy(() => import('../pages/auth/NewPassword')));
 const VerifyCode = Loadable(lazy(() => import('../pages/auth/VerifyCode')));
 
 // DASHBOARD
+
+// User
+
+const AccountSetting = Loadable(lazy(() => import('../pages/dashboard/UserAccount')));
 
 // Order
 const Orders = Loadable(lazy(() => import('../pages/dashboard/order/Orders')));
