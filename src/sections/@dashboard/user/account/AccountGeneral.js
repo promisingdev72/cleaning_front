@@ -11,10 +11,8 @@ import { LoadingButton } from '@mui/lab';
 import useAuth from '../../../../hooks/useAuth';
 // utils
 import { fData } from '../../../../utils/formatNumber';
-// _mock
-import { countries } from '../../../../_mock';
 // components
-import { FormProvider, RHFSwitch, RHFSelect, RHFTextField, RHFUploadAvatar } from '../../../../components/hook-form';
+import { FormProvider, RHFTextField, RHFUploadAvatar } from '../../../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -24,21 +22,20 @@ export default function AccountGeneral() {
   const { user } = useAuth();
 
   const UpdateUserSchema = Yup.object().shape({
-    displayName: Yup.string().required('Name is required'),
+    name: Yup.string().required('Name is required'),
+    email: Yup.string().email().required('Email is required'),
+    oldPassword: Yup.string().required('Old Password is required'),
+    newPassword: Yup.string().min(6, 'Password must be at least 6 characters').required('New Password is required'),
+    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
   });
 
   const defaultValues = {
-    displayName: user?.displayName || '',
+    name: user?.name || '',
     email: user?.email || '',
     photoURL: user?.photoURL || '',
-    phoneNumber: user?.phoneNumber || '',
-    country: user?.country || '',
-    address: user?.address || '',
-    state: user?.state || '',
-    city: user?.city || '',
-    zipCode: user?.zipCode || '',
-    about: user?.about || '',
-    isPublic: user?.isPublic || false,
+    oldPassword: '',
+    newPassword: '',
+    confirmNewPassword: '',
   };
 
   const methods = useForm({
@@ -103,8 +100,6 @@ export default function AccountGeneral() {
                 </Typography>
               }
             />
-
-            <RHFSwitch name="isPublic" labelPlacement="start" label="Public Profile" sx={{ mt: 5 }} />
           </Card>
         </Grid>
 
@@ -118,30 +113,18 @@ export default function AccountGeneral() {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFTextField name="displayName" label="Name" />
+              <RHFTextField name="name" label="Name" />
               <RHFTextField name="email" label="Email Address" />
-
-              <RHFTextField name="phoneNumber" label="Phone Number" />
-              <RHFTextField name="address" label="Address" />
-
-              <RHFSelect name="country" label="Country" placeholder="Country">
-                <option value="" />
-                {countries.map((option) => (
-                  <option key={option.code} value={option.label}>
-                    {option.label}
-                  </option>
-                ))}
-              </RHFSelect>
-
-              <RHFTextField name="state" label="State/Region" />
-
-              <RHFTextField name="city" label="City" />
-              <RHFTextField name="zipCode" label="Zip/Code" />
             </Box>
+            <Stack spacing={3} alignItems="flex-end" sx={{ mt: 5 }}>
+              <RHFTextField name="oldPassword" type="password" label="Old Password" />
+
+              <RHFTextField name="newPassword" type="password" label="New Password" />
+
+              <RHFTextField name="confirmNewPassword" type="password" label="Confirm New Password" />
+            </Stack>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-              <RHFTextField name="about" multiline rows={4} label="About" />
-
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
                 Save Changes
               </LoadingButton>
