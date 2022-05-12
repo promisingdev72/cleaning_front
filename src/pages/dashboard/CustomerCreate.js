@@ -34,7 +34,7 @@ export default function CustomerCreate() {
           heading={!isEdit ? 'Create a new customer' : 'Edit customer'}
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'Customer', href: PATH_DASHBOARD.customer.list },
+            { name: 'Customer', href: PATH_DASHBOARD.customer.customerlist },
             { name: !isEdit ? 'New customer' : capitalCase(name) },
           ]}
         />
