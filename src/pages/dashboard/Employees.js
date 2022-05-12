@@ -4,6 +4,7 @@ import { Grid, Container, Typography } from '@mui/material';
 import useSettings from '../../hooks/useSettings';
 // components
 import Page from '../../components/Page';
+import EmployeesList from './EmployeesList';
 
 // ----------------------------------------------------------------------
 
@@ -13,13 +14,7 @@ export default function Employees() {
   return (
     <Page title="Employees">
       <Container maxWidth={themeStretch ? false : 'xl'}>
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          This is Employee lists
-        </Typography>
-
-        <Grid container spacing={3}>
-          This is Employee lists
-        </Grid>
+        <EmployeesList />
       </Container>
     </Page>
   );

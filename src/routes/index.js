@@ -74,8 +74,24 @@ export default function Router() {
             { path: ':name/edit', element: <OrderCreate /> },
           ],
         },
-        { path: 'employee', element: <Employees /> },
-        { path: 'customer', element: <Customers /> },
+        {
+          path: 'employee',
+          children: [
+            { element: <Navigate to="/dashboard/employee/list" replace />, index: true },
+            { path: 'list', element: <Employees /> },
+            { path: 'new', element: <EmployeeCreate /> },
+            { path: ':name/edit', element: <EmployeeCreate /> },
+          ],
+        },
+        {
+          path: 'customer',
+          children: [
+            { element: <Navigate to="/dashboard/customer/list" replace />, index: true },
+            { path: 'list', element: <Customers /> },
+            { path: 'new', element: <CustomerCreate /> },
+            { path: ':name/edit', element: <CustomerCreate /> },
+          ],
+        },
         { path: 'permission-denied', element: <PermissionDenied /> },
       ],
     },
@@ -113,20 +129,15 @@ const VerifyCode = Loadable(lazy(() => import('../pages/auth/VerifyCode')));
 
 // DASHBOARD
 
-// GENERAL
-const Employees = Loadable(lazy(() => import('../pages/dashboard/EmployeesList')));
-const Orders = Loadable(lazy(() => import('../pages/dashboard/Orders')));
-const Customers = Loadable(lazy(() => import('../pages/dashboard/Customers')));
-
-// Customer
-const CustomerList = Loadable(lazy(() => import('../pages/dashboard/CustomerList')));
-const CustomerCreate = Loadable(lazy(() => import('../pages/dashboard/CustomerCreate')));
-// Employee
-const EmployeeList = Loadable(lazy(() => import('../pages/dashboard/EmployeesList')));
-const EmployeeCreate = Loadable(lazy(() => import('../pages/dashboard/EmployeeCreate')));
 // Order
-const OrderList = Loadable(lazy(() => import('../pages/dashboard/OrderList')));
+const Orders = Loadable(lazy(() => import('../pages/dashboard/Orders')));
 const OrderCreate = Loadable(lazy(() => import('../pages/dashboard/OrderCreate')));
+// Employee
+const Employees = Loadable(lazy(() => import('../pages/dashboard/Employees')));
+const EmployeeCreate = Loadable(lazy(() => import('../pages/dashboard/EmployeeCreate')));
+// Customer
+const Customers = Loadable(lazy(() => import('../pages/dashboard/Customers')));
+const CustomerCreate = Loadable(lazy(() => import('../pages/dashboard/CustomerCreate')));
 
 // TEST RENDER PAGE BY ROLE
 const PermissionDenied = Loadable(lazy(() => import('../pages/dashboard/PermissionDenied')));

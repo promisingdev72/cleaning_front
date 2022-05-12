@@ -4,7 +4,7 @@ import { Container, Typography } from '@mui/material';
 import useSettings from '../../hooks/useSettings';
 // components
 import Page from '../../components/Page';
-// import CustomerList from './CustomerList';
+import CustomerList from './CustomerList';
 
 // ----------------------------------------------------------------------
 
@@ -14,14 +14,7 @@ export default function Customers() {
   return (
     <Page title="Customers">
       <Container maxWidth={themeStretch ? false : 'xl'}>
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          This is Customer lists
-        </Typography>
-        <Typography variant="h7" sx={{ mb: 5 }}>
-          This is Customer lists
-        </Typography>
-
-        {/* <CustomerList /> */}
+        <CustomerList />
       </Container>
     </Page>
   );
