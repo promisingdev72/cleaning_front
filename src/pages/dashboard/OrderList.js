@@ -118,7 +118,7 @@ export default function OrderList() {
   };
 
   const handleEditRow = (id) => {
-    navigate(PATH_DASHBOARD.user.edit(paramCase(id)));
+    navigate(PATH_DASHBOARD.order.edit(paramCase(id)));
   };
 
   const dataFiltered = applySortFilter({
@@ -137,7 +137,7 @@ export default function OrderList() {
     (!dataFiltered.length && !!filterStatus);
 
   return (
-    <Page title="Order">
+    <Page title="Order List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading="Order List"
@@ -149,7 +149,7 @@ export default function OrderList() {
               to={PATH_DASHBOARD.order.new}
               startIcon={<Iconify icon={'eva:plus-fill'} />}
             >
-              New User
+              New Order
             </Button>
           }
         />

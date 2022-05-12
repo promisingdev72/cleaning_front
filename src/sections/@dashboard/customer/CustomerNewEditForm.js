@@ -31,7 +31,7 @@ export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const NewEmployeeSchema = Yup.object().shape({
+  const NewCustomerSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required').email(),
     phoneNumber: Yup.string().required('Phone number is required'),
@@ -46,26 +46,26 @@ export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
 
   const defaultValues = useMemo(
     () => ({
-      name: currentEmployee?.name || '',
-      email: currentEmployee?.email || '',
-      phoneNumber: currentEmployee?.phoneNumber || '',
-      address: currentEmployee?.address || '',
-      country: currentEmployee?.country || '',
-      state: currentEmployee?.state || '',
-      city: currentEmployee?.city || '',
-      zipCode: currentEmployee?.zipCode || '',
-      avatarUrl: currentEmployee?.avatarUrl || '',
-      isVerified: currentEmployee?.isVerified || true,
-      status: currentEmployee?.status,
-      company: currentEmployee?.company || '',
-      role: currentEmployee?.role || '',
+      name: currentCustomer?.name || '',
+      email: currentCustomer?.email || '',
+      phoneNumber: currentCustomer?.phoneNumber || '',
+      address: currentCustomer?.address || '',
+      country: currentCustomer?.country || '',
+      state: currentCustomer?.state || '',
+      city: currentCustomer?.city || '',
+      zipCode: currentCustomer?.zipCode || '',
+      avatarUrl: currentCustomer?.avatarUrl || '',
+      isVerified: currentCustomer?.isVerified || true,
+      status: currentCustomer?.status,
+      company: currentCustomer?.company || '',
+      role: currentCustomer?.role || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentEmployee]
+    [currentCustomer]
   );
 
   const methods = useForm({
-    resolver: yupResolver(NewEmployeeSchema),
+    resolver: yupResolver(NewCustomerSchema),
     defaultValues,
   });
 
@@ -81,21 +81,21 @@ export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
   const values = watch();
 
   useEffect(() => {
-    if (isEdit && currentEmployee) {
+    if (isEdit && currentCustomer) {
       reset(defaultValues);
     }
     if (!isEdit) {
       reset(defaultValues);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEdit, currentEmployee]);
+  }, [isEdit, currentCustomer]);
 
   const onSubmit = async () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      navigate(PATH_DASHBOARD.employee.list);
+      navigate(PATH_DASHBOARD.Customer.list);
     } catch (error) {
       console.error(error);
     }
@@ -194,7 +194,7 @@ export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
                     Email Verified
                   </Typography>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Disabling this will automatically send the Employee a verification email
+                    Disabling this will automatically send the Customer a verification email
                   </Typography>
                 </>
               }
@@ -236,7 +236,7 @@ export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                {!isEdit ? 'Create Employee' : 'Save Changes'}
+                {!isEdit ? 'Create Customer' : 'Save Changes'}
               </LoadingButton>
             </Stack>
           </Card>

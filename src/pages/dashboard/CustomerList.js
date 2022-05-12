@@ -118,7 +118,7 @@ export default function CustomerList() {
   };
 
   const handleEditRow = (id) => {
-    navigate(PATH_DASHBOARD.user.edit(paramCase(id)));
+    navigate(PATH_DASHBOARD.customer.edit(paramCase(id)));
   };
 
   const dataFiltered = applySortFilter({
@@ -137,7 +137,7 @@ export default function CustomerList() {
     (!dataFiltered.length && !!filterStatus);
 
   return (
-    <Page title="Customer: List">
+    <Page title="Customer List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading="Customer List"
@@ -146,10 +146,10 @@ export default function CustomerList() {
             <Button
               variant="contained"
               component={RouterLink}
-              to={PATH_DASHBOARD.user.new}
+              to={PATH_DASHBOARD.customer.new}
               startIcon={<Iconify icon={'eva:plus-fill'} />}
             >
-              New User
+              New Customer
             </Button>
           }
         />

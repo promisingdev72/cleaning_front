@@ -2,8 +2,6 @@ import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Grid, Link, Divider, Container, Typography, Stack } from '@mui/material';
-// routes
-import { PATH_PAGE } from '../../routes/paths';
 // components
 import Logo from '../../components/Logo';
 import SocialsButton from '../../components/SocialsButton';
@@ -11,14 +9,6 @@ import SocialsButton from '../../components/SocialsButton';
 // ----------------------------------------------------------------------
 
 const LINKS = [
-  {
-    headline: 'Minimal',
-    children: [
-      { name: 'About us', href: PATH_PAGE.about },
-      { name: 'Contact us', href: PATH_PAGE.contact },
-      { name: 'FAQs', href: PATH_PAGE.faqs },
-    ],
-  },
   {
     headline: 'Legal',
     children: [
@@ -29,8 +19,8 @@ const LINKS = [
   {
     headline: 'Contact',
     children: [
-      { name: 'support@minimals.cc', href: '#' },
-      { name: 'Los Angeles, 359  Hidden Valley Road', href: '#' },
+      { name: 'admin@admin.com', href: '#' },
+      { name: 'Denmark', href: '#' },
     ],
   },
 ];
@@ -104,7 +94,7 @@ export default function MainFooter() {
             textAlign: { xs: 'center', md: 'left' },
           }}
         >
-          © 2021. All rights reserved
+          © 2022.05.12
         </Typography>
       </Container>
     </RootStyle>

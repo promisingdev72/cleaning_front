@@ -23,15 +23,15 @@ import { FormProvider, RHFSelect, RHFSwitch, RHFTextField, RHFUploadAvatar } fro
 
 OrderNewEditForm.propTypes = {
   isEdit: PropTypes.bool,
-  currentUser: PropTypes.object,
+  currentOrder: PropTypes.object,
 };
 
-export default function OrderNewEditForm({ isEdit, currentUser }) {
+export default function OrderNewEditForm({ isEdit, currentOrder }) {
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const NewUserSchema = Yup.object().shape({
+  const NewOrderSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required').email(),
     phoneNumber: Yup.string().required('Phone number is required'),
@@ -46,26 +46,26 @@ export default function OrderNewEditForm({ isEdit, currentUser }) {
 
   const defaultValues = useMemo(
     () => ({
-      name: currentUser?.name || '',
-      email: currentUser?.email || '',
-      phoneNumber: currentUser?.phoneNumber || '',
-      address: currentUser?.address || '',
-      country: currentUser?.country || '',
-      state: currentUser?.state || '',
-      city: currentUser?.city || '',
-      zipCode: currentUser?.zipCode || '',
-      avatarUrl: currentUser?.avatarUrl || '',
-      isVerified: currentUser?.isVerified || true,
-      status: currentUser?.status,
-      company: currentUser?.company || '',
-      role: currentUser?.role || '',
+      name: currentOrder?.name || '',
+      email: currentOrder?.email || '',
+      phoneNumber: currentOrder?.phoneNumber || '',
+      address: currentOrder?.address || '',
+      country: currentOrder?.country || '',
+      state: currentOrder?.state || '',
+      city: currentOrder?.city || '',
+      zipCode: currentOrder?.zipCode || '',
+      avatarUrl: currentOrder?.avatarUrl || '',
+      isVerified: currentOrder?.isVerified || true,
+      status: currentOrder?.status,
+      company: currentOrder?.company || '',
+      role: currentOrder?.role || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentUser]
+    [currentOrder]
   );
 
   const methods = useForm({
-    resolver: yupResolver(NewUserSchema),
+    resolver: yupResolver(NewOrderSchema),
     defaultValues,
   });
 
@@ -81,21 +81,21 @@ export default function OrderNewEditForm({ isEdit, currentUser }) {
   const values = watch();
 
   useEffect(() => {
-    if (isEdit && currentUser) {
+    if (isEdit && currentOrder) {
       reset(defaultValues);
     }
     if (!isEdit) {
       reset(defaultValues);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEdit, currentUser]);
+  }, [isEdit, currentOrder]);
 
   const onSubmit = async () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      navigate(PATH_DASHBOARD.user.list);
+      navigate(PATH_DASHBOARD.order.list);
     } catch (error) {
       console.error(error);
     }
@@ -194,7 +194,7 @@ export default function OrderNewEditForm({ isEdit, currentUser }) {
                     Email Verified
                   </Typography>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Disabling this will automatically send the user a verification email
+                    Disabling this will automatically send the Order a verification email
                   </Typography>
                 </>
               }

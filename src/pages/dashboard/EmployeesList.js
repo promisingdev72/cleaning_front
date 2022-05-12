@@ -118,7 +118,7 @@ export default function EmployeesList() {
   };
 
   const handleEditRow = (id) => {
-    navigate(PATH_DASHBOARD.user.edit(paramCase(id)));
+    navigate(PATH_DASHBOARD.employee.edit(paramCase(id)));
   };
 
   const dataFiltered = applySortFilter({
@@ -137,7 +137,7 @@ export default function EmployeesList() {
     (!dataFiltered.length && !!filterStatus);
 
   return (
-    <Page title="Employees: List">
+    <Page title="Employees List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading="Employees List"
@@ -146,10 +146,10 @@ export default function EmployeesList() {
             <Button
               variant="contained"
               component={RouterLink}
-              to={PATH_DASHBOARD.user.new}
+              to={PATH_DASHBOARD.employee.new}
               startIcon={<Iconify icon={'eva:plus-fill'} />}
             >
-              New User
+              New Employee
             </Button>
           }
         />

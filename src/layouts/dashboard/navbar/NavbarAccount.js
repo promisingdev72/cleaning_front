@@ -33,37 +33,37 @@ export default function NavbarAccount({ isCollapse }) {
   const { user } = useAuth();
 
   return (
-    <Link underline="none" color="inherit" component={RouterLink} to={PATH_DASHBOARD.user.account}>
-      <RootStyle
+    // <Link underline="none" color="inherit" component={RouterLink} to={PATH_DASHBOARD.user.account}>
+    <RootStyle
+      sx={{
+        ...(isCollapse && {
+          bgcolor: 'transparent',
+        }),
+      }}
+    >
+      <MyAvatar />
+
+      <Box
         sx={{
+          ml: 2,
+          transition: (theme) =>
+            theme.transitions.create('width', {
+              duration: theme.transitions.duration.shorter,
+            }),
           ...(isCollapse && {
-            bgcolor: 'transparent',
+            ml: 0,
+            width: 0,
           }),
         }}
       >
-        <MyAvatar />
-
-        <Box
-          sx={{
-            ml: 2,
-            transition: (theme) =>
-              theme.transitions.create('width', {
-                duration: theme.transitions.duration.shorter,
-              }),
-            ...(isCollapse && {
-              ml: 0,
-              width: 0,
-            }),
-          }}
-        >
-          <Typography variant="subtitle2" noWrap>
-            {user?.name}
-          </Typography>
-          <Typography variant="body2" noWrap sx={{ color: 'text.secondary' }}>
-            {user?.role}
-          </Typography>
-        </Box>
-      </RootStyle>
-    </Link>
+        <Typography variant="subtitle2" noWrap>
+          {user?.name}
+        </Typography>
+        <Typography variant="body2" noWrap sx={{ color: 'text.secondary' }}>
+          {user?.role}
+        </Typography>
+      </Box>
+    </RootStyle>
+    // </Link>
   );
 }

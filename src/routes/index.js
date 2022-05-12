@@ -110,11 +110,7 @@ export default function Router() {
     {
       path: '/',
       element: <MainLayout />,
-      children: [
-        { element: <HomePage />, index: true },
-        { path: 'about-us', element: <About /> },
-        { path: 'contact-us', element: <Contact /> },
-      ],
+      children: [{ element: <HomePage />, index: true }],
     },
     { path: '*', element: <Navigate to="/404" replace /> },
   ]);
@@ -144,8 +140,6 @@ const PermissionDenied = Loadable(lazy(() => import('../pages/dashboard/Permissi
 
 // MAIN
 const HomePage = Loadable(lazy(() => import('../pages/Home')));
-const About = Loadable(lazy(() => import('../pages/About')));
-const Contact = Loadable(lazy(() => import('../pages/Contact')));
 const Page500 = Loadable(lazy(() => import('../pages/Page500')));
 const Page403 = Loadable(lazy(() => import('../pages/Page403')));
 const Page404 = Loadable(lazy(() => import('../pages/Page404')));
