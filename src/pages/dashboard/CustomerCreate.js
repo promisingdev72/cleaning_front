@@ -28,7 +28,7 @@ export default function CustomerCreate() {
   const currentUser = _userList.find((user) => paramCase(user.name) === name);
 
   return (
-    <Page title="Customer: Create a new customer">
+    <Page title="Create a new customer">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading={!isEdit ? 'Create a new customer' : 'Edit customer'}

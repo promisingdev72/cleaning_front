@@ -28,7 +28,7 @@ export default function EmployeeCreate() {
   const currentUser = _userList.find((user) => paramCase(user.name) === name);
 
   return (
-    <Page title="Employee: Create a new employee">
+    <Page title="Create a new employee">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading={!isEdit ? 'Create a new employee' : 'Edit employee'}

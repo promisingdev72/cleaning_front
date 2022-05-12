@@ -28,7 +28,7 @@ export default function OrderCreate() {
   const currentUser = _userList.find((user) => paramCase(user.name) === name);
 
   return (
-    <Page title="Order: Create a new order">
+    <Page title="Create a new order">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading={!isEdit ? 'Create a new order' : 'Edit order'}
