@@ -114,14 +114,19 @@ const VerifyCode = Loadable(lazy(() => import('../pages/auth/VerifyCode')));
 // DASHBOARD
 
 // GENERAL
-const Employees = Loadable(lazy(() => import('../pages/dashboard/Employees')));
+const Employees = Loadable(lazy(() => import('../pages/dashboard/EmployeesList')));
 const Orders = Loadable(lazy(() => import('../pages/dashboard/Orders')));
 const Customers = Loadable(lazy(() => import('../pages/dashboard/Customers')));
-const OrderCreate = Loadable(lazy(() => import('../pages/dashboard/OrderCreate')));
 
-// USER
-const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
-const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')));
+// Customer
+const CustomerList = Loadable(lazy(() => import('../pages/dashboard/CustomerList')));
+const CustomerCreate = Loadable(lazy(() => import('../pages/dashboard/CustomerCreate')));
+// Employee
+const EmployeeList = Loadable(lazy(() => import('../pages/dashboard/EmployeesList')));
+const EmployeeCreate = Loadable(lazy(() => import('../pages/dashboard/EmployeeCreate')));
+// Order
+const OrderList = Loadable(lazy(() => import('../pages/dashboard/OrderList')));
+const OrderCreate = Loadable(lazy(() => import('../pages/dashboard/OrderCreate')));
 
 // TEST RENDER PAGE BY ROLE
 const PermissionDenied = Loadable(lazy(() => import('../pages/dashboard/PermissionDenied')));

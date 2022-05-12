@@ -34,7 +34,7 @@ import Scrollbar from '../../components/Scrollbar';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../components/table';
 // sections
-import { UserTableToolbar, UserTableRow } from '../../sections/@dashboard/user/list';
+import { EmployeeTableToolbar, EmployeeTableRow } from '../../sections/@dashboard/employee/list';
 
 // ----------------------------------------------------------------------
 
@@ -64,7 +64,7 @@ const TABLE_HEAD = [
 
 // ----------------------------------------------------------------------
 
-export default function UserList() {
+export default function EmployeesList() {
   const {
     dense,
     page,
@@ -137,15 +137,11 @@ export default function UserList() {
     (!dataFiltered.length && !!filterStatus);
 
   return (
-    <Page title="User: List">
+    <Page title="Employees: List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="User List"
-          links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'User', href: PATH_DASHBOARD.user.root },
-            { name: 'List' },
-          ]}
+          heading="Employees List"
+          links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'Employees' }]}
           action={
             <Button
               variant="contained"
@@ -174,7 +170,7 @@ export default function UserList() {
 
           <Divider />
 
-          <UserTableToolbar
+          <EmployeeTableToolbar
             filterName={filterName}
             filterRole={filterRole}
             onFilterName={handleFilterName}
@@ -223,7 +219,7 @@ export default function UserList() {
 
                 <TableBody>
                   {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                    <UserTableRow
+                    <EmployeeTableRow
                       key={row.id}
                       row={row}
                       selected={selected.includes(row.id)}

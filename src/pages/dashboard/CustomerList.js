@@ -34,7 +34,7 @@ import Scrollbar from '../../components/Scrollbar';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../components/table';
 // sections
-import { UserTableToolbar, UserTableRow } from '../../sections/@dashboard/user/list';
+import { CustomerTableToolbar, CustomerTableRow } from '../../sections/@dashboard/customer/list';
 
 // ----------------------------------------------------------------------
 
@@ -170,7 +170,7 @@ export default function CustomerList() {
 
           <Divider />
 
-          <UserTableToolbar
+          <CustomerTableToolbar
             filterName={filterName}
             filterRole={filterRole}
             onFilterName={handleFilterName}
@@ -219,7 +219,7 @@ export default function CustomerList() {
 
                 <TableBody>
                   {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                    <UserTableRow
+                    <CustomerTableRow
                       key={row.id}
                       row={row}
                       selected={selected.includes(row.id)}

@@ -12,7 +12,7 @@ import { _userList } from '../../_mock';
 import Page from '../../components/Page';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 // sections
-import CustomerNewEditForm from '../../sections/@dashboard/order/CustomerNewEditForm';
+import CustomerNewEditForm from '../../sections/@dashboard/customer/CustomerNewEditForm';
 
 // ----------------------------------------------------------------------
 

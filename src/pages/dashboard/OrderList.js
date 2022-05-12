@@ -34,7 +34,7 @@ import Scrollbar from '../../components/Scrollbar';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../components/table';
 // sections
-import { UserTableToolbar, UserTableRow } from '../../sections/@dashboard/user/list';
+import { OrderTableToolbar, OrderTableRow } from '../../sections/@dashboard/order/list';
 
 // ----------------------------------------------------------------------
 
@@ -170,7 +170,7 @@ export default function OrderList() {
 
           <Divider />
 
-          <UserTableToolbar
+          <OrderTableToolbar
             filterName={filterName}
             filterRole={filterRole}
             onFilterName={handleFilterName}
@@ -219,7 +219,7 @@ export default function OrderList() {
 
                 <TableBody>
                   {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                    <UserTableRow
+                    <OrderTableRow
                       key={row.id}
                       row={row}
                       selected={selected.includes(row.id)}

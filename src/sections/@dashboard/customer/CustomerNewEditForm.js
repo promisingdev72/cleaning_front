@@ -23,15 +23,15 @@ import { FormProvider, RHFSelect, RHFSwitch, RHFTextField, RHFUploadAvatar } fro
 
 CustomerNewEditForm.propTypes = {
   isEdit: PropTypes.bool,
-  currentUser: PropTypes.object,
+  currentCustomer: PropTypes.object,
 };
 
-export default function CustomerNewEditForm({ isEdit, currentUser }) {
+export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const NewUserSchema = Yup.object().shape({
+  const NewEmployeeSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required').email(),
     phoneNumber: Yup.string().required('Phone number is required'),
@@ -46,26 +46,26 @@ export default function CustomerNewEditForm({ isEdit, currentUser }) {
 
   const defaultValues = useMemo(
     () => ({
-      name: currentUser?.name || '',
-      email: currentUser?.email || '',
-      phoneNumber: currentUser?.phoneNumber || '',
-      address: currentUser?.address || '',
-      country: currentUser?.country || '',
-      state: currentUser?.state || '',
-      city: currentUser?.city || '',
-      zipCode: currentUser?.zipCode || '',
-      avatarUrl: currentUser?.avatarUrl || '',
-      isVerified: currentUser?.isVerified || true,
-      status: currentUser?.status,
-      company: currentUser?.company || '',
-      role: currentUser?.role || '',
+      name: currentEmployee?.name || '',
+      email: currentEmployee?.email || '',
+      phoneNumber: currentEmployee?.phoneNumber || '',
+      address: currentEmployee?.address || '',
+      country: currentEmployee?.country || '',
+      state: currentEmployee?.state || '',
+      city: currentEmployee?.city || '',
+      zipCode: currentEmployee?.zipCode || '',
+      avatarUrl: currentEmployee?.avatarUrl || '',
+      isVerified: currentEmployee?.isVerified || true,
+      status: currentEmployee?.status,
+      company: currentEmployee?.company || '',
+      role: currentEmployee?.role || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentUser]
+    [currentEmployee]
   );
 
   const methods = useForm({
-    resolver: yupResolver(NewUserSchema),
+    resolver: yupResolver(NewEmployeeSchema),
     defaultValues,
   });
 
@@ -81,21 +81,21 @@ export default function CustomerNewEditForm({ isEdit, currentUser }) {
   const values = watch();
 
   useEffect(() => {
-    if (isEdit && currentUser) {
+    if (isEdit && currentEmployee) {
       reset(defaultValues);
     }
     if (!isEdit) {
       reset(defaultValues);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEdit, currentUser]);
+  }, [isEdit, currentEmployee]);
 
   const onSubmit = async () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      navigate(PATH_DASHBOARD.user.list);
+      navigate(PATH_DASHBOARD.employee.list);
     } catch (error) {
       console.error(error);
     }
@@ -194,7 +194,7 @@ export default function CustomerNewEditForm({ isEdit, currentUser }) {
                     Email Verified
                   </Typography>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Disabling this will automatically send the user a verification email
+                    Disabling this will automatically send the Employee a verification email
                   </Typography>
                 </>
               }
@@ -236,7 +236,7 @@ export default function CustomerNewEditForm({ isEdit, currentUser }) {
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                {!isEdit ? 'Create User' : 'Save Changes'}
+                {!isEdit ? 'Create Employee' : 'Save Changes'}
               </LoadingButton>
             </Stack>
           </Card>

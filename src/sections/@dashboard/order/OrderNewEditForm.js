@@ -236,7 +236,7 @@ export default function OrderNewEditForm({ isEdit, currentUser }) {
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                {!isEdit ? 'Create User' : 'Save Changes'}
+                {!isEdit ? 'Create order' : 'Save Changes'}
               </LoadingButton>
             </Stack>
           </Card>
