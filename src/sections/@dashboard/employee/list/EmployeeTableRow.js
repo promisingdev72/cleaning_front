@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 // @mui
-import { useTheme } from '@mui/material/styles';
 import { Avatar, Checkbox, TableRow, TableCell, Typography, MenuItem } from '@mui/material';
 // components
-import Label from '../../../../components/Label';
 import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 
@@ -19,9 +17,7 @@ EmployeeTableRow.propTypes = {
 };
 
 export default function EmployeeTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
-  const theme = useTheme();
-
-  const { name, avatarUrl, company, role, isVerified, status } = row;
+  const { name, avatarUrl, company, role } = row;
 
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -52,7 +48,7 @@ export default function EmployeeTableRow({ row, selected, onEditRow, onSelectRow
         {role}
       </TableCell>
 
-      <TableCell align="center">
+      {/* <TableCell align="center">
         <Iconify
           icon={isVerified ? 'eva:checkmark-circle-fill' : 'eva:clock-outline'}
           sx={{
@@ -62,9 +58,9 @@ export default function EmployeeTableRow({ row, selected, onEditRow, onSelectRow
             ...(!isVerified && { color: 'warning.main' }),
           }}
         />
-      </TableCell>
+      </TableCell> */}
 
-      <TableCell align="left">
+      {/* <TableCell align="left">
         <Label
           variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
           color={(status === 'banned' && 'error') || 'success'}
@@ -72,7 +68,7 @@ export default function EmployeeTableRow({ row, selected, onEditRow, onSelectRow
         >
           {status}
         </Label>
-      </TableCell>
+      </TableCell> */}
 
       <TableCell align="right">
         <TableMoreMenu
