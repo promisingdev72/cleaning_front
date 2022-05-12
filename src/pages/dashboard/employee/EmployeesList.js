@@ -20,21 +20,21 @@ import {
   FormControlLabel,
 } from '@mui/material';
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
-import useTabs from '../../hooks/useTabs';
-import useSettings from '../../hooks/useSettings';
-import useTable, { getComparator, emptyRows } from '../../hooks/useTable';
+import useTabs from '../../../hooks/useTabs';
+import useSettings from '../../../hooks/useSettings';
+import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
 // _mock_
-import { _userList } from '../../_mock';
+import { _userList } from '../../../_mock';
 // components
-import Page from '../../components/Page';
-import Iconify from '../../components/Iconify';
-import Scrollbar from '../../components/Scrollbar';
-import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../components/table';
+import Page from '../../../components/Page';
+import Iconify from '../../../components/Iconify';
+import Scrollbar from '../../../components/Scrollbar';
+import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
 // sections
-import { CustomerTableToolbar, CustomerTableRow } from '../../sections/@dashboard/customer/list';
+import { EmployeeTableToolbar, EmployeeTableRow } from '../../../sections/@dashboard/employee/list';
 
 // ----------------------------------------------------------------------
 
@@ -64,7 +64,7 @@ const TABLE_HEAD = [
 
 // ----------------------------------------------------------------------
 
-export default function CustomerList() {
+export default function EmployeesList() {
   const {
     dense,
     page,
@@ -118,7 +118,7 @@ export default function CustomerList() {
   };
 
   const handleEditRow = (id) => {
-    navigate(PATH_DASHBOARD.customer.edit(paramCase(id)));
+    navigate(PATH_DASHBOARD.employee.edit(paramCase(id)));
   };
 
   const dataFiltered = applySortFilter({
@@ -137,19 +137,19 @@ export default function CustomerList() {
     (!dataFiltered.length && !!filterStatus);
 
   return (
-    <Page title="Customer List">
+    <Page title="Employees List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Customer List"
-          links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'Customer' }]}
+          heading="Employees List"
+          links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'Employees' }]}
           action={
             <Button
               variant="contained"
               component={RouterLink}
-              to={PATH_DASHBOARD.customer.new}
+              to={PATH_DASHBOARD.employee.new}
               startIcon={<Iconify icon={'eva:plus-fill'} />}
             >
-              New Customer
+              New Employee
             </Button>
           }
         />
@@ -170,7 +170,7 @@ export default function CustomerList() {
 
           <Divider />
 
-          <CustomerTableToolbar
+          <EmployeeTableToolbar
             filterName={filterName}
             filterRole={filterRole}
             onFilterName={handleFilterName}
@@ -219,7 +219,7 @@ export default function CustomerList() {
 
                 <TableBody>
                   {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                    <CustomerTableRow
+                    <EmployeeTableRow
                       key={row.id}
                       row={row}
                       selected={selected.includes(row.id)}

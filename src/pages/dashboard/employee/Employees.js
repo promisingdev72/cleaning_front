@@ -1,20 +1,20 @@
 // @mui
 import { Container } from '@mui/material';
 // hooks
-import useSettings from '../../hooks/useSettings';
+import useSettings from '../../../hooks/useSettings';
 // components
-import Page from '../../components/Page';
-import CustomerList from './CustomerList';
+import Page from '../../../components/Page';
+import EmployeesList from './EmployeesList';
 
 // ----------------------------------------------------------------------
 
-export default function Customers() {
+export default function Employees() {
   const { themeStretch } = useSettings();
 
   return (
-    <Page title="Customers">
+    <Page title="Employees">
       <Container maxWidth={themeStretch ? false : 'xl'}>
-        <CustomerList />
+        <EmployeesList />
       </Container>
     </Page>
   );

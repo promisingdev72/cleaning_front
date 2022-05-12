@@ -3,20 +3,20 @@ import { useParams, useLocation } from 'react-router-dom';
 // @mui
 import { Container } from '@mui/material';
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
-import useSettings from '../../hooks/useSettings';
+import useSettings from '../../../hooks/useSettings';
 // _mock_
-import { _userList } from '../../_mock';
+import { _userList } from '../../../_mock';
 // components
-import Page from '../../components/Page';
-import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
+import Page from '../../../components/Page';
+import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 // sections
-import OrderNewEditForm from '../../sections/@dashboard/order/OrderNewEditForm';
+import EmployeeNewEditForm from '../../../sections/@dashboard/employee/EmployeeNewEditForm';
 
 // ----------------------------------------------------------------------
 
-export default function OrderCreate() {
+export default function EmployeeCreate() {
   const { themeStretch } = useSettings();
 
   const { pathname } = useLocation();
@@ -28,18 +28,18 @@ export default function OrderCreate() {
   const currentUser = _userList.find((user) => paramCase(user.name) === name);
 
   return (
-    <Page title="Create a new order">
+    <Page title="Create a new employee">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={!isEdit ? 'Create a new order' : 'Edit order'}
+          heading={!isEdit ? 'Create a new employee' : 'Edit employee'}
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'Order', href: PATH_DASHBOARD.order.orderlist },
-            { name: !isEdit ? 'New order' : capitalCase(name) },
+            { name: 'Employee', href: PATH_DASHBOARD.employee.employeelist },
+            { name: !isEdit ? 'New employee' : capitalCase(name) },
           ]}
         />
 
-        <OrderNewEditForm isEdit={isEdit} currentUser={currentUser} />
+        <EmployeeNewEditForm isEdit={isEdit} currentUser={currentUser} />
       </Container>
     </Page>
   );
