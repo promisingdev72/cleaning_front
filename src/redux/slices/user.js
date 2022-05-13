@@ -81,3 +81,15 @@ export function getUsers() {
     }
   };
 }
+
+export function addNewEmployee({ data }) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.post('/api/account/addnewemployee', data);
+      dispatch(slice.actions.getUserSuccess(response.data.users));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}

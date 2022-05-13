@@ -9,6 +9,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
 import { Box, Card, Grid, Stack, Typography, InputAdornment, IconButton } from '@mui/material';
+// Hook
+import useEmployee from '../../../hooks/useEmployee';
+
 // utils
 import { fData } from '../../../utils/formatNumber';
 // routes
@@ -25,6 +28,7 @@ EmployeeNewEditForm.propTypes = {
 };
 
 export default function EmployeeNewEditForm({ currentEmployee, roles }) {
+  const { addNewEmployee } = useEmployee();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -34,7 +38,7 @@ export default function EmployeeNewEditForm({ currentEmployee, roles }) {
     avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
     name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required').email(),
-    role: Yup.string().required('Role Number is required'),
+    role: Yup.string().required('Role is required'),
   });
 
   const defaultValues = useMemo(
@@ -66,14 +70,24 @@ export default function EmployeeNewEditForm({ currentEmployee, roles }) {
     }
   }, [currentEmployee]);
 
-  const onSubmit = async () => {
+  // const onSubmit = async (data) => {
+  //   try {
+  //     await new Promise((resolve) => setTimeout(resolve, 500));
+  //     reset();
+  //     enqueueSnackbar('Create success!');
+  //     navigate(PATH_DASHBOARD.employee.employeelist);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+  const onSubmit = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      reset();
-      enqueueSnackbar('Create success!');
+      await addNewEmployee({ data });
+      enqueueSnackbar('Sucess create new employee!');
       navigate(PATH_DASHBOARD.employee.employeelist);
     } catch (error) {
       console.error(error);
+      reset();
     }
   };
 
@@ -137,6 +151,7 @@ export default function EmployeeNewEditForm({ currentEmployee, roles }) {
               <RHFTextField name="name" label="Full Name" />
               <RHFTextField name="email" label="Email Address" />
               <RHFSelect name="role" label="Role" placeholder="Role">
+                <option value="" />
                 {roles.map((option) => (
                   <option key={option} value={option}>
                     {option}

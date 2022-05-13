@@ -6,6 +6,7 @@ module.exports = (app) => {
     next();
   });
 
+  app.post('/api/account/addnewemployee', usercontroller.addNewEmployee);
   app.get('/api/account/users', usercontroller.getUserList);
   app.get('/api/account/profile', usercontroller.getProfile);
   app.post('/api/account/updateProfile', usercontroller.updateProfile);

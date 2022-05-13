@@ -72,7 +72,7 @@ export default function EmployeesList() {
     dispatch(getUsers());
   }, [dispatch]);
 
-  const { users: userList } = useSelector((state) => state.user);
+  const { users } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
 
@@ -81,8 +81,8 @@ export default function EmployeesList() {
   const [filterName, setFilterName] = useState('');
 
   useEffect(() => {
-    setTableData(userList);
-  }, [userList]);
+    setTableData(users);
+  }, [users]);
 
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
