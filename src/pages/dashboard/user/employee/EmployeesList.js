@@ -1,6 +1,5 @@
-import { paramCase } from 'change-case';
 import { useEffect, useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import {
   Box,
@@ -73,8 +72,6 @@ export default function EmployeesList() {
   }, [dispatch]);
 
   const { users } = useSelector((state) => state.user);
-
-  const navigate = useNavigate();
 
   const [tableData, setTableData] = useState([]);
 

@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
-import { paramCase, capitalCase } from 'change-case';
-import { useParams, useLocation } from 'react-router-dom';
+import { paramCase } from 'change-case';
+import { useParams } from 'react-router-dom';
 // @mui
 import { Container } from '@mui/material';
 // routes
