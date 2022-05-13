@@ -71,7 +71,6 @@ export function getProfile() {
 // ----------------------------------------------------------------------
 
 export function getUsers() {
-  console.log('This is getUsers');
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {

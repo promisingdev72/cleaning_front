@@ -11,13 +11,13 @@ import { TableMoreMenu } from '../../../../components/table';
 EmployeeTableRow.propTypes = {
   row: PropTypes.object,
   selected: PropTypes.bool,
-  onEditRow: PropTypes.func,
+  // onEditRow: PropTypes.func,
   onSelectRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
 };
 
-export default function EmployeeTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
-  const { name, avatarUrl, email, role } = row;
+export default function EmployeeTableRow({ row, selected, onSelectRow, onDeleteRow }) {
+  const { name, avatarUrl, email, roles } = row;
 
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -45,7 +45,7 @@ export default function EmployeeTableRow({ row, selected, onEditRow, onSelectRow
       <TableCell align="left">{email}</TableCell>
 
       <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
-        {role}
+        {roles}
       </TableCell>
       <TableCell align="right">
         <TableMoreMenu
@@ -64,7 +64,7 @@ export default function EmployeeTableRow({ row, selected, onEditRow, onSelectRow
                 <Iconify icon={'eva:trash-2-outline'} />
                 Delete
               </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 onClick={() => {
                   onEditRow();
                   handleCloseMenu();
@@ -72,7 +72,7 @@ export default function EmployeeTableRow({ row, selected, onEditRow, onSelectRow
               >
                 <Iconify icon={'eva:edit-fill'} />
                 Edit
-              </MenuItem>
+              </MenuItem> */}
             </>
           }
         />

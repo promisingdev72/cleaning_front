@@ -1,67 +1,51 @@
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Switch, Typography, FormControlLabel } from '@mui/material';
+import { Box, Card, Grid, Stack, Typography, InputAdornment, IconButton } from '@mui/material';
 // utils
 import { fData } from '../../../utils/formatNumber';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
-// _mock
-import { countries } from '../../../_mock';
 // components
-import Label from '../../../components/Label';
-import { FormProvider, RHFSelect, RHFSwitch, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
+import Iconify from '../../../components/Iconify';
+import { FormProvider, RHFTextField, RHFUploadAvatar, RHFSelect } from '../../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
 EmployeeNewEditForm.propTypes = {
-  isEdit: PropTypes.bool,
   currentEmployee: PropTypes.object,
+  roles: PropTypes.array,
 };
 
-export default function EmployeeNewEditForm({ isEdit, currentEmployee }) {
+export default function EmployeeNewEditForm({ currentEmployee, roles }) {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
 
   const NewEmployeeSchema = Yup.object().shape({
+    avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
     name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required').email(),
-    phoneNumber: Yup.string().required('Phone number is required'),
-    address: Yup.string().required('Address is required'),
-    country: Yup.string().required('country is required'),
-    company: Yup.string().required('Company is required'),
-    state: Yup.string().required('State is required'),
-    city: Yup.string().required('City is required'),
     role: Yup.string().required('Role Number is required'),
-    avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
   });
 
   const defaultValues = useMemo(
     () => ({
-      name: currentEmployee?.name || '',
-      email: currentEmployee?.email || '',
-      phoneNumber: currentEmployee?.phoneNumber || '',
-      address: currentEmployee?.address || '',
-      country: currentEmployee?.country || '',
-      state: currentEmployee?.state || '',
-      city: currentEmployee?.city || '',
-      zipCode: currentEmployee?.zipCode || '',
-      avatarUrl: currentEmployee?.avatarUrl || '',
-      isVerified: currentEmployee?.isVerified || true,
-      status: currentEmployee?.status,
-      company: currentEmployee?.company || '',
-      role: currentEmployee?.role || '',
+      avatarUrl: '',
+      name: '',
+      email: '',
+      roles: [],
+      password: '',
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentEmployee]
+    []
   );
 
   const methods = useForm({
@@ -71,31 +55,23 @@ export default function EmployeeNewEditForm({ isEdit, currentEmployee }) {
 
   const {
     reset,
-    watch,
-    control,
     setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
-  const values = watch();
-
   useEffect(() => {
-    if (isEdit && currentEmployee) {
+    if (currentEmployee) {
       reset(defaultValues);
     }
-    if (!isEdit) {
-      reset(defaultValues);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEdit, currentEmployee]);
+  }, [currentEmployee]);
 
   const onSubmit = async () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
-      enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      navigate(PATH_DASHBOARD.employee.list);
+      enqueueSnackbar('Create success!');
+      navigate(PATH_DASHBOARD.employee.employeelist);
     } catch (error) {
       console.error(error);
     }
@@ -122,15 +98,6 @@ export default function EmployeeNewEditForm({ isEdit, currentEmployee }) {
       <Grid container spacing={3}>
         <Grid item xs={12} md={4}>
           <Card sx={{ py: 10, px: 3 }}>
-            {isEdit && (
-              <Label
-                color={values.status !== 'active' ? 'error' : 'success'}
-                sx={{ textTransform: 'uppercase', position: 'absolute', top: 24, right: 24 }}
-              >
-                {values.status}
-              </Label>
-            )}
-
             <Box sx={{ mb: 5 }}>
               <RHFUploadAvatar
                 name="avatarUrl"
@@ -154,52 +121,6 @@ export default function EmployeeNewEditForm({ isEdit, currentEmployee }) {
                 }
               />
             </Box>
-
-            {isEdit && (
-              <FormControlLabel
-                labelPlacement="start"
-                control={
-                  <Controller
-                    name="status"
-                    control={control}
-                    render={({ field }) => (
-                      <Switch
-                        {...field}
-                        checked={field.value !== 'active'}
-                        onChange={(event) => field.onChange(event.target.checked ? 'banned' : 'active')}
-                      />
-                    )}
-                  />
-                }
-                label={
-                  <>
-                    <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                      Banned
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      Apply disable account
-                    </Typography>
-                  </>
-                }
-                sx={{ mx: 0, mb: 3, width: 1, justifyContent: 'space-between' }}
-              />
-            )}
-
-            <RHFSwitch
-              name="isVerified"
-              labelPlacement="start"
-              label={
-                <>
-                  <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                    Email Verified
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Disabling this will automatically send the Employee a verification email
-                  </Typography>
-                </>
-              }
-              sx={{ mx: 0, width: 1, justifyContent: 'space-between' }}
-            />
           </Card>
         </Grid>
 
@@ -215,28 +136,32 @@ export default function EmployeeNewEditForm({ isEdit, currentEmployee }) {
             >
               <RHFTextField name="name" label="Full Name" />
               <RHFTextField name="email" label="Email Address" />
-              <RHFTextField name="phoneNumber" label="Phone Number" />
-
-              <RHFSelect name="country" label="Country" placeholder="Country">
-                <option value="" />
-                {countries.map((option) => (
-                  <option key={option.code} value={option.label}>
-                    {option.label}
+              <RHFSelect name="role" label="Role" placeholder="Role">
+                {roles.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
                   </option>
                 ))}
               </RHFSelect>
-
-              <RHFTextField name="state" label="State/Region" />
-              <RHFTextField name="city" label="City" />
-              <RHFTextField name="address" label="Address" />
-              <RHFTextField name="zipCode" label="Zip/Code" />
-              <RHFTextField name="company" label="Company" />
-              <RHFTextField name="role" label="Role" />
+              <RHFTextField
+                name="password"
+                label="Password"
+                type={showPassword ? 'text' : 'password'}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                        <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                {!isEdit ? 'Create Employee' : 'Save Changes'}
+                {'Create Employee'}
               </LoadingButton>
             </Stack>
           </Card>

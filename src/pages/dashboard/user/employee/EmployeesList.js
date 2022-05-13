@@ -25,8 +25,6 @@ import useTable, { getComparator, emptyRows } from '../../../../hooks/useTable';
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
 import { getUsers } from '../../../../redux/slices/user';
-// _mock_
-import { _userList } from '../../../../_mock';
 // components
 import Page from '../../../../components/Page';
 import Iconify from '../../../../components/Iconify';
@@ -70,21 +68,21 @@ export default function EmployeesList() {
 
   const { themeStretch } = useSettings();
 
-  const { users: userList } = useSelector((state) => state.user);
-
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log(userList);
-  }, [userList]);
+  const { users: userList } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
 
-  const [tableData, setTableData] = useState(_userList);
+  const [tableData, setTableData] = useState([]);
 
   const [filterName, setFilterName] = useState('');
+
+  useEffect(() => {
+    setTableData(userList);
+  }, [userList]);
 
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
@@ -101,10 +99,6 @@ export default function EmployeesList() {
     const deleteRows = tableData.filter((row) => !selected.includes(row.id));
     setSelected([]);
     setTableData(deleteRows);
-  };
-
-  const handleEditRow = (id) => {
-    navigate(PATH_DASHBOARD.employee.edit(paramCase(id)));
   };
 
   const dataFiltered = applySortFilter({
@@ -187,7 +181,6 @@ export default function EmployeesList() {
                       selected={selected.includes(row.id)}
                       onSelectRow={() => onSelectRow(row.id)}
                       onDeleteRow={() => handleDeleteRow(row.id)}
-                      onEditRow={() => handleEditRow(row.name)}
                     />
                   ))}
 
