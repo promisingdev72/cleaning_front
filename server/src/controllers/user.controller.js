@@ -16,12 +16,12 @@ exports.getUserList = (req, res) => {
   User.findAll().then((userInfos) => {
     const users = [];
     userInfos.map((userInfo) => {
-      const { id, name, email, roleId } = userInfo;
+      const { id, name, email, role } = userInfo;
       const user = {
         id,
         name,
         email,
-        roles: ROLES[roleId - 1].toUpperCase(),
+        roles: ROLES[role - 1].toUpperCase(),
       };
 
       users.push(user);

@@ -1,9 +1,9 @@
 // @mui
 import { Container } from '@mui/material';
 // hooks
-import useSettings from '../../../hooks/useSettings';
+import useSettings from '../../../../hooks/useSettings';
 // components
-import Page from '../../../components/Page';
+import Page from '../../../../components/Page';
 import EmployeesList from './EmployeesList';
 
 // ----------------------------------------------------------------------

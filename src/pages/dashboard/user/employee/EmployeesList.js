@@ -1,11 +1,9 @@
 import { paramCase } from 'change-case';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // @mui
 import {
   Box,
-  Tab,
-  Tabs,
   Card,
   Table,
   Switch,
@@ -20,51 +18,37 @@ import {
   FormControlLabel,
 } from '@mui/material';
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from '../../../../routes/paths';
 // hooks
-import useTabs from '../../../hooks/useTabs';
-import useSettings from '../../../hooks/useSettings';
-import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
+import useSettings from '../../../../hooks/useSettings';
+import useTable, { getComparator, emptyRows } from '../../../../hooks/useTable';
+// redux
+import { useDispatch, useSelector } from '../../../../redux/store';
+import { getUsers } from '../../../../redux/slices/user';
 // _mock_
-import { _userList } from '../../../_mock';
+import { _userList } from '../../../../_mock';
 // components
-import Page from '../../../components/Page';
-import Iconify from '../../../components/Iconify';
-import Scrollbar from '../../../components/Scrollbar';
-import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
-import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
+import Page from '../../../../components/Page';
+import Iconify from '../../../../components/Iconify';
+import Scrollbar from '../../../../components/Scrollbar';
+import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
+import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../../components/table';
 // sections
-import { CustomerTableToolbar, CustomerTableRow } from '../../../sections/@dashboard/customer/list';
+import { EmployeeTableToolbar, EmployeeTableRow } from '../../../../sections/@dashboard/employee/list';
 
 // ----------------------------------------------------------------------
 
-const STATUS_OPTIONS = ['all', 'active', 'banned'];
-
-const ROLE_OPTIONS = [
-  'all',
-  'ux designer',
-  'full stack designer',
-  'backend developer',
-  'project manager',
-  'leader',
-  'ui designer',
-  'ui/ux designer',
-  'front end developer',
-  'full stack developer',
-];
-
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', align: 'left' },
-  { id: 'company', label: 'Company', align: 'left' },
+  { id: 'email', label: 'Email', align: 'left' },
   { id: 'role', label: 'Role', align: 'left' },
-  { id: 'isVerified', label: 'Verified', align: 'center' },
-  { id: 'status', label: 'Status', align: 'left' },
   { id: '' },
 ];
 
 // ----------------------------------------------------------------------
 
-export default function CustomerList() {
+export default function EmployeesList() {
+  const dispatch = useDispatch();
   const {
     dense,
     page,
@@ -86,23 +70,25 @@ export default function CustomerList() {
 
   const { themeStretch } = useSettings();
 
+  const { users: userList } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log(userList);
+  }, [userList]);
+
   const navigate = useNavigate();
 
   const [tableData, setTableData] = useState(_userList);
 
   const [filterName, setFilterName] = useState('');
 
-  const [filterRole, setFilterRole] = useState('all');
-
-  const { currentTab: filterStatus, onChangeTab: onChangeFilterStatus } = useTabs('all');
-
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
     setPage(0);
-  };
-
-  const handleFilterRole = (event) => {
-    setFilterRole(event.target.value);
   };
 
   const handleDeleteRow = (id) => {
@@ -118,65 +104,41 @@ export default function CustomerList() {
   };
 
   const handleEditRow = (id) => {
-    navigate(PATH_DASHBOARD.customer.edit(paramCase(id)));
+    navigate(PATH_DASHBOARD.employee.edit(paramCase(id)));
   };
 
   const dataFiltered = applySortFilter({
     tableData,
     comparator: getComparator(order, orderBy),
     filterName,
-    filterRole,
-    filterStatus,
   });
 
   const denseHeight = dense ? 52 : 72;
 
-  const isNotFound =
-    (!dataFiltered.length && !!filterName) ||
-    (!dataFiltered.length && !!filterRole) ||
-    (!dataFiltered.length && !!filterStatus);
+  const isNotFound = (!dataFiltered.length && !!filterName) || !dataFiltered.length;
 
   return (
-    <Page title="Customer List">
+    <Page title="Employees List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Customer List"
-          links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'Customer' }]}
+          heading="Employees List"
+          links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'Employees' }]}
           action={
             <Button
               variant="contained"
               component={RouterLink}
-              to={PATH_DASHBOARD.customer.new}
+              to={PATH_DASHBOARD.employee.new}
               startIcon={<Iconify icon={'eva:plus-fill'} />}
             >
-              New Customer
+              New Employee
             </Button>
           }
         />
 
         <Card>
-          <Tabs
-            allowScrollButtonsMobile
-            variant="scrollable"
-            scrollButtons="auto"
-            value={filterStatus}
-            onChange={onChangeFilterStatus}
-            sx={{ px: 2, bgcolor: 'background.neutral' }}
-          >
-            {STATUS_OPTIONS.map((tab) => (
-              <Tab disableRipple key={tab} label={tab} value={tab} />
-            ))}
-          </Tabs>
-
           <Divider />
 
-          <CustomerTableToolbar
-            filterName={filterName}
-            filterRole={filterRole}
-            onFilterName={handleFilterName}
-            onFilterRole={handleFilterRole}
-            optionsRole={ROLE_OPTIONS}
-          />
+          <EmployeeTableToolbar filterName={filterName} onFilterName={handleFilterName} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
@@ -219,7 +181,7 @@ export default function CustomerList() {
 
                 <TableBody>
                   {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                    <CustomerTableRow
+                    <EmployeeTableRow
                       key={row.id}
                       row={row}
                       selected={selected.includes(row.id)}
@@ -262,7 +224,7 @@ export default function CustomerList() {
 
 // ----------------------------------------------------------------------
 
-function applySortFilter({ tableData, comparator, filterName, filterStatus, filterRole }) {
+function applySortFilter({ tableData, comparator, filterName }) {
   const stabilizedThis = tableData.map((el, index) => [el, index]);
 
   stabilizedThis.sort((a, b) => {
@@ -275,14 +237,6 @@ function applySortFilter({ tableData, comparator, filterName, filterStatus, filt
 
   if (filterName) {
     tableData = tableData.filter((item) => item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1);
-  }
-
-  if (filterStatus !== 'all') {
-    tableData = tableData.filter((item) => item.status === filterStatus);
-  }
-
-  if (filterRole !== 'all') {
-    tableData = tableData.filter((item) => item.role === filterRole);
   }
 
   return tableData;
