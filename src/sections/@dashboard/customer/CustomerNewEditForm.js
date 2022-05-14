@@ -1,6 +1,8 @@
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
@@ -8,13 +10,16 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Typography } from '@mui/material';
+import { Box, Card, Grid, Stack, Typography, InputAdornment, IconButton } from '@mui/material';
+// Hook
+import useCustomer from '../../../hooks/useCustomer';
 // utils
 import { fData } from '../../../utils/formatNumber';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
 import { FormProvider, RHFSelect, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
+import Iconify from '../../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
@@ -24,22 +29,11 @@ CustomerNewEditForm.propTypes = {
 };
 
 export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
-  const roles = [
-    {
-      role: 'ADMIN',
-      value: '1',
-    },
-    {
-      role: 'EMPLOYEE',
-      value: '2',
-    },
-    {
-      role: 'CUSTOMER',
-      value: '3',
-    },
-  ];
-
-  console.log('user datas', currentCustomer.roles);
+  // const { addNewEmployee } = useCustomer();
+  const { editCustomer, addCustomer } = useCustomer();
+  const ROLES = ['ADMIN', 'EMPLOYEE', 'CUSTOMER'];
+  const ROLES_INIT = { ADMIN: 1, EMPLOYEE: 2, CUSTOMER: 3 };
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -48,7 +42,8 @@ export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
   const NewCustomerSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required').email(),
-    role: Yup.string().required('Role Number is required'),
+    password: Yup.string().required('Password is required'),
+    role: Yup.string().required('Role is required'),
     avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
   });
 
@@ -56,8 +51,9 @@ export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
     () => ({
       name: currentCustomer?.name || '',
       email: currentCustomer?.email || '',
+      password: '',
       avatarUrl: currentCustomer?.avatarUrl || '',
-      role: currentCustomer?.roles || '',
+      role: ROLES_INIT[currentCustomer?.roles] || '1',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentCustomer]
@@ -86,12 +82,16 @@ export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentCustomer]);
 
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      if (isEdit) {
+        await editCustomer({ data });
+        reset();
+      }
+      await addCustomer({ data });
       reset();
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      navigate(PATH_DASHBOARD.Customer.list);
+      navigate(PATH_DASHBOARD.customer.customerlist);
     } catch (error) {
       console.error(error);
     }
@@ -156,15 +156,31 @@ export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
             >
               <RHFTextField name="name" label="Full Name" />
               <RHFTextField name="email" label="Email Address" />
-
-              <RHFSelect name="role" label="Roles" placeholder="Roles">
-                <option value="" />
-                {roles.map((option) => (
-                  <option key={option.role} value={option.value}>
-                    {option.role}
-                  </option>
-                ))}
-              </RHFSelect>
+              {isEdit && (
+                <RHFSelect name="role" label="Roles" placeholder="Roles">
+                  {ROLES.map((option, index) => (
+                    <option key={index} value={index + 1}>
+                      {option}
+                    </option>
+                  ))}
+                </RHFSelect>
+              )}
+              {!isEdit && (
+                <RHFTextField
+                  name="password"
+                  label="Password"
+                  type={showPassword ? 'text' : 'password'}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                          <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              )}
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>

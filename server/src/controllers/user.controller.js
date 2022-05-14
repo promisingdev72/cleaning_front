@@ -133,6 +133,31 @@ exports.addNewEmployee = (req, res) => {
     });
 };
 
+exports.addCustomer = (req, res) => {
+  let name = req.body.name;
+  let email = req.body.email;
+  let password = req.body.password;
+  let role = 3;
+  User.create({
+    name: name,
+    email: email,
+    password: bcrypt.hashSync(password, 8),
+    role: role,
+  })
+    .then((userData) => {
+      const user = {
+        id: userData.id,
+        name: userData.name,
+        email: userData.email,
+        role: ROLES[userData.role - 1].toUpperCase(),
+      };
+      res.status(200).send({ user });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
 exports.deleteEmployee = (req, res) => {
   let employeeId = req.body.employeeId;
   User.destroy({
@@ -141,4 +166,33 @@ exports.deleteEmployee = (req, res) => {
     },
   });
   res.status(200).send('success');
+};
+
+exports.deleteCustomer = (req, res) => {
+  let customerId = req.body.customerId;
+  User.destroy({
+    where: {
+      id: customerId,
+    },
+  });
+  res.status(200).send('success');
+};
+
+exports.editCustomer = (req, res) => {
+  let email = req.body.email;
+  let name = req.body.name;
+  let role = req.body.role;
+  User.update(
+    {
+      name: name,
+      role: role,
+    },
+    { where: { email: email } }
+  )
+    .then(() => {
+      res.status(200).send('update is success');
+    })
+    .catch((error) => {
+      return res.status(500).send('update is unsuccessfull');
+    });
 };

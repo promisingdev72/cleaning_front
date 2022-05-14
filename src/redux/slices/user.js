@@ -53,15 +53,19 @@ const slice = createSlice({
       state.customers = action.payload;
     },
 
-    // DELETE USERS
-    // deleteUser(state, action) {
-    //   const deleteUser = filter(state.userList, (user) => user.id !== action.payload);
-    //   state.userList = deleteUser;
-    // },
+    editCustomerSuccess(state, action) {
+      state.isLoading = false;
+      state.customers = action.payload;
+    },
     // DELETE EMPLOYEES
     deleteEmployee(state, action) {
       const deleteEmployee = filter(state.employees, (employees) => employees.id !== action.payload);
       state.employees = deleteEmployee;
+    },
+
+    deleteCustomer(state, action) {
+      const deleteCustomer = filter(state.customers, (customers) => customers.id !== action.payload);
+      state.customers = deleteCustomer;
     },
   },
 });
@@ -142,6 +146,44 @@ export function deleteEmployee(employeeId) {
     dispatch(slice.actions.startLoading());
     try {
       await axios.post('/api/account/deleteemployee', { employeeId });
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function editCustomer({ data }) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      await axios.post('/api/account/editcustomer', data).then((response) => {
+        dispatch(slice.actions.editCustomerSuccess(response.data.users));
+        return response.status;
+      });
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function deleteCustomer(customerId) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      await axios.post('/api/account/deletecustomer', { customerId });
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+export function addCustomer({ data }) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      await axios.post('/api/account/addcustomer', data).then((response) => {
+        dispatch(slice.actions.getUserSuccess(response.data.users));
+        return response.status;
+      });
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

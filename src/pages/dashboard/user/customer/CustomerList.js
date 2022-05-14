@@ -1,6 +1,7 @@
 import { paramCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 // @mui
 import {
   Box,
@@ -18,6 +19,7 @@ import {
   TablePagination,
   FormControlLabel,
 } from '@mui/material';
+
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // redux
@@ -25,6 +27,7 @@ import { useDispatch, useSelector } from '../../../../redux/store';
 import { getCustomers } from '../../../../redux/slices/user';
 // hooks
 import useTabs from '../../../../hooks/useTabs';
+import useCustomer from '../../../../hooks/useCustomer';
 import useSettings from '../../../../hooks/useSettings';
 import useTable, { getComparator, emptyRows } from '../../../../hooks/useTable';
 // components
@@ -47,6 +50,8 @@ const TABLE_HEAD = [
 // ----------------------------------------------------------------------
 
 export default function CustomerList() {
+  const { enqueueSnackbar } = useSnackbar();
+  const { deleteCustomer } = useCustomer();
   const dispatch = useDispatch();
   const {
     dense,
@@ -104,12 +109,16 @@ export default function CustomerList() {
     const deleteRow = tableData.filter((row) => row.id !== id);
     setSelected([]);
     setTableData(deleteRow);
+    deleteCustomer(id);
+    enqueueSnackbar('Success Deleted!');
   };
 
   const handleDeleteRows = (selected) => {
     const deleteRows = tableData.filter((row) => !selected.includes(row.id));
     setSelected([]);
     setTableData(deleteRows);
+    deleteCustomer(selected);
+    enqueueSnackbar('Success Deleted!');
   };
 
   const handleEditRow = (id) => {
