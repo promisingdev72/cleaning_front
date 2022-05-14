@@ -10,9 +10,8 @@ const initialState = {
   error: false,
   myProfile: null,
   users: [],
-  userList: [],
   employees: [],
-  employeeList: [],
+  customers: [],
 };
 
 const slice = createSlice({
@@ -46,6 +45,12 @@ const slice = createSlice({
     getEmployeeSuccess(state, action) {
       state.isLoading = false;
       state.employees = action.payload;
+    },
+
+    // GET CUSTOMERS
+    getCustomerSuccess(state, action) {
+      state.isLoading = false;
+      state.customers = action.payload;
     },
 
     // DELETE USERS
@@ -89,6 +94,18 @@ export function getEmployees() {
     try {
       const response = await axios.get('/api/account/employees');
       dispatch(slice.actions.getEmployeeSuccess(response.data.employees));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function getCustomers() {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get('/api/account/customers');
+      dispatch(slice.actions.getCustomerSuccess(response.data.customers));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

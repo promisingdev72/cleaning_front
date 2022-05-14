@@ -9,7 +9,6 @@ import {
   Switch,
   Button,
   Tooltip,
-  Divider,
   TableBody,
   Container,
   IconButton,
@@ -136,8 +135,6 @@ export default function EmployeesList() {
         />
 
         <Card>
-          <Divider />
-
           <EmployeeTableToolbar filterName={filterName} onFilterName={handleFilterName} />
 
           <Scrollbar>

@@ -48,16 +48,7 @@ export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
     () => ({
       name: currentCustomer?.name || '',
       email: currentCustomer?.email || '',
-      phoneNumber: currentCustomer?.phoneNumber || '',
-      address: currentCustomer?.address || '',
-      country: currentCustomer?.country || '',
-      state: currentCustomer?.state || '',
-      city: currentCustomer?.city || '',
-      zipCode: currentCustomer?.zipCode || '',
       avatarUrl: currentCustomer?.avatarUrl || '',
-      isVerified: currentCustomer?.isVerified || true,
-      status: currentCustomer?.status,
-      company: currentCustomer?.company || '',
       role: currentCustomer?.role || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps

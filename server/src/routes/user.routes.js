@@ -9,6 +9,7 @@ module.exports = (app) => {
 
   app.post('/api/account/addnewemployee', [verifySignUp.checkDuplicateEmails], usercontroller.addNewEmployee);
   app.get('/api/account/employees', usercontroller.getEmployeeList);
+  app.get('/api/account/customers', usercontroller.getCustomerList);
   app.get('/api/account/profile', usercontroller.getProfile);
   app.post('/api/account/deleteemployee', usercontroller.deleteEmployee);
   // app.post('/api/account/updateProfile', usercontroller.updateProfile);
