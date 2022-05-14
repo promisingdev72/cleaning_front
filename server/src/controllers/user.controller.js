@@ -14,21 +14,36 @@ const User = db.user;
 const { ROLES } = db;
 
 exports.getEmployeeList = (req, res) => {
-  const role = req.role;
-  User.findAll({ where: { role: 2 } }).then((userInfos) => {
+  User.findAll({ where: { role: 2 } }).then((employeeInfos) => {
     const employees = [];
-    userInfos.map((userInfo) => {
-      const { id, name, email, role } = userInfo;
+    employeeInfos.map((employeeInfo) => {
+      const { id, name, email, role } = employeeInfo;
       const employee = {
         id,
         name,
         email,
         roles: ROLES[role - 1].toUpperCase(),
       };
-
       employees.push(employee);
     });
     res.status(200).send({ employees });
+  });
+};
+
+exports.getCustomerList = (req, res) => {
+  User.findAll({ where: { role: 3 } }).then((customerInfos) => {
+    const customers = [];
+    customerInfos.map((customerInfo) => {
+      const { id, name, email, role } = customerInfo;
+      const customer = {
+        id,
+        name,
+        email,
+        roles: ROLES[role - 1].toUpperCase(),
+      };
+      customers.push(customer);
+    });
+    res.status(200).send({ customers });
   });
 };
 
