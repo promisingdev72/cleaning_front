@@ -87,6 +87,17 @@ export function getProfile() {
 }
 
 // ----------------------------------------------------------------------
+export function getUsers() {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get('/api/account/users');
+      dispatch(slice.actions.getUserSuccess(response.data.users));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
 
 export function getEmployees() {
   return async (dispatch) => {

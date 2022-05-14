@@ -27,8 +27,6 @@ import { getCustomers } from '../../../../redux/slices/user';
 import useTabs from '../../../../hooks/useTabs';
 import useSettings from '../../../../hooks/useSettings';
 import useTable, { getComparator, emptyRows } from '../../../../hooks/useTable';
-// _mock_
-import { _userList } from '../../../../_mock';
 // components
 import Page from '../../../../components/Page';
 import Iconify from '../../../../components/Iconify';
@@ -128,17 +126,17 @@ export default function CustomerList() {
 
   const denseHeight = dense ? 52 : 72;
 
-  const isNotFound =
-    (!dataFiltered.length && !!filterName) ||
-    (!dataFiltered.length && !!filterRole) ||
-    (!dataFiltered.length && !!filterStatus);
+  const isNotFound = (!dataFiltered.length && !!filterName) || (!dataFiltered.length && !!filterStatus);
 
   return (
     <Page title="Customer List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading="Customer List"
-          links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'Customer' }]}
+          links={[
+            { name: 'Dashboard', href: PATH_DASHBOARD.root },
+            { name: 'Customer', href: PATH_DASHBOARD.customer.customerlist },
+          ]}
           action={
             <Button
               variant="contained"

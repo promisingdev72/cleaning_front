@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { paramCase, capitalCase } from 'change-case';
 import { useParams, useLocation } from 'react-router-dom';
 // @mui
@@ -6,6 +7,10 @@ import { Container } from '@mui/material';
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // hooks
 import useSettings from '../../../../hooks/useSettings';
+
+// redux
+import { useDispatch, useSelector } from '../../../../redux/store';
+import { getUsers } from '../../../../redux/slices/user';
 // _mock_
 import { _userList } from '../../../../_mock';
 // components
@@ -17,6 +22,8 @@ import CustomerNewEditForm from '../../../../sections/@dashboard/customer/Custom
 // ----------------------------------------------------------------------
 
 export default function CustomerCreate() {
+  const dispatch = useDispatch();
+
   const { themeStretch } = useSettings();
 
   const { pathname } = useLocation();
@@ -25,7 +32,13 @@ export default function CustomerCreate() {
 
   const isEdit = pathname.includes('edit');
 
-  const currentUser = _userList.find((user) => paramCase(user.name) === name);
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
+
+  const { users } = useSelector((state) => state.user);
+
+  const currentCustomer = users.find((user) => paramCase(user.name) === name);
 
   return (
     <Page title="Create a new customer">
@@ -39,7 +52,7 @@ export default function CustomerCreate() {
           ]}
         />
 
-        <CustomerNewEditForm isEdit={isEdit} currentUser={currentUser} />
+        <CustomerNewEditForm isEdit={isEdit} currentCustomer={currentCustomer} />
       </Container>
     </Page>
   );

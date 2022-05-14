@@ -13,6 +13,23 @@ const db = require('../models');
 const User = db.user;
 const { ROLES } = db;
 
+exports.getUserList = (req, res) => {
+  User.findAll().then((userInfos) => {
+    const users = [];
+    userInfos.map((userInfo) => {
+      const { id, name, email, role } = userInfo;
+      const user = {
+        id,
+        name,
+        email,
+        roles: ROLES[role - 1].toUpperCase(),
+      };
+      users.push(user);
+    });
+    res.status(200).send({ users });
+  });
+};
+
 exports.getEmployeeList = (req, res) => {
   User.findAll({ where: { role: 2 } }).then((employeeInfos) => {
     const employees = [];
