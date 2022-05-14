@@ -64,15 +64,6 @@ export default function EmployeeTableRow({ row, selected, onSelectRow, onDeleteR
                 <Iconify icon={'eva:trash-2-outline'} />
                 Delete
               </MenuItem>
-              {/* <MenuItem
-                onClick={() => {
-                  onEditRow();
-                  handleCloseMenu();
-                }}
-              >
-                <Iconify icon={'eva:edit-fill'} />
-                Edit
-              </MenuItem> */}
             </>
           }
         />

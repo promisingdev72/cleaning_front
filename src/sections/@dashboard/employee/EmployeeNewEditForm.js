@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
@@ -18,16 +17,11 @@ import { fData } from '../../../utils/formatNumber';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
 import Iconify from '../../../components/Iconify';
-import { FormProvider, RHFTextField, RHFUploadAvatar, RHFSelect } from '../../../components/hook-form';
+import { FormProvider, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
-EmployeeNewEditForm.propTypes = {
-  currentEmployee: PropTypes.object,
-  roles: PropTypes.array,
-};
-
-export default function EmployeeNewEditForm({ currentEmployee, roles }) {
+export default function EmployeeNewEditForm() {
   const { addNewEmployee } = useEmployee();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -38,7 +32,6 @@ export default function EmployeeNewEditForm({ currentEmployee, roles }) {
     avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
     name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required').email(),
-    role: Yup.string().required('Role is required'),
   });
 
   const defaultValues = useMemo(
@@ -46,7 +39,6 @@ export default function EmployeeNewEditForm({ currentEmployee, roles }) {
       avatarUrl: '',
       name: '',
       email: '',
-      roles: [],
       password: '',
     }),
     []
@@ -64,22 +56,6 @@ export default function EmployeeNewEditForm({ currentEmployee, roles }) {
     formState: { isSubmitting },
   } = methods;
 
-  useEffect(() => {
-    if (currentEmployee) {
-      reset(defaultValues);
-    }
-  }, [currentEmployee]);
-
-  // const onSubmit = async (data) => {
-  //   try {
-  //     await new Promise((resolve) => setTimeout(resolve, 500));
-  //     reset();
-  //     enqueueSnackbar('Create success!');
-  //     navigate(PATH_DASHBOARD.employee.employeelist);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
   const onSubmit = async (data) => {
     try {
       await addNewEmployee({ data });
@@ -150,14 +126,6 @@ export default function EmployeeNewEditForm({ currentEmployee, roles }) {
             >
               <RHFTextField name="name" label="Full Name" />
               <RHFTextField name="email" label="Email Address" />
-              <RHFSelect name="role" label="Role" placeholder="Role">
-                <option value="" />
-                {roles.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </RHFSelect>
               <RHFTextField
                 name="password"
                 label="Password"

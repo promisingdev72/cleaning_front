@@ -13,21 +13,22 @@ const db = require('../models');
 const User = db.user;
 const { ROLES } = db;
 
-exports.getUserList = (req, res) => {
-  User.findAll().then((userInfos) => {
-    const users = [];
+exports.getEmployeeList = (req, res) => {
+  const role = req.role;
+  User.findAll({ where: { role: 2 } }).then((userInfos) => {
+    const employees = [];
     userInfos.map((userInfo) => {
       const { id, name, email, role } = userInfo;
-      const user = {
+      const employee = {
         id,
         name,
         email,
         roles: ROLES[role - 1].toUpperCase(),
       };
 
-      users.push(user);
+      employees.push(employee);
     });
-    res.status(200).send({ users });
+    res.status(200).send({ employees });
   });
 };
 
@@ -79,7 +80,7 @@ exports.addNewEmployee = (req, res) => {
   let name = req.body.name;
   let email = req.body.email;
   let password = req.body.password;
-  let role = 3;
+  let role = 2;
   User.create({
     name: name,
     email: email,
@@ -98,4 +99,14 @@ exports.addNewEmployee = (req, res) => {
     .catch((err) => {
       res.status(500).send({ message: err.message });
     });
+};
+
+exports.deleteEmployee = (req, res) => {
+  let employeeId = req.body.employeeId;
+  User.destroy({
+    where: {
+      id: employeeId,
+    },
+  });
+  res.status(200).send('success');
 };

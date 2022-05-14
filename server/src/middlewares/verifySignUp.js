@@ -21,6 +21,24 @@ checkDuplicateEmail = (req, res, next) => {
   });
 };
 
+checkDuplicateEmails = (req, res, next) => {
+  let email = req.body.email;
+  // Username
+  User.findOne({
+    where: {
+      email: email,
+    },
+  }).then((user) => {
+    if (user) {
+      res.status(200).send({
+        message: 'Email is already used',
+      });
+      return;
+    }
+    next();
+  });
+};
+
 checkRolesExisted = (req, res, next) => {
   if (req.body.roles) {
     for (let i = 0; i < req.body.roles.length; i += 1) {
@@ -39,6 +57,7 @@ checkRolesExisted = (req, res, next) => {
 const verifySignUp = {
   checkDuplicateEmail,
   checkRolesExisted,
+  checkDuplicateEmails,
 };
 
 module.exports = verifySignUp;

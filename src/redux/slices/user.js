@@ -11,6 +11,8 @@ const initialState = {
   myProfile: null,
   users: [],
   userList: [],
+  employees: [],
+  employeeList: [],
 };
 
 const slice = createSlice({
@@ -40,10 +42,21 @@ const slice = createSlice({
       state.users = action.payload;
     },
 
+    // GET EMPLOYEES
+    getEmployeeSuccess(state, action) {
+      state.isLoading = false;
+      state.employees = action.payload;
+    },
+
     // DELETE USERS
-    deleteUser(state, action) {
-      const deleteUser = filter(state.userList, (user) => user.id !== action.payload);
-      state.userList = deleteUser;
+    // deleteUser(state, action) {
+    //   const deleteUser = filter(state.userList, (user) => user.id !== action.payload);
+    //   state.userList = deleteUser;
+    // },
+    // DELETE EMPLOYEES
+    deleteEmployee(state, action) {
+      const deleteEmployee = filter(state.employees, (employees) => employees.id !== action.payload);
+      state.employees = deleteEmployee;
     },
   },
 });
@@ -70,12 +83,12 @@ export function getProfile() {
 
 // ----------------------------------------------------------------------
 
-export function getUsers() {
+export function getEmployees() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/account/users');
-      dispatch(slice.actions.getUserSuccess(response.data.users));
+      const response = await axios.get('/api/account/employees');
+      dispatch(slice.actions.getEmployeeSuccess(response.data.employees));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -86,8 +99,21 @@ export function addNewEmployee({ data }) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.post('/api/account/addnewemployee', data);
-      dispatch(slice.actions.getUserSuccess(response.data.users));
+      await axios.post('/api/account/addnewemployee', data).then((response) => {
+        dispatch(slice.actions.getUserSuccess(response.data.users));
+        return response.status;
+      });
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function deleteEmployee(employeeId) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      await axios.post('/api/account/deleteemployee', { employeeId });
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

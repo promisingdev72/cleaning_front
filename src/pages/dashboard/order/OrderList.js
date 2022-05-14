@@ -154,7 +154,7 @@ export default function OrderList() {
           }
         />
 
-        <Card>
+        {/* <Card>
           <Tabs
             allowScrollButtonsMobile
             variant="scrollable"
@@ -254,7 +254,7 @@ export default function OrderList() {
               sx={{ px: 3, py: 1.5, top: 0, position: { md: 'absolute' } }}
             />
           </Box>
-        </Card>
+        </Card> */}
       </Container>
     </Page>
   );

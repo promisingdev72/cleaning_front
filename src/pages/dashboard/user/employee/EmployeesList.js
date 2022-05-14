@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 // @mui
 import {
   Box,
@@ -21,9 +22,11 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 // hooks
 import useSettings from '../../../../hooks/useSettings';
 import useTable, { getComparator, emptyRows } from '../../../../hooks/useTable';
+import useEmployee from '../../../../hooks/useEmployee';
+
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
-import { getUsers } from '../../../../redux/slices/user';
+import { getEmployees } from '../../../../redux/slices/user';
 // components
 import Page from '../../../../components/Page';
 import Iconify from '../../../../components/Iconify';
@@ -45,6 +48,7 @@ const TABLE_HEAD = [
 // ----------------------------------------------------------------------
 
 export default function EmployeesList() {
+  const { deleteEmployee } = useEmployee();
   const dispatch = useDispatch();
   const {
     dense,
@@ -64,38 +68,43 @@ export default function EmployeesList() {
     onChangePage,
     onChangeRowsPerPage,
   } = useTable();
-
+  const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettings();
 
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(getEmployees());
   }, [dispatch]);
 
-  const { users } = useSelector((state) => state.user);
+  const { employees } = useSelector((state) => state.user);
 
   const [tableData, setTableData] = useState([]);
 
   const [filterName, setFilterName] = useState('');
 
   useEffect(() => {
-    setTableData(users);
-  }, [users]);
+    if (employees) {
+      setTableData(employees);
+    }
+  }, [employees]);
 
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
     setPage(0);
   };
-
   const handleDeleteRow = (id) => {
     const deleteRow = tableData.filter((row) => row.id !== id);
     setSelected([]);
     setTableData(deleteRow);
+    deleteEmployee(id);
+    enqueueSnackbar('Success Deleted!');
   };
 
   const handleDeleteRows = (selected) => {
     const deleteRows = tableData.filter((row) => !selected.includes(row.id));
     setSelected([]);
     setTableData(deleteRows);
+    deleteEmployee(selected);
+    enqueueSnackbar('Success Deleted!');
   };
 
   const dataFiltered = applySortFilter({
