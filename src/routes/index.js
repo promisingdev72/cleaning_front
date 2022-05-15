@@ -75,6 +75,15 @@ export default function Router() {
           ],
         },
         {
+          path: 'bus',
+          children: [
+            { element: <Navigate to="/dashboard/bus/list" replace />, index: true },
+            { path: 'list', element: <Buses /> },
+            { path: 'new', element: <BusCreate /> },
+            { path: ':name/edit', element: <BusCreate /> },
+          ],
+        },
+        {
           path: 'employee',
           children: [
             { element: <Navigate to="/dashboard/employee/list" replace />, index: true },
@@ -136,6 +145,9 @@ const AccountSetting = Loadable(lazy(() => import('../pages/dashboard/user/UserA
 // Order
 const Orders = Loadable(lazy(() => import('../pages/dashboard/order/Orders')));
 const OrderCreate = Loadable(lazy(() => import('../pages/dashboard/order/OrderCreate')));
+// Bus
+const Buses = Loadable(lazy(() => import('../pages/dashboard/bus/Buses')));
+const BusCreate = Loadable(lazy(() => import('../pages/dashboard/bus/BusCreate')));
 // Employee
 const Employees = Loadable(lazy(() => import('../pages/dashboard/user/employee/Employees')));
 const EmployeeCreate = Loadable(lazy(() => import('../pages/dashboard/user/employee/EmployeeCreate')));

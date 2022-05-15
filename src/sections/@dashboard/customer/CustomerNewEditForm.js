@@ -42,7 +42,7 @@ export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
   const NewCustomerSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required').email(),
-    password: Yup.string().required('Password is required'),
+    password: !isEdit ? Yup.string().required('Password is required') : '',
     role: Yup.string().required('Role is required'),
     avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
   });

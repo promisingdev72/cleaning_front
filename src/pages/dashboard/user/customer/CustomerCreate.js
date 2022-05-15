@@ -35,10 +35,14 @@ export default function CustomerCreate() {
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
-
+  const [currentCustomer, setCurrentCustomer] = useState({});
   const { users } = useSelector((state) => state.user);
 
-  const currentCustomer = users.find((user) => paramCase(user.name) === name);
+  useEffect(() => {
+    if (users) {
+      setCurrentCustomer(users.find((user) => paramCase(user.name) === name));
+    }
+  }, [users]);
 
   return (
     <Page title="Create a new customer">
