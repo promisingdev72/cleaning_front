@@ -90,31 +90,6 @@ export default function HomeHero() {
               <Typography sx={{ color: 'common.white' }}>The starting point fdddddd</Typography>
             </m.div>
 
-            <Stack spacing={2.5} alignItems="center" direction={{ xs: 'column', md: 'row' }}>
-              <m.div variants={varFade().inRight}>
-                <TextIconLabel
-                  icon={
-                    <Image
-                      alt="sketch icon"
-                      src="https://minimal-assets-api-dev.vercel.app/assets/images/home/ic_figma_small.svg"
-                      sx={{ width: 20, height: 20, mr: 1 }}
-                    />
-                  }
-                  value={
-                    <Link
-                      href="https://www.figma.com/file/x7earqGD0VGFjFdk5v2DgZ/%5BPreview%5D-Minimal-Web?node-id=866%3A55474"
-                      target="_blank"
-                      rel="noopener"
-                      color="common.white"
-                      sx={{ typography: 'body2' }}
-                    >
-                      Preview Figma
-                    </Link>
-                  }
-                />
-              </m.div>
-            </Stack>
-
             <m.div variants={varFade().inRight}>
               <Button
                 size="large"
