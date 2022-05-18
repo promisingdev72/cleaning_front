@@ -1,4 +1,4 @@
-const usercontroller = require('../controllers/user.controller');
+const buscontroller = require('../controllers/bus.controller');
 const { verifySignUp, verifyDuplicateEmail } = require('../middlewares');
 
 module.exports = (app) => {
@@ -7,15 +7,8 @@ module.exports = (app) => {
     next();
   });
 
-  // app.post('/api/account/addnewemployee', [verifySignUp.checkDuplicateEmails], usercontroller.addNewEmployee);
-  // app.post('/api/account/addcustomer', [verifySignUp.checkDuplicateEmails], usercontroller.addCustomer);
-  // app.post('/api/account/editcustomer', usercontroller.editCustomer);
-  // app.get('/api/account/users', usercontroller.getUserList);
-  // app.get('/api/account/employees', usercontroller.getEmployeeList);
-  // app.get('/api/account/customers', usercontroller.getCustomerList);
-  // app.get('/api/account/profile', usercontroller.getProfile);
-  // app.post('/api/account/deleteemployee', usercontroller.deleteEmployee);
-  // app.post('/api/account/deletecustomer', usercontroller.deleteCustomer);
-
-  // app.post('/api/account/updateProfile', usercontroller.updateProfile);
+  app.post('/api/account/addbus', buscontroller.addBus);
+  app.post('/api/account/delbus', buscontroller.delBus);
+  app.post('/api/account/editbus', buscontroller.editBus);
+  app.get('/api/account/buses', buscontroller.getBusList);
 };

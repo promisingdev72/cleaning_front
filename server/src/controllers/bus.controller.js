@@ -10,189 +10,97 @@ const JWT_SECRET = config.secret;
 const JWT_EXPIRES_IN = 86400;
 const db = require('../models');
 
-const User = db.user;
-const { ROLES } = db;
+const Bus = db.bus;
 
-// exports.getUserList = (req, res) => {
-//   User.findAll().then((userInfos) => {
-//     const users = [];
-//     userInfos.map((userInfo) => {
-//       const { id, name, email, role } = userInfo;
-//       const user = {
-//         id,
-//         name,
-//         email,
-//         roles: ROLES[role - 1].toUpperCase(),
-//       };
-//       users.push(user);
-//     });
-//     res.status(200).send({ users });
-//   });
-// };
+exports.addBus = (req, res) => {
+  let companyName = req.body.companyName;
+  let busNumbers = req.body.busNumbers;
+  let busDriverName = req.body.busDriverName;
+  let busDriverPhoneNumber = req.body.busDriverPhoneNumber;
+  let busDepartingTime = req.body.busDepartingTime;
+  let busArrivingTime = req.body.busArrivingTime;
+  Bus.create({
+    bus_company_name: companyName,
+    bus_numbers: busNumbers,
+    bus_driver_name: busDriverName,
+    bus_driver_phone_number: busDriverPhoneNumber,
+    bus_departing_time: busDepartingTime,
+    bus_arriving_time: busArrivingTime,
+  })
+    .then(() => {
+      res.status(200).send('Bus Added!!!');
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
 
-// exports.getEmployeeList = (req, res) => {
-//   User.findAll({ where: { role: 2 } }).then((employeeInfos) => {
-//     const employees = [];
-//     employeeInfos.map((employeeInfo) => {
-//       const { id, name, email, role } = employeeInfo;
-//       const employee = {
-//         id,
-//         name,
-//         email,
-//         roles: ROLES[role - 1].toUpperCase(),
-//       };
-//       employees.push(employee);
-//     });
-//     res.status(200).send({ employees });
-//   });
-// };
+exports.getBusList = (req, res) => {
+  Bus.findAll()
+    .then((busInfos) => {
+      const busList = [];
+      busInfos.map((busInfo) => {
+        const {
+          bus_company_name,
+          bus_numbers,
+          bus_driver_name,
+          bus_driver_phone_number,
+          bus_departing_time,
+          bus_arriving_time,
+        } = busInfo;
+        const bus = {
+          bus_company_name,
+          bus_numbers,
+          bus_driver_name,
+          bus_driver_phone_number,
+          bus_departing_time,
+          bus_arriving_time,
+        };
+        busList.push(bus);
+      });
+      res.status(200).send({ busList });
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+};
 
-// exports.getCustomerList = (req, res) => {
-//   User.findAll({ where: { role: 3 } }).then((customerInfos) => {
-//     const customers = [];
-//     customerInfos.map((customerInfo) => {
-//       const { id, name, email, role } = customerInfo;
-//       const customer = {
-//         id,
-//         name,
-//         email,
-//         roles: ROLES[role - 1].toUpperCase(),
-//       };
-//       customers.push(customer);
-//     });
-//     res.status(200).send({ customers });
-//   });
-// };
-
-// exports.updateProfile = (req, res) => {
-//   User.update(
-//     {
-//       name: req.body.name,
-//       roles: 1,
-//     },
-//     { where: { email: req.body.email } }
-//   )
-//     .then(() => {
-//       res.status(200).send('update is success');
-//     })
-//     .catch((error) => {
-//       return res.status(500).send('update is unsuccessfull');
-//     });
-// };
-
-// exports.getProfile = (req, res) => {
-//   const { authorization } = req.headers;
-//   if (!authorization) {
-//     return res.status(400).send('Not authorization!');
-//   }
-
-//   const accessToken = authorization.split(' ')[1];
-//   const { userId } = jwt.verify(accessToken, JWT_SECRET);
-
-//   User.findOne({
-//     where: {
-//       id: userId,
-//     },
-//   })
-//     .then((userData) => {
-//       const user = {
-//         id: userData.id,
-//         name: userData.name,
-//         email: userData.email,
-//         role: ROLES[userData.role - 1].toUpperCase(),
-//       };
-//       res.status(200).send({ user });
-//     })
-//     .catch((err) => {
-//       res.status(500).send({ message: err.message });
-//     });
-// };
-
-// exports.addNewEmployee = (req, res) => {
-//   let name = req.body.name;
-//   let email = req.body.email;
-//   let password = req.body.password;
-//   let role = 2;
-//   User.create({
-//     name: name,
-//     email: email,
-//     password: bcrypt.hashSync(password, 8),
-//     role: role,
-//   })
-//     .then((userData) => {
-//       const user = {
-//         id: userData.id,
-//         name: userData.name,
-//         email: userData.email,
-//         role: ROLES[userData.role - 1].toUpperCase(),
-//       };
-//       res.status(200).send({ user });
-//     })
-//     .catch((err) => {
-//       res.status(500).send({ message: err.message });
-//     });
-// };
-
-// exports.addCustomer = (req, res) => {
-//   let name = req.body.name;
-//   let email = req.body.email;
-//   let password = req.body.password;
-//   let role = 3;
-//   User.create({
-//     name: name,
-//     email: email,
-//     password: bcrypt.hashSync(password, 8),
-//     role: role,
-//   })
-//     .then((userData) => {
-//       const user = {
-//         id: userData.id,
-//         name: userData.name,
-//         email: userData.email,
-//         role: ROLES[userData.role - 1].toUpperCase(),
-//       };
-//       res.status(200).send({ user });
-//     })
-//     .catch((err) => {
-//       res.status(500).send({ message: err.message });
-//     });
-// };
-
-// exports.deleteEmployee = (req, res) => {
-//   let employeeId = req.body.employeeId;
-//   User.destroy({
-//     where: {
-//       id: employeeId,
-//     },
-//   });
-//   res.status(200).send('success');
-// };
-
-// exports.deleteCustomer = (req, res) => {
-//   let customerId = req.body.customerId;
-//   User.destroy({
-//     where: {
-//       id: customerId,
-//     },
-//   });
-//   res.status(200).send('success');
-// };
-
-// exports.editCustomer = (req, res) => {
-//   let email = req.body.email;
-//   let name = req.body.name;
-//   let role = req.body.role;
-//   User.update(
-//     {
-//       name: name,
-//       role: role,
-//     },
-//     { where: { email: email } }
-//   )
-//     .then(() => {
-//       res.status(200).send('update is success');
-//     })
-//     .catch((error) => {
-//       return res.status(500).send('update is unsuccessfull');
-//     });
-// };
+exports.delBus = (req, res) => {
+  let busId = req.body.busId;
+  Bus.destroy({
+    where: {
+      id: busId,
+    },
+  })
+    .then(() => {
+      res.status(200).send('Bus Added!!!');
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+};
+exports.editBus = (req, res) => {
+  let companyName = req.body.companyName;
+  let busNumbers = req.body.busNumbers;
+  let busDriverName = req.body.busDriverName;
+  let busDriverPhoneNumber = req.body.busDriverPhoneNumber;
+  let busDepartingTime = req.body.busDepartingTime;
+  let busArrivingTime = req.body.busArrivingTime;
+  Bus.update(
+    {
+      bus_company_name: companyName,
+      bus_numbers: busNumbers,
+      bus_driver_name: busDriverName,
+      bus_driver_phone_number: busDriverPhoneNumber,
+      bus_departing_time: busDepartingTime,
+      bus_arriving_time: busArrivingTime,
+    },
+    { where: { bus_numbers: busNumbers } }
+  )
+    .then(() => {
+      res.status(200).send('update is success');
+    })
+    .catch((err) => {
+      return res.status(500).send(err);
+    });
+};
