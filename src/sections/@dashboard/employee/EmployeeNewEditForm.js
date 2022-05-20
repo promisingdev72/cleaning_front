@@ -72,7 +72,11 @@ export default function EmployeeNewEditForm({ isEdit, currentEmployee }) {
 
   const onSubmit = async (data) => {
     try {
-      await addEmployee({ data });
+      if (isEdit) {
+        data.id = currentEmployee.id;
+        await editEmployee({ data });
+        reset();
+      } else await addEmployee({ data });
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
       navigate(PATH_DASHBOARD.employee.employeelist);
     } catch (error) {

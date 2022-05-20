@@ -154,17 +154,24 @@ exports.addCustomer = (req, res) => {
 };
 
 exports.editEmployee = (req, res) => {
-  const { name, phoneNumber, employeeId } = req.body;
+  const { id, name, phoneNumber, garage } = req.body;
   User.update(
     {
       name: name,
       phoneNumber: phoneNumber,
     },
-    { where: { id: employeeId } }
+    { where: { id: id } }
   )
     .then((response) => {
-      if (response[0]) res.status(200).send({ message: 'update is success' });
-      else res.status(500).send({ message: 'update is failed' });
+      if (response[0]) {
+        Garage.update(
+          {
+            garage: garage,
+          },
+          { where: { userId: id } }
+        );
+        res.status(200).send({ message: 'update is success' });
+      } else res.status(500).send({ message: 'update is failed' });
     })
     .catch((err) => {
       return res.status(500).send({ message: err });

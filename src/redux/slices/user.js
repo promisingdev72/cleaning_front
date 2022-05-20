@@ -158,10 +158,7 @@ export function editCustomer({ data }) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      await axios.post('/api/account/editcustomer', data).then((response) => {
-        dispatch(slice.actions.editCustomerSuccess(response.data.users));
-        return response.status;
-      });
+      await axios.post('/api/account/editcustomer', data);
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
