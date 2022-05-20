@@ -10,7 +10,7 @@ import useSettings from '../../../../hooks/useSettings';
 
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
-import { getUsers } from '../../../../redux/slices/user';
+import { getCustomers } from '../../../../redux/slices/user';
 // _mock_
 import { _userList } from '../../../../_mock';
 // components
@@ -33,16 +33,16 @@ export default function CustomerCreate() {
   const isEdit = pathname.includes('edit');
 
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(getCustomers());
   }, [dispatch]);
   const [currentCustomer, setCurrentCustomer] = useState({});
-  const { users } = useSelector((state) => state.user);
+  const { customers } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (users) {
-      setCurrentCustomer(users.find((user) => paramCase(user.name) === name));
+    if (customers) {
+      setCurrentCustomer(customers.find((customers) => paramCase(customers.name) === name));
     }
-  }, [users]);
+  }, [customers]);
 
   return (
     <Page title="Create a new customer">

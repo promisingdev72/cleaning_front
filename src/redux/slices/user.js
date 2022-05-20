@@ -124,7 +124,7 @@ export function getCustomers() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/account/customers');
+      const response = await axios.get('/api/account/getcustomer');
       dispatch(slice.actions.getCustomerSuccess(response.data.customers));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -180,20 +180,18 @@ export function deleteCustomer(customerId) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      await axios.post('/api/account/deletecustomer', { customerId });
+      await axios.post('/api/account/delcustomer', { customerId });
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
+
 export function addCustomer({ data }) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      await axios.post('/api/account/addcustomer', data).then((response) => {
-        dispatch(slice.actions.getUserSuccess(response.data.users));
-        return response.status;
-      });
+      await axios.post('/api/account/addcustomer', data);
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

@@ -38,21 +38,6 @@ import { OrderTableToolbar, OrderTableRow } from '../../../sections/@dashboard/o
 
 // ----------------------------------------------------------------------
 
-const STATUS_OPTIONS = ['all', 'active', 'banned'];
-
-const ROLE_OPTIONS = [
-  'all',
-  'ux designer',
-  'full stack designer',
-  'backend developer',
-  'project manager',
-  'leader',
-  'ui designer',
-  'ui/ux designer',
-  'front end developer',
-  'full stack developer',
-];
-
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', align: 'left' },
   { id: 'company', label: 'Company', align: 'left' },
@@ -118,65 +103,39 @@ export default function OrderList() {
   };
 
   const handleEditRow = (id) => {
-    navigate(PATH_DASHBOARD.order.edit(paramCase(id)));
+    navigate(PATH_DASHBOARD.task.edit(paramCase(id)));
   };
 
   const dataFiltered = applySortFilter({
     tableData,
     comparator: getComparator(order, orderBy),
     filterName,
-    filterRole,
-    filterStatus,
   });
 
   const denseHeight = dense ? 52 : 72;
 
-  const isNotFound =
-    (!dataFiltered.length && !!filterName) ||
-    (!dataFiltered.length && !!filterRole) ||
-    (!dataFiltered.length && !!filterStatus);
+  const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title="Order List">
+    <Page title="Task List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Order List"
-          links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'OrderList' }]}
+          heading="Task List"
+          links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'TaksList' }]}
           action={
             <Button
               variant="contained"
               component={RouterLink}
-              to={PATH_DASHBOARD.order.new}
+              to={PATH_DASHBOARD.task.new}
               startIcon={<Iconify icon={'eva:plus-fill'} />}
             >
-              New Order
+              New Task
             </Button>
           }
         />
 
-        {/* <Card>
-          <Tabs
-            allowScrollButtonsMobile
-            variant="scrollable"
-            scrollButtons="auto"
-            value={filterStatus}
-            onChange={onChangeFilterStatus}
-            sx={{ px: 2, bgcolor: 'background.neutral' }}
-          >
-            {STATUS_OPTIONS.map((tab) => (
-              <Tab disableRipple key={tab} label={tab} value={tab} />
-            ))}
-          </Tabs>
-
-          <Divider />
-
-          <OrderTableToolbar
-            filterName={filterName}
-            filterRole={filterRole}
-            onFilterName={handleFilterName}
-            onFilterRole={handleFilterRole}
-            optionsRole={ROLE_OPTIONS}
-          />
+        <Card>
+          <OrderTableToolbar filterName={filterName} onFilterName={handleFilterName} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
@@ -254,7 +213,7 @@ export default function OrderList() {
               sx={{ px: 3, py: 1.5, top: 0, position: { md: 'absolute' } }}
             />
           </Box>
-        </Card> */}
+        </Card>
       </Container>
     </Page>
   );
@@ -262,7 +221,7 @@ export default function OrderList() {
 
 // ----------------------------------------------------------------------
 
-function applySortFilter({ tableData, comparator, filterName, filterStatus, filterRole }) {
+function applySortFilter({ tableData, comparator, filterName }) {
   const stabilizedThis = tableData.map((el, index) => [el, index]);
 
   stabilizedThis.sort((a, b) => {
@@ -275,14 +234,6 @@ function applySortFilter({ tableData, comparator, filterName, filterStatus, filt
 
   if (filterName) {
     tableData = tableData.filter((item) => item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1);
-  }
-
-  if (filterStatus !== 'all') {
-    tableData = tableData.filter((item) => item.status === filterStatus);
-  }
-
-  if (filterRole !== 'all') {
-    tableData = tableData.filter((item) => item.role === filterRole);
   }
 
   return tableData;

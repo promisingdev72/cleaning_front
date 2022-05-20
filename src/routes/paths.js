@@ -26,10 +26,10 @@ export const PATH_PAGE = {
 
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
-  order: {
-    orderlist: path(ROOTS_DASHBOARD, '/order'),
-    new: path(ROOTS_DASHBOARD, '/order/new'),
-    edit: (name) => path(ROOTS_DASHBOARD, `/order/${name}/edit`),
+  task: {
+    tasklist: path(ROOTS_DASHBOARD, '/task'),
+    new: path(ROOTS_DASHBOARD, '/task/new'),
+    edit: (name) => path(ROOTS_DASHBOARD, `/task/${name}/edit`),
   },
   bus: {
     buslist: path(ROOTS_DASHBOARD, '/bus'),

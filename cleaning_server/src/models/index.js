@@ -23,6 +23,7 @@ db.garage = require('./garage.model')(sequelize, Sequelize);
 db.driver = require('./driver.model')(sequelize, Sequelize);
 db.bus = require('./bus.model')(sequelize, Sequelize);
 db.order = require('./order.model')(sequelize, Sequelize);
+db.company = require('./company.model')(sequelize, Sequelize);
 
 // user vs role
 
@@ -39,13 +40,18 @@ db.role.belongsToMany(db.user, {
 
 // user vs garage
 
-db.garage.belongsTo(db.user, {
+db.user.hasMany(db.garage, {
   foreignKey: 'userId',
 });
 
-db.user.hasOne(db.garage, {
+db.garage.belongsTo(db.user);
+
+// user vs company
+
+db.user.hasMany(db.company, {
   foreignKey: 'userId',
 });
+db.company.belongsTo(db.user);
 
 // user vs driver
 

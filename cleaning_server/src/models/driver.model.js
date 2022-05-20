@@ -1,12 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
-  const Driver = sequelize.define("drivers", {
+  const Driver = sequelize.define('drivers', {
     userId: {
       type: Sequelize.INTEGER,
     },
     driverName: {
       type: Sequelize.STRING,
     },
-    driverPhone: {
+    driverPhoneNumber: {
       type: Sequelize.STRING,
     },
   });

@@ -41,9 +41,10 @@ import { CustomerTableToolbar, CustomerTableRow } from '../../../../sections/@da
 
 // ----------------------------------------------------------------------
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', align: 'left' },
-  { id: 'email', label: 'Email', align: 'left' },
-  { id: 'role', label: 'Role', align: 'left' },
+  { id: 'companyName', label: 'Company Name', align: 'left' },
+  { id: 'isCharge', label: 'Is Charge', align: 'left' },
+  { id: 'phoneNumber', label: 'Phone Number', align: 'left' },
+  { id: 'garage', label: 'Garage', align: 'left' },
   { id: '' },
 ];
 

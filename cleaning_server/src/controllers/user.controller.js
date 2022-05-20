@@ -6,6 +6,7 @@ const JWT_SECRET = config.secret;
 const JWT_EXPIRES_IN = 86400;
 const User = db.user;
 const Garage = db.garage;
+const Company = db.company;
 const { ROLES } = db;
 
 exports.getEmployees = (req, res) => {
@@ -35,21 +36,33 @@ async function getEmployeeData(employeeInfos) {
 }
 
 exports.getCustomers = (req, res) => {
-  User.findAll({ where: { roleId: 3 } }).then((customerInfos) => {
-    const customers = [];
-    customerInfos.map((customerInfo) => {
+  User.findAll({ where: { roleId: 3 } }).then(async (customerInfos) => {
+    const customers = await getCustomerData(customerInfos);
+    res.status(200).send({ customers });
+  });
+};
+
+async function getCustomerData(customerInfos) {
+  const asyncRes = await Promise.all(
+    customerInfos.map(async (customerInfo) => {
       const { id, name, phoneNumber, roleId } = customerInfo;
+      const garageData = await Garage.findOne({ where: { userId: id } });
+      const { garage } = garageData;
+      const companyData = await Company.findOne({ where: { userId: id } });
+      const { companyName } = companyData;
       const customer = {
         id,
         name,
         phoneNumber,
+        garage,
+        companyName,
         roleId: ROLES[roleId - 1].toUpperCase(),
       };
-      customers.push(customer);
-    });
-    res.status(200).send({ customers });
-  });
-};
+      return customer;
+    })
+  );
+  return asyncRes;
+}
 
 // exports.updateProfile = (req, res) => {
 //   User.update(
@@ -127,26 +140,35 @@ exports.addEmployee = (req, res) => {
 };
 
 exports.addCustomer = (req, res) => {
-  let userId = req.body.userId;
-  let company = req.body.company;
-  let name = req.body.name;
-  let phoneNumber = req.body.phoneNumber;
-  let password = 'password';
-  let roleId = 3;
+  const { companyName, inCharge, phoneNumber, garage } = req.body;
+  const password = 'password';
+  const roleId = 3;
   User.create({
-    name: name,
+    name: inCharge,
     phoneNumber: phoneNumber,
     password: bcrypt.hashSync(password, 8),
     roleId: roleId,
   })
     .then((customerInfo) => {
-      const customer = {
-        id: customerInfo.id,
-        name: customerInfo.name,
-        phoneNumber: customerInfo.phoneNumber,
-        roleId: ROLES[customerInfo.roleId - 1].toUpperCase(),
-      };
-      res.status(200).send({ customer });
+      Garage.create({
+        userId: customerInfo.id,
+        garage: garage,
+      }).then((garageInfo) => {
+        Company.create({
+          userId: customerInfo.id,
+          companyName: companyName,
+        }).then((companyInfo) => {
+          const customer = {
+            id: customerInfo.id,
+            companyName: companyInfo.companyName,
+            inCharge: customerInfo.name,
+            phoneNumber: customerInfo.phoneNumber,
+            garage: garageInfo.garage,
+            roleId: ROLES[customerInfo.roleId - 1].toUpperCase(),
+          };
+          res.status(200).send({ customer });
+        });
+      });
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });
@@ -179,18 +201,29 @@ exports.editEmployee = (req, res) => {
 };
 
 exports.editCustomer = (req, res) => {
-  let company = req.body.company;
-  let name = req.body.name;
-  let phoneNumber = req.body.phoneNumber;
-  let customerId = req.body.customerId;
+  const { companyName, inCharge, phoneNumber, garage, id } = req.body;
   User.update(
     {
-      name: name,
+      name: inCharge,
       phoneNumber: phoneNumber,
     },
-    { where: { id: customerId } }
+    { where: { id: id } }
   )
-    .then(() => {
+    .then((response) => {
+      if (response[0]) {
+        Garage.update(
+          {
+            garage: garage,
+          },
+          { where: { userId: id } }
+        );
+        Company.update(
+          {
+            companyName: companyName,
+          },
+          { where: { userId: id } }
+        );
+      }
       res.status(200).send('update is success');
     })
     .catch((error) => {

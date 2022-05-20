@@ -30,29 +30,24 @@ CustomerNewEditForm.propTypes = {
 
 export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
   const { editCustomer, addCustomer } = useCustomer();
-  const ROLES = ['ADMIN', 'EMPLOYEE', 'CUSTOMER'];
-  const ROLES_INIT = { ADMIN: 1, EMPLOYEE: 2, CUSTOMER: 3 };
-  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const NewCustomerSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    email: Yup.string().required('Email is required').email(),
-    password: !isEdit ? Yup.string().required('Password is required') : '',
-    role: Yup.string().required('Role is required'),
-    avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
+    companyName: Yup.string().required('Company name is required'),
+    inCharge: Yup.string().required('In Charge is required'),
+    phoneNumber: Yup.string().required('Phone number is required'),
+    garage: Yup.string().required('Garage is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      name: currentCustomer?.name || '',
-      email: currentCustomer?.email || '',
-      password: '',
-      avatarUrl: currentCustomer?.avatarUrl || '',
-      role: ROLES_INIT[currentCustomer?.roles] || '1',
+      companyName: currentCustomer?.companyName || '',
+      inCharge: currentCustomer?.name || '',
+      phoneNumber: currentCustomer?.phoneNumber || '',
+      garage: currentCustomer?.garage || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentCustomer]
@@ -84,10 +79,10 @@ export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
   const onSubmit = async (data) => {
     try {
       if (isEdit) {
+        data.id = currentCustomer.id;
         await editCustomer({ data });
         reset();
-      }
-      await addCustomer({ data });
+      } else await addCustomer({ data });
       reset();
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
       navigate(PATH_DASHBOARD.customer.customerlist);
@@ -96,65 +91,19 @@ export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
     }
   };
 
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
-
-      if (file) {
-        setValue(
-          'avatarUrl',
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        );
-      }
-    },
-    [setValue]
-  );
-
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={8} sx={{ margin: '0 auto' }}>
           <Card sx={{ p: 3 }}>
-            <Box
-              sx={{
-                display: 'grid',
-                columnGap: 2,
-                rowGap: 3,
-                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
-              }}
-            >
-              <RHFTextField name="name" label="Full Name" />
-              <RHFTextField name="email" label="Email Address" />
-              {isEdit && (
-                <RHFSelect name="role" label="Roles" placeholder="Roles">
-                  {ROLES.map((option, index) => (
-                    <option key={index} value={index + 1}>
-                      {option}
-                    </option>
-                  ))}
-                </RHFSelect>
-              )}
-              {!isEdit && (
-                <RHFTextField
-                  name="password"
-                  label="Password"
-                  type={showPassword ? 'text' : 'password'}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                          <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              )}
+            <Box>
+              <RHFTextField name="companyName" label="Company Name" sx={{ my: 2 }} />
+              <RHFTextField name="inCharge" label="In Charge" sx={{ my: 2 }} />
+              <RHFTextField name="phoneNumber" label="Phone Number" sx={{ my: 2 }} />
+              <RHFTextField name="garage" label="Garage" sx={{ my: 2 }} />
             </Box>
 
-            <Stack alignItems="flex-end" sx={{ mt: 3 }}>
+            <Stack alignItems="flex-end" sx={{ mt: 2 }}>
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
                 {!isEdit ? 'Create Customer' : 'Save Changes'}
               </LoadingButton>

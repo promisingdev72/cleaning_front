@@ -21,7 +21,7 @@ CustomerTableRow.propTypes = {
 export default function CustomerTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
   const theme = useTheme();
 
-  const { name, avatarUrl, email, roles } = row;
+  const { name, companyName, id, roleId, garage, phoneNumber } = row;
 
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -38,18 +38,11 @@ export default function CustomerTableRow({ row, selected, onEditRow, onSelectRow
       <TableCell padding="checkbox">
         <Checkbox checked={selected} onClick={onSelectRow} />
       </TableCell>
-
-      <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }} />
-        <Typography variant="subtitle2" noWrap>
-          {name}
-        </Typography>
-      </TableCell>
-
-      <TableCell align="left">{email}</TableCell>
-
+      <TableCell align="left">{companyName}</TableCell>
+      <TableCell align="left">{name}</TableCell>
+      <TableCell align="left">{phoneNumber}</TableCell>
       <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
-        {roles}
+        {garage}
       </TableCell>
 
       <TableCell align="right">

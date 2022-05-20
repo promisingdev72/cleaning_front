@@ -34,7 +34,7 @@ export default function OrderCreate() {
           heading={!isEdit ? 'Create a new order' : 'Edit order'}
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'Order', href: PATH_DASHBOARD.order.orderlist },
+            { name: 'Task', href: PATH_DASHBOARD.task.tasklist },
             { name: !isEdit ? 'New order' : capitalCase(name) },
           ]}
         />

@@ -53,12 +53,12 @@ export default function Router() {
       children: [
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
         {
-          path: 'order',
+          path: 'task',
           children: [
-            { element: <Navigate to="/dashboard/order/list" replace />, index: true },
-            { path: 'list', element: <Orders /> },
-            { path: 'new', element: <OrderCreate /> },
-            { path: ':name/edit', element: <OrderCreate /> },
+            { element: <Navigate to="/dashboard/task/list" replace />, index: true },
+            { path: 'list', element: <Tasks /> },
+            { path: 'new', element: <TaskCreate /> },
+            { path: ':name/edit', element: <TaskCreate /> },
           ],
         },
         {
@@ -124,9 +124,9 @@ const Login = Loadable(lazy(() => import('../pages/auth/Login')));
 
 const AccountSetting = Loadable(lazy(() => import('../pages/dashboard/user/UserAccount')));
 
-// Order
-const Orders = Loadable(lazy(() => import('../pages/dashboard/order/Orders')));
-const OrderCreate = Loadable(lazy(() => import('../pages/dashboard/order/OrderCreate')));
+// Task
+const Tasks = Loadable(lazy(() => import('../pages/dashboard/order/Orders')));
+const TaskCreate = Loadable(lazy(() => import('../pages/dashboard/order/OrderCreate')));
 // Bus
 const Buses = Loadable(lazy(() => import('../pages/dashboard/bus/Buses')));
 const BusCreate = Loadable(lazy(() => import('../pages/dashboard/bus/BusCreate')));
