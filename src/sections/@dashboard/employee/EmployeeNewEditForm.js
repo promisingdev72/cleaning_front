@@ -22,24 +22,22 @@ import { FormProvider, RHFTextField, RHFUploadAvatar } from '../../../components
 // ----------------------------------------------------------------------
 
 export default function EmployeeNewEditForm() {
-  const { addNewEmployee } = useEmployee();
+  const { addEmployee } = useEmployee();
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
 
   const NewEmployeeSchema = Yup.object().shape({
-    avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
     name: Yup.string().required('Name is required'),
-    email: Yup.string().required('Email is required').email(),
+    phoneNumber: Yup.string().required('Phone number is required'),
+    garage: Yup.string().required('Garage is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      avatarUrl: '',
       name: '',
-      email: '',
-      password: '',
+      phoneNumber: '',
+      garage: '',
     }),
     []
   );
@@ -58,7 +56,7 @@ export default function EmployeeNewEditForm() {
 
   const onSubmit = async (data) => {
     try {
-      await addNewEmployee({ data });
+      await addEmployee({ data });
       enqueueSnackbar('Sucess create new employee!');
       navigate(PATH_DASHBOARD.employee.employeelist);
     } catch (error) {
@@ -67,79 +65,19 @@ export default function EmployeeNewEditForm() {
     }
   };
 
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
-
-      if (file) {
-        setValue(
-          'avatarUrl',
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        );
-      }
-    },
-    [setValue]
-  );
-
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
-          <Card sx={{ py: 10, px: 3 }}>
-            <Box sx={{ mb: 5 }}>
-              <RHFUploadAvatar
-                name="avatarUrl"
-                accept="image/*"
-                maxSize={3145728}
-                onDrop={handleDrop}
-                helperText={
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      mt: 2,
-                      mx: 'auto',
-                      display: 'block',
-                      textAlign: 'center',
-                      color: 'text.secondary',
-                    }}
-                  >
-                    Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
-                  </Typography>
-                }
-              />
-            </Box>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={8} sx={{ margin: '0 auto' }}>
           <Card sx={{ p: 3 }}>
             <Box
               sx={{
-                display: 'grid',
-                columnGap: 2,
-                rowGap: 3,
-                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
+                my: 5,
               }}
             >
-              <RHFTextField name="name" label="Full Name" />
-              <RHFTextField name="email" label="Email Address" />
-              <RHFTextField
-                name="password"
-                label="Password"
-                type={showPassword ? 'text' : 'password'}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                        <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
+              <RHFTextField name="name" label="Employee Name" />
+              <RHFTextField name="phoneNumber" label="Phone Number" sx={{ my: 2 }} />
+              <RHFTextField name="garage" label="Garage" />
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>

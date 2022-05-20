@@ -39,8 +39,8 @@ import { EmployeeTableToolbar, EmployeeTableRow } from '../../../../sections/@da
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', align: 'left' },
-  { id: 'email', label: 'Email', align: 'left' },
-  { id: 'role', label: 'Role', align: 'left' },
+  { id: 'phonNumber', label: 'Phone Number', align: 'left' },
+  { id: 'garage', label: 'Garage', align: 'left' },
   { id: '' },
 ];
 

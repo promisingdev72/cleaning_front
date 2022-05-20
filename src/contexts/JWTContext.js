@@ -36,15 +36,6 @@ const handlers = {
     isAuthenticated: false,
     user: null,
   }),
-  REGISTER: (state, action) => {
-    const { user } = action.payload;
-
-    return {
-      ...state,
-      isAuthenticated: true,
-      user,
-    };
-  },
 };
 
 const reducer = (state, action) => (handlers[action.type] ? handlers[action.type](state, action) : state);
@@ -54,7 +45,6 @@ const AuthContext = createContext({
   method: 'jwt',
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
-  register: () => Promise.resolve(),
 });
 
 // ----------------------------------------------------------------------
@@ -74,7 +64,7 @@ function AuthProvider({ children }) {
         if (accessToken && isValidToken(accessToken)) {
           setSession(accessToken);
 
-          const response = await axios.get('/api/account/profile');
+          const response = await axios.get('/api/account/getprofile');
           const { user } = response.data;
           dispatch({
             type: 'INITIALIZE',
@@ -107,9 +97,9 @@ function AuthProvider({ children }) {
     initialize();
   }, []);
 
-  const login = async (email, password) => {
+  const login = async (userName, password) => {
     const response = await axios.post('/api/account/login', {
-      email,
+      userName,
       password,
     });
     const { accessToken, user } = response.data;
@@ -118,24 +108,6 @@ function AuthProvider({ children }) {
 
     dispatch({
       type: 'LOGIN',
-      payload: {
-        user,
-      },
-    });
-  };
-
-  const register = async (email, password, name) => {
-    const response = await axios.post('/api/account/register', {
-      email,
-      password,
-      name,
-    });
-    const { accessToken, user } = response.data;
-
-    localStorage.setItem('accessToken', accessToken);
-
-    dispatch({
-      type: 'REGISTER',
       payload: {
         user,
       },
@@ -154,7 +126,6 @@ function AuthProvider({ children }) {
         method: 'jwt',
         login,
         logout,
-        register,
       }}
     >
       {children}

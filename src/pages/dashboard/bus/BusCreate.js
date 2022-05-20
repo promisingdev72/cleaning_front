@@ -12,7 +12,7 @@ import { _userList } from '../../../_mock';
 import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 // sections
-import OrderNewEditForm from '../../../sections/@dashboard/order/OrderNewEditForm';
+import BusNewEditForm from '../../../sections/@dashboard/bus/BusNewEditForm';
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ export default function BusCreate() {
           ]}
         />
 
-        <OrderNewEditForm isEdit={isEdit} currentUser={currentUser} />
+        <BusNewEditForm isEdit={isEdit} currentUser={currentUser} />
       </Container>
     </Page>
   );

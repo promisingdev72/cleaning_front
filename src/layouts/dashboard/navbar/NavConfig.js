@@ -20,8 +20,8 @@ const navConfig = [
     items: [
       { title: 'Order List', path: PATH_DASHBOARD.order.orderlist, icon: ICONS.dashboard },
       { title: 'Manage Bus List', path: PATH_DASHBOARD.bus.buslist, icon: ICONS.dashboard },
-      { title: 'Employee List', path: PATH_DASHBOARD.employee.employeelist, icon: ICONS.user },
-      { title: 'Customer List', path: PATH_DASHBOARD.customer.customerlist, icon: ICONS.user },
+      { title: 'Employees', path: PATH_DASHBOARD.employee.employeelist, icon: ICONS.user },
+      { title: 'Customers', path: PATH_DASHBOARD.customer.customerlist, icon: ICONS.user },
     ],
   },
 ];

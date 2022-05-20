@@ -11,13 +11,13 @@ import { TableMoreMenu } from '../../../../components/table';
 EmployeeTableRow.propTypes = {
   row: PropTypes.object,
   selected: PropTypes.bool,
-  // onEditRow: PropTypes.func,
+  onEditRow: PropTypes.func,
   onSelectRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
 };
 
-export default function EmployeeTableRow({ row, selected, onSelectRow, onDeleteRow }) {
-  const { name, avatarUrl, email, roles } = row;
+export default function EmployeeTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
+  const { name, phoneNumber, garage } = row;
 
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -35,18 +35,9 @@ export default function EmployeeTableRow({ row, selected, onSelectRow, onDeleteR
         <Checkbox checked={selected} onClick={onSelectRow} />
       </TableCell>
 
-      <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }} />
-        <Typography variant="subtitle2" noWrap>
-          {name}
-        </Typography>
-      </TableCell>
-
-      <TableCell align="left">{email}</TableCell>
-
-      <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
-        {roles}
-      </TableCell>
+      <TableCell sx={{ textTransform: 'capitalize' }}>{name}</TableCell>
+      <TableCell sx={{ textTransform: 'capitalize' }}>{phoneNumber}</TableCell>
+      <TableCell sx={{ textTransform: 'capitalize' }}>{garage}</TableCell>
       <TableCell align="right">
         <TableMoreMenu
           open={openMenu}
@@ -63,6 +54,15 @@ export default function EmployeeTableRow({ row, selected, onSelectRow, onDeleteR
               >
                 <Iconify icon={'eva:trash-2-outline'} />
                 Delete
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  onEditRow();
+                  handleCloseMenu();
+                }}
+              >
+                <Iconify icon={'eva:edit-fill'} />
+                Edit
               </MenuItem>
             </>
           }

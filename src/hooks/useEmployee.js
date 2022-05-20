@@ -2,7 +2,7 @@
 import { useDispatch } from 'react-redux';
 
 // redux
-import { addNewEmployee, deleteEmployee } from '../redux/slices/user';
+import { addEmployee, deleteEmployee } from '../redux/slices/user';
 
 // ----------------------------------------------------------------------
 
@@ -11,8 +11,8 @@ export default function useEmployee() {
 
   return {
     // --------------  Creating part ---------------------
-    addNewEmployee: ({ data }) => {
-      dispatch(addNewEmployee({ data }));
+    addEmployee: ({ data }) => {
+      dispatch(addEmployee({ data }));
     },
 
     // --------------  Delete Employee ---------------------

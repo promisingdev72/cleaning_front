@@ -107,7 +107,8 @@ export function getEmployees() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/account/employees');
+      const response = await axios.get('/api/account/getemployee');
+      console.log(response);
       dispatch(slice.actions.getEmployeeSuccess(response.data.employees));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -127,14 +128,11 @@ export function getCustomers() {
   };
 }
 
-export function addNewEmployee({ data }) {
+export function addEmployee({ data }) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      await axios.post('/api/account/addnewemployee', data).then((response) => {
-        dispatch(slice.actions.getUserSuccess(response.data.users));
-        return response.status;
-      });
+      await axios.post('/api/account/addemployee', data);
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -145,7 +143,7 @@ export function deleteEmployee(employeeId) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      await axios.post('/api/account/deleteemployee', { employeeId });
+      await axios.post('/api/account/delemployee', { employeeId });
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

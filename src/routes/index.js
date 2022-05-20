@@ -39,19 +39,6 @@ export default function Router() {
             </GuestGuard>
           ),
         },
-        {
-          path: 'register',
-          element: (
-            <GuestGuard>
-              <Register />
-            </GuestGuard>
-          ),
-        },
-        { path: 'login-unprotected', element: <Login /> },
-        { path: 'register-unprotected', element: <Register /> },
-        { path: 'reset-password', element: <ResetPassword /> },
-        { path: 'new-password', element: <NewPassword /> },
-        { path: 'verify', element: <VerifyCode /> },
       ],
     },
 
@@ -101,7 +88,6 @@ export default function Router() {
             { path: ':name/edit', element: <CustomerCreate /> },
           ],
         },
-        { path: 'permission-denied', element: <PermissionDenied /> },
         {
           path: 'profile',
           element: <AccountSetting />,
@@ -131,10 +117,6 @@ export default function Router() {
 
 // AUTHENTICATION
 const Login = Loadable(lazy(() => import('../pages/auth/Login')));
-const Register = Loadable(lazy(() => import('../pages/auth/Register')));
-const ResetPassword = Loadable(lazy(() => import('../pages/auth/ResetPassword')));
-const NewPassword = Loadable(lazy(() => import('../pages/auth/NewPassword')));
-const VerifyCode = Loadable(lazy(() => import('../pages/auth/VerifyCode')));
 
 // DASHBOARD
 
@@ -154,9 +136,6 @@ const EmployeeCreate = Loadable(lazy(() => import('../pages/dashboard/user/emplo
 // Customer
 const Customers = Loadable(lazy(() => import('../pages/dashboard/user/customer/Customers')));
 const CustomerCreate = Loadable(lazy(() => import('../pages/dashboard/user/customer/CustomerCreate')));
-
-// TEST RENDER PAGE BY ROLE
-const PermissionDenied = Loadable(lazy(() => import('../pages/dashboard/PermissionDenied')));
 
 // MAIN
 const HomePage = Loadable(lazy(() => import('../pages/Home')));
