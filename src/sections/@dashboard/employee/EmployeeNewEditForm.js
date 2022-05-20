@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
@@ -21,8 +22,13 @@ import { FormProvider, RHFTextField, RHFUploadAvatar } from '../../../components
 
 // ----------------------------------------------------------------------
 
-export default function EmployeeNewEditForm() {
-  const { addEmployee } = useEmployee();
+EmployeeNewEditForm.propTypes = {
+  isEdit: PropTypes.bool,
+  currentEmployee: PropTypes.object,
+};
+
+export default function EmployeeNewEditForm({ isEdit, currentEmployee }) {
+  const { addEmployee, editEmployee } = useEmployee();
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -35,11 +41,11 @@ export default function EmployeeNewEditForm() {
 
   const defaultValues = useMemo(
     () => ({
-      name: '',
-      phoneNumber: '',
-      garage: '',
+      name: currentEmployee?.name || '',
+      phoneNumber: currentEmployee?.phoneNumber || '',
+      garage: currentEmployee?.garage || '',
     }),
-    []
+    [currentEmployee]
   );
 
   const methods = useForm({
@@ -54,10 +60,20 @@ export default function EmployeeNewEditForm() {
     formState: { isSubmitting },
   } = methods;
 
+  useEffect(() => {
+    if (isEdit && currentEmployee) {
+      reset(defaultValues);
+    }
+    if (!isEdit) {
+      reset(defaultValues);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEdit, currentEmployee]);
+
   const onSubmit = async (data) => {
     try {
       await addEmployee({ data });
-      enqueueSnackbar('Sucess create new employee!');
+      enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
       navigate(PATH_DASHBOARD.employee.employeelist);
     } catch (error) {
       console.error(error);
@@ -82,7 +98,7 @@ export default function EmployeeNewEditForm() {
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                {'Create Employee'}
+                {!isEdit ? 'Create Customer' : 'Save Changes'}
               </LoadingButton>
             </Stack>
           </Card>

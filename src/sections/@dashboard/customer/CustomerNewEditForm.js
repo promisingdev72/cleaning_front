@@ -29,7 +29,6 @@ CustomerNewEditForm.propTypes = {
 };
 
 export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
-  // const { addNewEmployee } = useCustomer();
   const { editCustomer, addCustomer } = useCustomer();
   const ROLES = ['ADMIN', 'EMPLOYEE', 'CUSTOMER'];
   const ROLES_INIT = { ADMIN: 1, EMPLOYEE: 2, CUSTOMER: 3 };
@@ -116,34 +115,6 @@ export default function CustomerNewEditForm({ isEdit, currentCustomer }) {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
-          <Card sx={{ py: 10, px: 3 }}>
-            <Box sx={{ mb: 5 }}>
-              <RHFUploadAvatar
-                name="avatarUrl"
-                accept="image/*"
-                maxSize={3145728}
-                onDrop={handleDrop}
-                helperText={
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      mt: 2,
-                      mx: 'auto',
-                      display: 'block',
-                      textAlign: 'center',
-                      color: 'text.secondary',
-                    }}
-                  >
-                    Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
-                  </Typography>
-                }
-              />
-            </Box>
-          </Card>
-        </Grid>
-
         <Grid item xs={12} md={8}>
           <Card sx={{ p: 3 }}>
             <Box

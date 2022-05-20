@@ -1,5 +1,6 @@
+import { paramCase } from 'change-case';
 import { useEffect, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 // @mui
 import {
@@ -76,6 +77,8 @@ export default function EmployeesList() {
 
   const { employees } = useSelector((state) => state.user);
 
+  const navigate = useNavigate();
+
   const [tableData, setTableData] = useState([]);
 
   const [filterName, setFilterName] = useState('');
@@ -104,6 +107,10 @@ export default function EmployeesList() {
     setTableData(deleteRows);
     deleteEmployee(selected);
     enqueueSnackbar('Success Deleted!');
+  };
+
+  const handleEditRow = (id) => {
+    navigate(PATH_DASHBOARD.employee.edit(paramCase(id)));
   };
 
   const dataFiltered = applySortFilter({
@@ -184,6 +191,7 @@ export default function EmployeesList() {
                       selected={selected.includes(row.id)}
                       onSelectRow={() => onSelectRow(row.id)}
                       onDeleteRow={() => handleDeleteRow(row.id)}
+                      onEditRow={() => handleEditRow(row.name)}
                     />
                   ))}
 

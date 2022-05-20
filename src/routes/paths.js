@@ -39,6 +39,7 @@ export const PATH_DASHBOARD = {
   employee: {
     employeelist: path(ROOTS_DASHBOARD, '/employee'),
     new: path(ROOTS_DASHBOARD, '/employee/new'),
+    edit: (name) => path(ROOTS_DASHBOARD, `/employee/${name}/edit`),
   },
   customer: {
     customerlist: path(ROOTS_DASHBOARD, '/customer'),

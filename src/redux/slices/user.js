@@ -46,13 +46,18 @@ const slice = createSlice({
       state.isLoading = false;
       state.employees = action.payload;
     },
+    // Edit Employee
+    editEmployeeSuccess(state, action) {
+      state.isLoading = false;
+      state.customers = action.payload;
+    },
 
     // GET CUSTOMERS
     getCustomerSuccess(state, action) {
       state.isLoading = false;
       state.customers = action.payload;
     },
-
+    // Edit Customer
     editCustomerSuccess(state, action) {
       state.isLoading = false;
       state.customers = action.payload;
@@ -108,7 +113,6 @@ export function getEmployees() {
     dispatch(slice.actions.startLoading());
     try {
       const response = await axios.get('/api/account/getemployee');
-      console.log(response);
       dispatch(slice.actions.getEmployeeSuccess(response.data.employees));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -158,6 +162,17 @@ export function editCustomer({ data }) {
         dispatch(slice.actions.editCustomerSuccess(response.data.users));
         return response.status;
       });
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function editEmployee({ data }) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      await axios.post('/api/account/editemployee', data);
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
