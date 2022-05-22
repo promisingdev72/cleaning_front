@@ -18,8 +18,9 @@ const navConfig = [
   {
     subheader: 'Dashboard',
     items: [
-      { title: 'Manage Bus List', path: PATH_DASHBOARD.bus.buslist, icon: ICONS.dashboard },
       { title: 'Tasks', path: PATH_DASHBOARD.task.tasklist, icon: ICONS.dashboard },
+      { title: 'Manage Bus List', path: PATH_DASHBOARD.bus.buslist, icon: ICONS.dashboard },
+      { title: 'Manage Driver List', path: PATH_DASHBOARD.driver.driverlist, icon: ICONS.user },
       { title: 'Employees', path: PATH_DASHBOARD.employee.employeelist, icon: ICONS.user },
       { title: 'Customers', path: PATH_DASHBOARD.customer.customerlist, icon: ICONS.user },
     ],

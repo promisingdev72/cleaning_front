@@ -1,8 +1,11 @@
 const express = require('express');
+// eslint-disable-next-line no-unused-vars
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
+
 const app = express();
 const bodyParser = require('body-parser');
+
 const corsOptions = {
   origin: 'http://localhost:8080',
 };
@@ -11,6 +14,7 @@ app.use(cors(corsOptions.origin));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// eslint-disable-next-line no-unused-vars
 const db = require('./models');
 
 // db.sequelize.sync({ force: true }).then(() => {

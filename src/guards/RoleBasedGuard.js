@@ -20,9 +20,7 @@ RoleBasedGuard.propTypes = {
 export default function RoleBasedGuard({ hasContent, roles, children }) {
   // Logic here to get current user role
   const { user } = useAuth();
-
-  // const currentRole = 'user';
-  const currentRole = user?.role; // admin;
+  const currentRole = user?.roleId; // admin;
 
   if (typeof roles !== 'undefined' && !roles.includes(currentRole)) {
     return hasContent ? (

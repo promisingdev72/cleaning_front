@@ -1,21 +1,33 @@
 module.exports = (sequelize, Sequelize) => {
   const Order = sequelize.define('orders', {
+    userId: {
+      type: Sequelize.STRING,
+    },
     busNumber: {
+      type: Sequelize.STRING,
+    },
+    busPlates: {
+      type: Sequelize.STRING,
+    },
+    busGasCode: {
       type: Sequelize.STRING,
     },
     program: {
       type: Sequelize.STRING,
     },
-    busDriverName: {
+    driverName: {
       type: Sequelize.STRING,
     },
-    employeeId: {
+    driverPhoneNumber: {
+      type: Sequelize.STRING,
+    },
+    startDate: {
       type: Sequelize.INTEGER,
     },
-    arival: {
+    endDate: {
       type: Sequelize.STRING,
     },
-    depart: {
+    AssignedEmployees: {
       type: Sequelize.STRING,
     },
     status: {

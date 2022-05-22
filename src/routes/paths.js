@@ -36,6 +36,11 @@ export const PATH_DASHBOARD = {
     new: path(ROOTS_DASHBOARD, '/bus/new'),
     edit: (name) => path(ROOTS_DASHBOARD, `/bus/${name}/edit`),
   },
+  driver: {
+    driverlist: path(ROOTS_DASHBOARD, '/driver'),
+    new: path(ROOTS_DASHBOARD, '/driver/new'),
+    edit: (name) => path(ROOTS_DASHBOARD, `/driver/${name}/edit`),
+  },
   employee: {
     employeelist: path(ROOTS_DASHBOARD, '/employee'),
     new: path(ROOTS_DASHBOARD, '/employee/new'),

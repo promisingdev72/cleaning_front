@@ -1,12 +1,9 @@
 import { paramCase } from 'change-case';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 // @mui
 import {
   Box,
-  Tab,
-  Tabs,
   Card,
   Table,
   Switch,
@@ -19,41 +16,33 @@ import {
   TablePagination,
   FormControlLabel,
 } from '@mui/material';
-
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
-// redux
-import { useDispatch, useSelector } from '../../../../redux/store';
-import { getCustomers } from '../../../../redux/slices/user';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
-import useTabs from '../../../../hooks/useTabs';
-import useCustomer from '../../../../hooks/useCustomer';
-import useSettings from '../../../../hooks/useSettings';
-import useTable, { getComparator, emptyRows } from '../../../../hooks/useTable';
+import useSettings from '../../../hooks/useSettings';
+import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
+// _mock_
+import { _userList } from '../../../_mock';
 // components
-import Page from '../../../../components/Page';
-import Iconify from '../../../../components/Iconify';
-import Scrollbar from '../../../../components/Scrollbar';
-import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
-import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../../components/table';
+import Page from '../../../components/Page';
+import Iconify from '../../../components/Iconify';
+import Scrollbar from '../../../components/Scrollbar';
+import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
 // sections
-import { CustomerTableToolbar, CustomerTableRow } from '../../../../sections/@dashboard/customer/list';
+import { DriverTableToolbar, DriverTableRow } from '../../../sections/@dashboard/driver/list';
 
 // ----------------------------------------------------------------------
+
 const TABLE_HEAD = [
-  { id: 'companyName', label: 'Company Name', align: 'left' },
-  { id: 'isCharge', label: 'Is Charge', align: 'left' },
-  { id: 'phoneNumber', label: 'Phone Number', align: 'left' },
-  { id: 'garage', label: 'Garage', align: 'left' },
+  { id: 'driverName', label: 'Driver Name', align: 'left' },
+  { id: 'driverPhoneNumber', label: 'Driver Phone Number', align: 'left' },
   { id: '' },
 ];
 
 // ----------------------------------------------------------------------
 
-export default function CustomerList() {
-  const { enqueueSnackbar } = useSnackbar();
-  const { deleteCustomer } = useCustomer();
-  const dispatch = useDispatch();
+export default function DriverList() {
   const {
     dense,
     page,
@@ -75,89 +64,63 @@ export default function CustomerList() {
 
   const { themeStretch } = useSettings();
 
-  useEffect(() => {
-    dispatch(getCustomers());
-  }, [dispatch]);
-
-  const { customers } = useSelector((state) => state.user);
-
   const navigate = useNavigate();
 
-  const [tableData, setTableData] = useState([]);
-
-  useEffect(() => {
-    if (customers) {
-      setTableData(customers);
-    }
-  }, [customers]);
+  const [tableData, setTableData] = useState(_userList);
 
   const [filterName, setFilterName] = useState('');
-
-  const [filterRole, setFilterRole] = useState('all');
 
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
     setPage(0);
   };
 
-  const handleFilterRole = (event) => {
-    setFilterRole(event.target.value);
-  };
-
   const handleDeleteRow = (id) => {
     const deleteRow = tableData.filter((row) => row.id !== id);
     setSelected([]);
     setTableData(deleteRow);
-    deleteCustomer(id);
-    enqueueSnackbar('Success Deleted!');
   };
 
   const handleDeleteRows = (selected) => {
     const deleteRows = tableData.filter((row) => !selected.includes(row.id));
     setSelected([]);
     setTableData(deleteRows);
-    deleteCustomer(selected);
-    enqueueSnackbar('Success Deleted!');
   };
 
   const handleEditRow = (id) => {
-    navigate(PATH_DASHBOARD.customer.edit(paramCase(id)));
+    navigate(PATH_DASHBOARD.driver.edit(paramCase(id)));
   };
 
   const dataFiltered = applySortFilter({
     tableData,
     comparator: getComparator(order, orderBy),
     filterName,
-    filterRole,
   });
 
   const denseHeight = dense ? 52 : 72;
 
-  const isNotFound = (!dataFiltered.length && !!filterName) || !dataFiltered.length;
+  const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title="Customer List">
+    <Page title="Driver List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Customer List"
-          links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'Customer', href: PATH_DASHBOARD.customer.customerlist },
-          ]}
+          heading="Driver List"
+          links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'DriverList' }]}
           action={
             <Button
               variant="contained"
               component={RouterLink}
-              to={PATH_DASHBOARD.customer.new}
+              to={PATH_DASHBOARD.driver.new}
               startIcon={<Iconify icon={'eva:plus-fill'} />}
             >
-              New Customer
+              New Driver
             </Button>
           }
         />
 
         <Card>
-          <CustomerTableToolbar filterName={filterName} onFilterName={handleFilterName} />
+          <DriverTableToolbar filterName={filterName} onFilterName={handleFilterName} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
@@ -200,7 +163,7 @@ export default function CustomerList() {
 
                 <TableBody>
                   {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                    <CustomerTableRow
+                    <DriverTableRow
                       key={row.id}
                       row={row}
                       selected={selected.includes(row.id)}
@@ -243,7 +206,7 @@ export default function CustomerList() {
 
 // ----------------------------------------------------------------------
 
-function applySortFilter({ tableData, comparator, filterName, filterStatus, filterRole }) {
+function applySortFilter({ tableData, comparator, filterName }) {
   const stabilizedThis = tableData.map((el, index) => [el, index]);
 
   stabilizedThis.sort((a, b) => {
@@ -256,14 +219,6 @@ function applySortFilter({ tableData, comparator, filterName, filterStatus, filt
 
   if (filterName) {
     tableData = tableData.filter((item) => item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1);
-  }
-
-  if (filterStatus !== 'all') {
-    tableData = tableData.filter((item) => item.status === filterStatus);
-  }
-
-  if (filterRole !== 'all') {
-    tableData = tableData.filter((item) => item.role === filterRole);
   }
 
   return tableData;

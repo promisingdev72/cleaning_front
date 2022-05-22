@@ -1,5 +1,5 @@
-const config = require('../config/db.config');
 const Sequelize = require('sequelize');
+const config = require('../config/db.config');
 
 const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
   host: config.HOST,
@@ -24,6 +24,13 @@ db.driver = require('./driver.model')(sequelize, Sequelize);
 db.bus = require('./bus.model')(sequelize, Sequelize);
 db.order = require('./order.model')(sequelize, Sequelize);
 db.company = require('./company.model')(sequelize, Sequelize);
+db.assEmployee = require('./assEmployee.model')(sequelize, Sequelize);
+
+// order vs assEmployee
+db.order.hasMany(db.assEmployee, {
+  foreignKey: 'orderId',
+});
+db.assEmployee.belongsTo(db.order);
 
 // user vs role
 

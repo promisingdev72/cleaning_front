@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import { List, Box, ListSubheader } from '@mui/material';
 // hooks
 import useLocales from '../../../hooks/useLocales';
+import useAuth from '../../../hooks/useAuth';
 //
 import { NavListRoot } from './NavList';
 
@@ -31,6 +32,11 @@ NavSectionVertical.propTypes = {
 
 export default function NavSectionVertical({ navConfig, isCollapse = false, ...other }) {
   const { translate } = useLocales();
+  const { user } = useAuth();
+
+  console.log('user', user);
+
+  console.log(navConfig);
 
   return (
     <Box {...other}>
@@ -46,11 +52,22 @@ export default function NavSectionVertical({ navConfig, isCollapse = false, ...o
             {translate(group.subheader)}
           </ListSubheaderStyle>
 
-          {group.items.map((list) => (
-            <NavListRoot key={list.title + list.path} list={list} isCollapse={isCollapse} />
-          ))}
+          {group.items.map((list) => {
+            if (user.roleId === 'ADMIN') {
+              if (list.title === 'Tasks' || list.title === 'Employees' || list.title === 'Customers')
+                return <NavListRoot key={list.title + list.path} list={list} isCollapse={isCollapse} />;
+            } else if (user.roleId === 'CUSTOMER') {
+              if (list.title === 'Manage Bus List' || list.title === 'Manage Driver List' || list.title === 'Tasks')
+                return <NavListRoot key={list.title + list.path} list={list} isCollapse={isCollapse} />;
+            }
+            return null;
+          })}
         </List>
       ))}
     </Box>
   );
 }
+
+// {user.roleId === "ADMIN" && (
+//   {list.title !== "Manage Bus List" && <NavListRoot key={list.title + list.path} list={list} isCollapse={isCollapse} />}
+// )}

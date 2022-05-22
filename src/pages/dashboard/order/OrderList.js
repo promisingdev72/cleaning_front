@@ -1,5 +1,5 @@
 import { paramCase } from 'change-case';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // @mui
 import {
@@ -21,6 +21,9 @@ import {
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
+// redux
+import { useDispatch, useSelector } from '../../../redux/store';
+import { getAllOrders } from '../../../redux/slices/order';
 // hooks
 import useTabs from '../../../hooks/useTabs';
 import useSettings from '../../../hooks/useSettings';
@@ -33,16 +36,22 @@ import Iconify from '../../../components/Iconify';
 import Scrollbar from '../../../components/Scrollbar';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
+import SimpleDialog from '../../../components/SimpleDialog';
+
 // sections
 import { OrderTableToolbar, OrderTableRow } from '../../../sections/@dashboard/order/list';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', align: 'left' },
-  { id: 'company', label: 'Company', align: 'left' },
-  { id: 'role', label: 'Role', align: 'left' },
-  { id: 'isVerified', label: 'Verified', align: 'center' },
+  { id: 'busNumber', label: 'Bus Number', align: 'left' },
+  { id: 'busPlates', label: 'Bus Plates', align: 'left' },
+  { id: 'busGasCode', label: 'Bus Gas Code', align: 'left' },
+  { id: 'driverName', label: 'Driver Name', align: 'left' },
+  { id: 'driverPhoneNuber', label: 'Driver Phone Number', align: 'left' },
+  { id: 'startDate', label: 'Start', align: 'left' },
+  { id: 'endDate', label: 'End', align: 'left' },
+  { id: 'assginEmployees', label: 'Assigned Employees', align: 'left' },
   { id: 'status', label: 'Status', align: 'left' },
   { id: '' },
 ];
@@ -71,15 +80,27 @@ export default function OrderList() {
 
   const { themeStretch } = useSettings();
 
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [tableData, setTableData] = useState(_userList);
+  useEffect(() => {
+    dispatch(getAllOrders());
+  }, [dispatch]);
+
+  const { orders } = useSelector((state) => state.order);
+
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(() => {
+    if (orders) {
+      setTableData(orders);
+    }
+  }, [orders]);
+
+  const navigate = useNavigate();
 
   const [filterName, setFilterName] = useState('');
 
   const [filterRole, setFilterRole] = useState('all');
-
-  const { currentTab: filterStatus, onChangeTab: onChangeFilterStatus } = useTabs('all');
 
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
@@ -112,6 +133,16 @@ export default function OrderList() {
     filterName,
   });
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const denseHeight = dense ? 52 : 72;
 
   const isNotFound = !dataFiltered.length && !!filterName;
@@ -122,16 +153,16 @@ export default function OrderList() {
         <HeaderBreadcrumbs
           heading="Task List"
           links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'TaksList' }]}
-          action={
-            <Button
-              variant="contained"
-              component={RouterLink}
-              to={PATH_DASHBOARD.task.new}
-              startIcon={<Iconify icon={'eva:plus-fill'} />}
-            >
-              New Task
-            </Button>
-          }
+          // action={
+          // <Button
+          //   variant="contained"
+          //   component={RouterLink}
+          //   to={PATH_DASHBOARD.task.new}
+          //   startIcon={<Iconify icon={'eva:plus-fill'} />}
+          // >
+          //   New Task
+          // </Button>
+          // }
         />
 
         <Card>
@@ -183,6 +214,7 @@ export default function OrderList() {
                       row={row}
                       selected={selected.includes(row.id)}
                       onSelectRow={() => onSelectRow(row.id)}
+                      onAssignRow={() => handleClickOpen()}
                       onDeleteRow={() => handleDeleteRow(row.id)}
                       onEditRow={() => handleEditRow(row.name)}
                     />
@@ -215,6 +247,7 @@ export default function OrderList() {
           </Box>
         </Card>
       </Container>
+      <SimpleDialog open={open} onClose={handleClose} />
     </Page>
   );
 }

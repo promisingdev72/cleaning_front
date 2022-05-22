@@ -7,7 +7,7 @@ import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // guards
 import GuestGuard from '../guards/GuestGuard';
 import AuthGuard from '../guards/AuthGuard';
-// import RoleBasedGuard from '../guards/RoleBasedGuard';
+import RoleBasedGuard from '../guards/RoleBasedGuard';
 // config
 import { PATH_AFTER_LOGIN } from '../config';
 // components
@@ -27,6 +27,10 @@ const Loadable = (Component) => (props) => {
 };
 
 export default function Router() {
+  const role1 = ['ADMIN'];
+  const role2 = ['EMPLOYEE'];
+  const role3 = ['CUSTOMER'];
+  const role4 = ['ADMIN', 'EMPLOYEE', 'CUSTOMER'];
   return useRoutes([
     {
       path: 'auth',
@@ -41,7 +45,6 @@ export default function Router() {
         },
       ],
     },
-
     // Dashboard Routes
     {
       path: 'dashboard',
@@ -56,36 +59,150 @@ export default function Router() {
           path: 'task',
           children: [
             { element: <Navigate to="/dashboard/task/list" replace />, index: true },
-            { path: 'list', element: <Tasks /> },
-            { path: 'new', element: <TaskCreate /> },
-            { path: ':name/edit', element: <TaskCreate /> },
+            {
+              path: 'list',
+              element: (
+                <RoleBasedGuard roles={role4} hasContent>
+                  <Tasks />
+                </RoleBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <RoleBasedGuard roles={role4} hasContent>
+                  <TaskCreate />
+                </RoleBasedGuard>
+              ),
+            },
+            {
+              path: ':name/edit',
+              element: (
+                <RoleBasedGuard roles={role4} hasContent>
+                  <TaskCreate />
+                </RoleBasedGuard>
+              ),
+            },
           ],
         },
         {
           path: 'bus',
           children: [
             { element: <Navigate to="/dashboard/bus/list" replace />, index: true },
-            { path: 'list', element: <Buses /> },
-            { path: 'new', element: <BusCreate /> },
-            { path: ':name/edit', element: <BusCreate /> },
+            {
+              path: 'list',
+              element: (
+                <RoleBasedGuard roles={role3} hasContent>
+                  <Buses />
+                </RoleBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <RoleBasedGuard roles={role3} hasContent>
+                  <BusCreate />
+                </RoleBasedGuard>
+              ),
+            },
+            {
+              path: ':name/edit',
+              element: (
+                <RoleBasedGuard roles={role3} hasContent>
+                  <BusCreate />{' '}
+                </RoleBasedGuard>
+              ),
+            },
+          ],
+        },
+        {
+          path: 'driver',
+          children: [
+            { element: <Navigate to="/dashboard/driver/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <RoleBasedGuard roles={role3} hasContent>
+                  <Drivers />
+                </RoleBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <RoleBasedGuard roles={role3} hasContent>
+                  <DriverCreate />
+                </RoleBasedGuard>
+              ),
+            },
+            {
+              path: ':name/edit',
+              element: (
+                <RoleBasedGuard roles={role3} hasContent>
+                  <DriverCreate />
+                </RoleBasedGuard>
+              ),
+            },
           ],
         },
         {
           path: 'employee',
           children: [
             { element: <Navigate to="/dashboard/employee/list" replace />, index: true },
-            { path: 'list', element: <Employees /> },
-            { path: 'new', element: <EmployeeCreate /> },
-            { path: ':name/edit', element: <EmployeeCreate /> },
+            {
+              path: 'list',
+              element: (
+                <RoleBasedGuard roles={role1} hasContent>
+                  <Employees />
+                </RoleBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <RoleBasedGuard roles={role1} hasContent>
+                  <EmployeeCreate />
+                </RoleBasedGuard>
+              ),
+            },
+            {
+              path: ':name/edit',
+              element: (
+                <RoleBasedGuard roles={role1} hasContent>
+                  <EmployeeCreate />
+                </RoleBasedGuard>
+              ),
+            },
           ],
         },
         {
           path: 'customer',
           children: [
             { element: <Navigate to="/dashboard/customer/list" replace />, index: true },
-            { path: 'list', element: <Customers /> },
-            { path: 'new', element: <CustomerCreate /> },
-            { path: ':name/edit', element: <CustomerCreate /> },
+            {
+              path: 'list',
+              element: (
+                <RoleBasedGuard roles={role1} hasContent>
+                  <Customers />
+                </RoleBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <RoleBasedGuard roles={role1} hasContent>
+                  <CustomerCreate />
+                </RoleBasedGuard>
+              ),
+            },
+            {
+              path: ':name/edit',
+              element: (
+                <RoleBasedGuard roles={role1} hasContent>
+                  <CustomerCreate />{' '}
+                </RoleBasedGuard>
+              ),
+            },
           ],
         },
         {
@@ -127,12 +244,19 @@ const AccountSetting = Loadable(lazy(() => import('../pages/dashboard/user/UserA
 // Task
 const Tasks = Loadable(lazy(() => import('../pages/dashboard/order/Orders')));
 const TaskCreate = Loadable(lazy(() => import('../pages/dashboard/order/OrderCreate')));
+
 // Bus
 const Buses = Loadable(lazy(() => import('../pages/dashboard/bus/Buses')));
 const BusCreate = Loadable(lazy(() => import('../pages/dashboard/bus/BusCreate')));
+
+// Driver
+const Drivers = Loadable(lazy(() => import('../pages/dashboard/driver/Drivers')));
+const DriverCreate = Loadable(lazy(() => import('../pages/dashboard/driver/DriverCreate')));
+
 // Employee
 const Employees = Loadable(lazy(() => import('../pages/dashboard/user/employee/Employees')));
 const EmployeeCreate = Loadable(lazy(() => import('../pages/dashboard/user/employee/EmployeeCreate')));
+
 // Customer
 const Customers = Loadable(lazy(() => import('../pages/dashboard/user/customer/Customers')));
 const CustomerCreate = Loadable(lazy(() => import('../pages/dashboard/user/customer/CustomerCreate')));

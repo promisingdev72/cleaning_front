@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import storage from 'redux-persist/lib/storage';
 // slices
-// import orderReducer from './slices/order';
+import orderReducer from './slices/order';
 import userReducer from './slices/user';
 
 // ----------------------------------------------------------------------
@@ -14,7 +14,7 @@ const rootPersistConfig = {
 };
 
 const rootReducer = combineReducers({
-  // order: orderReducer,
+  order: orderReducer,
   user: userReducer,
 });
 

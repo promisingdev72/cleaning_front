@@ -67,7 +67,7 @@ const slice = createSlice({
       const deleteEmployee = filter(state.employees, (employees) => employees.id !== action.payload);
       state.employees = deleteEmployee;
     },
-
+    // DELETE Customers
     deleteCustomer(state, action) {
       const deleteCustomer = filter(state.customers, (customers) => customers.id !== action.payload);
       state.customers = deleteCustomer;

@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require('../models');
 const Order = db.order;
 
 exports.addOrder = (req, res) => {
@@ -19,40 +19,49 @@ exports.addOrder = (req, res) => {
     status: status,
   })
     .then(() => {
-      res.status(200).send({ message: "Order Added!" });
+      res.status(200).send({ message: 'Order Added!' });
     })
     .catch((err) => {
       res.status(500).send({ message: err });
     });
 };
 
-exports.getOrders = (req, res) => {
-  let userId = req.body.userId;
-  Order.findAll({ where: { userId: userId } })
+exports.getAllOrders = (req, res) => {
+  Order.findAll()
     .then((orderInfos) => {
-      const orderList = [];
+      const orders = [];
       orderInfos.map((orderInfo) => {
         const {
-          busName,
+          id,
+          busNumber,
+          busPlates,
+          busGasCode,
           program,
-          busDriverName,
-          employeeId,
-          arival,
-          depart,
+          driverName,
+          driverPhoneNumber,
+          startDate,
+          endDate,
+          AssignedEmployees,
           status,
         } = orderInfo;
+
         const order = {
-          busName,
+          id,
+          busNumber,
+          busPlates,
+          busGasCode,
           program,
-          busDriverName,
-          employeeId,
-          arival,
-          depart,
+          driverName,
+          driverPhoneNumber,
+          startDate,
+          endDate,
+          AssignedEmployees,
           status,
         };
-        orderList.push(order);
+
+        orders.push(order);
       });
-      res.status(200).send({ orderList });
+      res.status(200).send({ orders });
     })
     .catch((err) => {
       res.status(500).send({ message: err });

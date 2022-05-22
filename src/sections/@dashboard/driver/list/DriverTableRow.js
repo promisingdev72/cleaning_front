@@ -2,39 +2,25 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Avatar, Checkbox, TableRow, TableCell, Typography, MenuItem } from '@mui/material';
+import { Checkbox, TableRow, TableCell, MenuItem } from '@mui/material';
 // components
-import Label from '../../../../components/Label';
 import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 
 // ----------------------------------------------------------------------
 
-OrderTableRow.propTypes = {
+DriverTableRow.propTypes = {
   row: PropTypes.object,
   selected: PropTypes.bool,
   onEditRow: PropTypes.func,
-  onAssignRow: PropTypes.func,
   onSelectRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
 };
 
-export default function OrderTableRow({ row, selected, onEditRow, onAssignRow, onSelectRow, onDeleteRow }) {
+export default function DriverTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
   const theme = useTheme();
 
-  const {
-    id,
-    AssignedEmployees,
-    busGasCode,
-    busNumber,
-    busPlates,
-    driverName,
-    driverPhoneNumber,
-    endDate,
-    program,
-    startDate,
-    status,
-  } = row;
+  const { driverName, driverPhoneNumber } = row;
 
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -51,25 +37,8 @@ export default function OrderTableRow({ row, selected, onEditRow, onAssignRow, o
       <TableCell padding="checkbox">
         <Checkbox checked={selected} onClick={onSelectRow} />
       </TableCell>
-
-      <TableCell align="left">{busNumber}</TableCell>
-      <TableCell align="left">{busPlates}</TableCell>
-      <TableCell align="left">{busGasCode}</TableCell>
       <TableCell align="left">{driverName}</TableCell>
       <TableCell align="left">{driverPhoneNumber}</TableCell>
-      <TableCell align="left">{startDate}</TableCell>
-      <TableCell align="left">{endDate}</TableCell>
-      <TableCell align="left">{AssignedEmployees !== '' ? AssignedEmployees : 'Not Yet'}</TableCell>
-      <TableCell align="left">
-        <Label
-          variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-          color={(status === 'banned' && 'error') || 'success'}
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {status}
-        </Label>
-      </TableCell>
-
       <TableCell align="right">
         <TableMoreMenu
           open={openMenu}
@@ -95,15 +64,6 @@ export default function OrderTableRow({ row, selected, onEditRow, onAssignRow, o
               >
                 <Iconify icon={'eva:edit-fill'} />
                 Edit
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  onAssignRow();
-                  handleCloseMenu();
-                }}
-              >
-                <Iconify icon={'clarity:assign-user-solid'} />
-                Assign
               </MenuItem>
             </>
           }
