@@ -1,22 +1,23 @@
 const db = require('../models');
+
 const Order = db.order;
 
 exports.addOrder = (req, res) => {
-  let busName = req.body.busName;
-  let program = req.body.program;
-  let busDriverName = req.body.busDriverName;
-  let employeeId = req.body.employeeId;
-  let arival = req.body.arival;
-  let depart = req.body.depart;
-  let status = req.body.status;
+  const { busName } = req.body;
+  const { program } = req.body;
+  const { busDriverName } = req.body;
+  const { employeeId } = req.body;
+  const { arival } = req.body;
+  const { depart } = req.body;
+  const { status } = req.body;
   Order.create({
-    busName: busName,
-    program: program,
-    busDriverName: busDriverName,
-    employeeId: employeeId,
-    arival: arival,
-    depart: depart,
-    status: status,
+    busName,
+    program,
+    busDriverName,
+    employeeId,
+    arival,
+    depart,
+    status,
   })
     .then(() => {
       res.status(200).send({ message: 'Order Added!' });
@@ -30,6 +31,7 @@ exports.getAllOrders = (req, res) => {
   Order.findAll()
     .then((orderInfos) => {
       const orders = [];
+      // eslint-disable-next-line array-callback-return
       orderInfos.map((orderInfo) => {
         const {
           id,

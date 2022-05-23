@@ -25,11 +25,8 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 import { useDispatch, useSelector } from '../../../redux/store';
 import { getAllOrders } from '../../../redux/slices/order';
 // hooks
-import useTabs from '../../../hooks/useTabs';
 import useSettings from '../../../hooks/useSettings';
 import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
-// _mock_
-import { _userList } from '../../../_mock';
 // components
 import Page from '../../../components/Page';
 import Iconify from '../../../components/Iconify';

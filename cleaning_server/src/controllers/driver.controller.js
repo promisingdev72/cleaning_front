@@ -1,17 +1,18 @@
-const db = require("../models");
+const db = require('../models');
+
 const Driver = db.bus;
 
 exports.addDriver = (req, res) => {
-  let userId = req.body.userId;
-  let driverName = req.body.driverName;
-  let driverPhoneNumber = req.body.driverPhoneNumber;
+  const { userId } = req.body;
+  const { driverName } = req.body;
+  const { driverPhoneNumber } = req.body;
   Driver.create({
-    userId: userId,
+    userId,
     driver_name: driverName,
     driver_phone: driverPhoneNumber,
   })
     .then(() => {
-      res.status(200).send({ message: "Driver Added!" });
+      res.status(200).send({ message: 'Driver Added!' });
     })
     .catch((err) => {
       res.status(500).send({ message: err });
@@ -19,28 +20,30 @@ exports.addDriver = (req, res) => {
 };
 
 exports.getDrivers = (req, res) => {
-  let userId = req.body.userId;
-  Driver.findAll({ where: { userId: userId } })
-    .then((busInfos) => {
-      const driverList = [];
-      busInfos.map((busInfo) => {
-        const { driver_name, driver_phone } = busInfo;
-        const driver = {
-          driver_name,
-          driver_phone,
-        };
-        driverList.push(driver);
-      });
-      res.status(200).send({ driverList });
-    })
-    .catch((err) => {
-      res.status(500).send({ message: err });
-    });
+  const { customerId } = req.body;
+
+  console.log('customerId:', customerId);
+  // Driver.findAll({ where: { userId } })
+  //   .then((busInfos) => {
+  //     const driverList = [];
+  //     busInfos.map((busInfo) => {
+  //       const { driver_name, driver_phone } = busInfo;
+  //       const driver = {
+  //         driver_name,
+  //         driver_phone,
+  //       };
+  //       driverList.push(driver);
+  //     });
+  //     res.status(200).send({ driverList });
+  //   })
+  //   .catch((err) => {
+  //     res.status(500).send({ message: err });
+  //   });
 };
 
 exports.editDriver = (req, res) => {
-  let driverName = req.body.driverName;
-  let driverPhoneNumber = req.body.driverPhoneNumber;
+  const { driverName } = req.body;
+  const { driverPhoneNumber } = req.body;
   Driver.update(
     {
       driver_name: driverName,
@@ -49,22 +52,20 @@ exports.editDriver = (req, res) => {
     { where: { driver_name: driverName } }
   )
     .then(() => {
-      res.status(200).send({ message: "Update is success" });
+      res.status(200).send({ message: 'Update is success' });
     })
-    .catch((err) => {
-      return res.status(500).send({ message: err });
-    });
+    .catch((err) => res.status(500).send({ message: err }));
 };
 
 exports.delDriver = (req, res) => {
-  let driverId = req.body.driverId;
+  const { driverId } = req.body;
   Driver.destroy({
     where: {
       id: driverId,
     },
   })
     .then(() => {
-      res.status(200).send({ message: "Driver Deleted!" });
+      res.status(200).send({ message: 'Driver Deleted!' });
     })
     .catch((err) => {
       res.status(500).send({ message: err });

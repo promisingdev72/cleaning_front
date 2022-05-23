@@ -1,5 +1,5 @@
 import { paramCase } from 'change-case';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // @mui
 import {
@@ -21,8 +21,7 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
 import useSettings from '../../../hooks/useSettings';
 import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
-// _mock_
-import { _userList } from '../../../_mock';
+import useAuth from '../../../hooks/useAuth';
 // components
 import Page from '../../../components/Page';
 import Iconify from '../../../components/Iconify';
@@ -31,6 +30,10 @@ import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
 // sections
 import { DriverTableToolbar, DriverTableRow } from '../../../sections/@dashboard/driver/list';
+// redux
+import { useDispatch, useSelector } from '../../../redux/store';
+// eslint-disable-next-line import/extensions
+import { getDrivers } from '../../../redux/slices/driver';
 
 // ----------------------------------------------------------------------
 
@@ -66,7 +69,24 @@ export default function DriverList() {
 
   const navigate = useNavigate();
 
-  const [tableData, setTableData] = useState(_userList);
+  const { user } = useAuth();
+
+  const [tableData, setTableData] = useState([]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const customerId = user.id;
+    dispatch(getDrivers(customerId));
+  }, [dispatch]);
+
+  const { drivers } = useSelector((state) => state.driver);
+
+  useEffect(() => {
+    if (drivers) {
+      setTableData(drivers);
+    }
+  }, [drivers]);
 
   const [filterName, setFilterName] = useState('');
 
