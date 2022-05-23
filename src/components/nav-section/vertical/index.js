@@ -34,8 +34,6 @@ export default function NavSectionVertical({ navConfig, isCollapse = false, ...o
   const { translate } = useLocales();
   const { user } = useAuth();
 
-  console.log('user', user);
-
   return (
     <Box {...other}>
       {navConfig.map((group) => (
@@ -56,6 +54,9 @@ export default function NavSectionVertical({ navConfig, isCollapse = false, ...o
                 return <NavListRoot key={list.title + list.path} list={list} isCollapse={isCollapse} />;
             } else if (user.roleId === 'CUSTOMER') {
               if (list.title === 'Manage Bus List' || list.title === 'Manage Driver List' || list.title === 'Tasks')
+                return <NavListRoot key={list.title + list.path} list={list} isCollapse={isCollapse} />;
+            } else if (user.roleId === 'EMPLOYEE') {
+              if (list.title === 'Tasks')
                 return <NavListRoot key={list.title + list.path} list={list} isCollapse={isCollapse} />;
             }
             return null;
