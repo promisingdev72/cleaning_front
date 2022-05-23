@@ -1,15 +1,14 @@
 const db = require('../models');
 
-const Driver = db.bus;
+const Driver = db.driver;
 
 exports.addDriver = (req, res) => {
-  const { userId } = req.body;
-  const { driverName } = req.body;
-  const { driverPhoneNumber } = req.body;
+  const { customerId, driverName, driverPhoneNumber } = req.body;
+
   Driver.create({
-    userId,
-    driver_name: driverName,
-    driver_phone: driverPhoneNumber,
+    userId: customerId,
+    driverName,
+    driverPhoneNumber,
   })
     .then(() => {
       res.status(200).send({ message: 'Driver Added!' });

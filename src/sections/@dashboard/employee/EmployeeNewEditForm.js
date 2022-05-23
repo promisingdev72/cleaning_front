@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
@@ -8,17 +8,14 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Typography, InputAdornment, IconButton } from '@mui/material';
+import { Box, Card, Grid, Stack } from '@mui/material';
 // Hook
 import useEmployee from '../../../hooks/useEmployee';
 
-// utils
-import { fData } from '../../../utils/formatNumber';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
-import Iconify from '../../../components/Iconify';
-import { FormProvider, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
+import { FormProvider, RHFTextField } from '../../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -55,7 +52,6 @@ export default function EmployeeNewEditForm({ isEdit, currentEmployee }) {
 
   const {
     reset,
-    setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;

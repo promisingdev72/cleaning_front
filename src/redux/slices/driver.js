@@ -34,12 +34,44 @@ const slice = createSlice({
 export default slice.reducer;
 
 export function getDrivers(customerId) {
-  console.log('here is redux', customerId);
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
       const response = await axios.get('/api/account/getdriver', { customerId });
       dispatch(slice.actions.getDriverSuccess(response.data.drivers));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function addDriver({ data }) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      await axios.post('/api/account/adddriver', data);
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function deleteDriver(employeeId) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      await axios.post('/api/account/delemployee', { employeeId });
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function editDriver({ data }) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      await axios.post('/api/account/editcustomer', data);
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

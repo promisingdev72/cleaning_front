@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 // @mui
-import { useTheme } from '@mui/material/styles';
 import { Checkbox, TableRow, TableCell, MenuItem } from '@mui/material';
 // components
 import Iconify from '../../../../components/Iconify';
@@ -18,8 +17,6 @@ DriverTableRow.propTypes = {
 };
 
 export default function DriverTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
-  const theme = useTheme();
-
   const { driverName, driverPhoneNumber } = row;
 
   const [openMenu, setOpenMenuActions] = useState(null);

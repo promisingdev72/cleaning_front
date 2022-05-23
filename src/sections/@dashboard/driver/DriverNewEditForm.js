@@ -6,9 +6,12 @@ import { useNavigate } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+
 // @mui
 import { LoadingButton } from '@mui/lab';
 import { Box, Card, Grid, Stack } from '@mui/material';
+// hook
+import useDriver from '../../../hooks/useDriver';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
@@ -16,12 +19,17 @@ import { FormProvider, RHFTextField } from '../../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
+import useAuth from '../../../hooks/useAuth';
+
 DriverNewEditForm.propTypes = {
   isEdit: PropTypes.bool,
   currentDriver: PropTypes.object,
 };
 
 export default function DriverNewEditForm({ isEdit, currentDriver }) {
+  const { user } = useAuth();
+  const { addDriver, editDriver } = useDriver();
+
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -61,12 +69,18 @@ export default function DriverNewEditForm({ isEdit, currentDriver }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentDriver]);
 
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      data.customerId = user.id;
+      // await new Promise((resolve) => setTimeout(resolve, 500));
+      if (isEdit) {
+        // data.id = currentEmployee.id;
+        // await editEmployee({ data });
+        reset();
+      } else await addDriver({ data });
       reset();
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      navigate(PATH_DASHBOARD.driver.list);
+      navigate(PATH_DASHBOARD.driver.driverlist);
     } catch (error) {
       console.error(error);
     }
