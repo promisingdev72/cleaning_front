@@ -19,36 +19,37 @@ exports.addDriver = (req, res) => {
 };
 
 exports.getDrivers = (req, res) => {
-  const { customerId } = req.body;
+  const { customerId } = req.query;
 
-  console.log('customerId:', customerId);
-  // Driver.findAll({ where: { userId } })
-  //   .then((busInfos) => {
-  //     const driverList = [];
-  //     busInfos.map((busInfo) => {
-  //       const { driver_name, driver_phone } = busInfo;
-  //       const driver = {
-  //         driver_name,
-  //         driver_phone,
-  //       };
-  //       driverList.push(driver);
-  //     });
-  //     res.status(200).send({ driverList });
-  //   })
-  //   .catch((err) => {
-  //     res.status(500).send({ message: err });
-  //   });
+  Driver.findAll({ where: { userId: customerId } })
+    .then((driverInfos) => {
+      const drivers = [];
+      // eslint-disable-next-line array-callback-return
+      driverInfos.map((driverInfo) => {
+        const { id, driverName, driverPhoneNumber } = driverInfo;
+        const driver = {
+          id,
+          driverName,
+          driverPhoneNumber,
+        };
+        drivers.push(driver);
+      });
+      // console.log(driverList);
+      res.status(200).send({ drivers });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err });
+    });
 };
 
 exports.editDriver = (req, res) => {
-  const { driverName } = req.body;
-  const { driverPhoneNumber } = req.body;
+  const { driverId, driverName, driverPhoneNumber } = req.body;
   Driver.update(
     {
-      driver_name: driverName,
-      driver_phone: driverPhoneNumber,
+      driverName,
+      driverPhoneNumber,
     },
-    { where: { driver_name: driverName } }
+    { where: { id: driverId } }
   )
     .then(() => {
       res.status(200).send({ message: 'Update is success' });

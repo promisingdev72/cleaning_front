@@ -71,13 +71,14 @@ export default function DriverNewEditForm({ isEdit, currentDriver }) {
 
   const onSubmit = async (data) => {
     try {
-      data.customerId = user.id;
-      // await new Promise((resolve) => setTimeout(resolve, 500));
       if (isEdit) {
-        // data.id = currentEmployee.id;
-        // await editEmployee({ data });
+        data.driverId = currentDriver.id;
+        await editDriver({ data });
         reset();
-      } else await addDriver({ data });
+      } else {
+        data.customerId = user.id;
+        await addDriver({ data });
+      }
       reset();
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
       navigate(PATH_DASHBOARD.driver.driverlist);

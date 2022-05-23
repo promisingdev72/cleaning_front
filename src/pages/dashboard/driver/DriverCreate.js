@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { paramCase, capitalCase } from 'change-case';
 import { useParams, useLocation } from 'react-router-dom';
 // @mui
@@ -6,8 +7,10 @@ import { Container } from '@mui/material';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
 import useSettings from '../../../hooks/useSettings';
-// _mock_
-import { _userList } from '../../../_mock';
+import useAuth from '../../../hooks/useAuth';
+// redux
+import { useDispatch, useSelector } from '../../../redux/store';
+import { getDrivers } from '../../../redux/slices/driver';
 // components
 import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
@@ -17,6 +20,9 @@ import DriverNewEditForm from '../../../sections/@dashboard/driver/DriverNewEdit
 // ----------------------------------------------------------------------
 
 export default function DriverCreate() {
+  const dispatch = useDispatch();
+  const { user } = useAuth();
+
   const { themeStretch } = useSettings();
 
   const { pathname } = useLocation();
@@ -25,7 +31,19 @@ export default function DriverCreate() {
 
   const isEdit = pathname.includes('edit');
 
-  const currentDriver = _userList.find((user) => paramCase(user.name) === name);
+  const [currentDriver, setCurrentDriver] = useState({});
+
+  useEffect(() => {
+    dispatch(getDrivers(user.id));
+  }, [dispatch]);
+
+  const { drivers } = useSelector((state) => state.driver);
+
+  useEffect(() => {
+    if (drivers) {
+      setCurrentDriver(drivers.find((driver) => paramCase(driver.driverName) === name));
+    }
+  }, [drivers]);
 
   return (
     <Page title="Create a new driver">
@@ -39,7 +57,7 @@ export default function DriverCreate() {
           ]}
         />
 
-        <DriverNewEditForm isEdit={isEdit} currentUser={currentDriver} />
+        <DriverNewEditForm isEdit={isEdit} currentDriver={currentDriver} />
       </Container>
     </Page>
   );

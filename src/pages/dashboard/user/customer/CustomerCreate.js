@@ -11,8 +11,6 @@ import useSettings from '../../../../hooks/useSettings';
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
 import { getCustomers } from '../../../../redux/slices/user';
-// _mock_
-import { _userList } from '../../../../_mock';
 // components
 import Page from '../../../../components/Page';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';

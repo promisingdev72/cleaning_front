@@ -1,6 +1,9 @@
 import { paramCase } from 'change-case';
 import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+
+import { useSnackbar } from 'notistack';
+
 // @mui
 import {
   Box,
@@ -16,6 +19,8 @@ import {
   TablePagination,
   FormControlLabel,
 } from '@mui/material';
+
+import useDriver from '../../../hooks/useDriver';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
@@ -65,6 +70,9 @@ export default function DriverList() {
     onChangeRowsPerPage,
   } = useTable();
 
+  const { enqueueSnackbar } = useSnackbar();
+  const { deleteDriver } = useDriver();
+
   const { themeStretch } = useSettings();
 
   const navigate = useNavigate();
@@ -99,12 +107,16 @@ export default function DriverList() {
     const deleteRow = tableData.filter((row) => row.id !== id);
     setSelected([]);
     setTableData(deleteRow);
+    deleteDriver(id);
+    enqueueSnackbar('Success Deleted!');
   };
 
   const handleDeleteRows = (selected) => {
     const deleteRows = tableData.filter((row) => !selected.includes(row.id));
     setSelected([]);
     setTableData(deleteRows);
+    deleteDriver(selected);
+    enqueueSnackbar('Success Deleted!');
   };
 
   const handleEditRow = (id) => {
@@ -189,7 +201,7 @@ export default function DriverList() {
                       selected={selected.includes(row.id)}
                       onSelectRow={() => onSelectRow(row.id)}
                       onDeleteRow={() => handleDeleteRow(row.id)}
-                      onEditRow={() => handleEditRow(row.name)}
+                      onEditRow={() => handleEditRow(row.driverName)}
                     />
                   ))}
 

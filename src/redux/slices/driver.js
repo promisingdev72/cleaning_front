@@ -37,7 +37,7 @@ export function getDrivers(customerId) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/account/getdriver', { customerId });
+      const response = await axios.get('/api/account/getdriver', { params: { customerId } });
       dispatch(slice.actions.getDriverSuccess(response.data.drivers));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -56,11 +56,11 @@ export function addDriver({ data }) {
   };
 }
 
-export function deleteDriver(employeeId) {
+export function deleteDriver(driverId) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      await axios.post('/api/account/delemployee', { employeeId });
+      await axios.post('/api/account/deldriver', { driverId });
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -71,7 +71,7 @@ export function editDriver({ data }) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      await axios.post('/api/account/editcustomer', data);
+      await axios.post('/api/account/editdriver', data);
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
