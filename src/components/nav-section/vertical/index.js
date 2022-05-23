@@ -36,8 +36,6 @@ export default function NavSectionVertical({ navConfig, isCollapse = false, ...o
 
   console.log('user', user);
 
-  console.log(navConfig);
-
   return (
     <Box {...other}>
       {navConfig.map((group) => (
