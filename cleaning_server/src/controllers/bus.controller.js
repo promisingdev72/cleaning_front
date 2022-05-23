@@ -1,19 +1,17 @@
-const db = require("../models");
+const db = require('../models');
+
 const Bus = db.bus;
 
 exports.addBus = (req, res) => {
-  let userId = req.body.userId;
-  let busNumber = req.body.busNumber;
-  let busPlates = req.body.busPlates;
-  let busGasCode = req.body.busGasCode;
+  const { busGasCode, busNumber, busPlates, customerId } = req.body;
   Bus.create({
-    userId: userId,
-    bus_number: busNumber,
-    bus_plates: busPlates,
-    bus_gas_code: busGasCode,
+    userId: customerId,
+    busNumber,
+    busPlates,
+    busGasCode,
   })
     .then(() => {
-      res.status(200).send({ message: "Bus Added!" });
+      res.status(200).send({ message: 'Bus Added!' });
     })
     .catch((err) => {
       res.status(500).send({ message: err });
@@ -21,20 +19,22 @@ exports.addBus = (req, res) => {
 };
 
 exports.getBuses = (req, res) => {
-  let userId = req.body.userId;
-  Bus.findAll({ where: { userId: userId } })
+  const { customerId } = req.query;
+  Bus.findAll({ where: { userId: customerId } })
     .then((busInfos) => {
-      const busList = [];
+      const buses = [];
+      // eslint-disable-next-line array-callback-return
       busInfos.map((busInfo) => {
-        const { bus_number, bus_plates, bus_gas_code } = busInfo;
+        const { id, busNumber, busPlates, busGasCode } = busInfo;
         const bus = {
-          bus_number,
-          bus_plates,
-          bus_gas_code,
+          id,
+          busNumber,
+          busPlates,
+          busGasCode,
         };
-        busList.push(bus);
+        buses.push(bus);
       });
-      res.status(200).send({ busList });
+      res.status(200).send({ buses });
     })
     .catch((err) => {
       res.status(500).send({ message: err });
@@ -42,34 +42,30 @@ exports.getBuses = (req, res) => {
 };
 
 exports.editBus = (req, res) => {
-  let busNumber = req.body.busNumber;
-  let busPlates = req.body.busPlates;
-  let busGasCode = req.body.busGasCode;
+  const { busNumber, busPlates, busGasCode, busId } = req.body;
   Bus.update(
     {
-      bus_number: busNumber,
-      bus_plates: busPlates,
-      bus_gas_code: busGasCode,
+      busNumber,
+      busPlates,
+      busGasCode,
     },
-    { where: { bus_number: busNumber } }
+    { where: { id: busId } }
   )
     .then(() => {
-      res.status(200).send({ message: "Update is success" });
+      res.status(200).send({ message: 'Update is success' });
     })
-    .catch((err) => {
-      return res.status(500).send({ message: err });
-    });
+    .catch((err) => res.status(500).send({ message: err }));
 };
 
 exports.delBus = (req, res) => {
-  let busId = req.body.busId;
+  const { busId } = req.body;
   Bus.destroy({
     where: {
       id: busId,
     },
   })
     .then(() => {
-      res.status(200).send({ message: "Bus Deleted!" });
+      res.status(200).send({ message: 'Bus Deleted!' });
     })
     .catch((err) => {
       res.status(500).send({ message: err });

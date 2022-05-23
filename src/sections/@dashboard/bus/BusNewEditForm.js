@@ -1,25 +1,25 @@
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Switch, Typography, FormControlLabel } from '@mui/material';
-// utils
-import { fData } from '../../../utils/formatNumber';
+import { Box, Card, Grid, Stack } from '@mui/material';
+// hook
+import useBus from '../../../hooks/useBus';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
-// _mock
-import { countries } from '../../../_mock';
 // components
-import Label from '../../../components/Label';
-import { FormProvider, RHFSelect, RHFSwitch, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
+import { FormProvider, RHFTextField } from '../../../components/hook-form';
 
 // ----------------------------------------------------------------------
+
+import useAuth from '../../../hooks/useAuth';
 
 BusNewEditForm.propTypes = {
   isEdit: PropTypes.bool,
@@ -27,24 +27,24 @@ BusNewEditForm.propTypes = {
 };
 
 export default function BusNewEditForm({ isEdit, currentBus }) {
+  const { user } = useAuth();
+  const { addBus, editBus } = useBus();
+
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const NewBusSchema = Yup.object().shape({
-    bus_number: Yup.string().required('Bus number is required'),
-    gas_card_code_number: Yup.string().required('Bus numbers is required'),
-    bus_register_plate: Yup.string().required('Bus driver name is required'),
+    busNumber: Yup.string().required('Bus number is required'),
+    busPlates: Yup.string().required('Bus plates is required'),
+    busGasCode: Yup.string().required('Bus Gas Code is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      bus_company_name: currentBus?.bus_company_name || '',
-      bus_numbers: currentBus?.bus_numbers || '',
-      bus_driver_name: currentBus?.bus_driver_name || '',
-      bus_driver_phone_number: currentBus?.bus_driver_phone_number || '',
-      bus_departing_time: currentBus?.bus_departing_time || '',
-      bus_arriving_time: currentBus?.bus_arriving_time || '',
+      busNumber: currentBus?.busNumber || '',
+      busPlates: currentBus?.busPlates || '',
+      busGasCode: currentBus?.busGasCode || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentBus]
@@ -57,14 +57,9 @@ export default function BusNewEditForm({ isEdit, currentBus }) {
 
   const {
     reset,
-    watch,
-    control,
-    setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-
-  const values = watch();
 
   useEffect(() => {
     if (isEdit && currentBus) {
@@ -76,12 +71,19 @@ export default function BusNewEditForm({ isEdit, currentBus }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentBus]);
 
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      if (isEdit) {
+        data.busId = currentBus.id;
+        await editBus({ data });
+        reset();
+      } else {
+        data.customerId = user.id;
+        await addBus({ data });
+      }
       reset();
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      navigate(PATH_DASHBOARD.bus.list);
+      navigate(PATH_DASHBOARD.bus.buslist);
     } catch (error) {
       console.error(error);
     }
@@ -100,12 +102,9 @@ export default function BusNewEditForm({ isEdit, currentBus }) {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(1, 1fr)' },
               }}
             >
-              <RHFTextField name="bus_company_name" label="Bus company name" />
-              <RHFTextField name="bus_numbers" label="Bus numbers" />
-              <RHFTextField name="bus_driver_name" label="Bus driver name" />
-              <RHFTextField name="bus_driver_phone_number" label="Bus driver phone number" />
-              <RHFTextField name="bus_departing_time" label="Bus departing time" />
-              <RHFTextField name="bus_arriving_time" label="Bus arriving time" />
+              <RHFTextField name="busNumber" label="Bus number" />
+              <RHFTextField name="busPlates" label="Bus plates" />
+              <RHFTextField name="busGasCode" label="Bus Gas Code" />
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>

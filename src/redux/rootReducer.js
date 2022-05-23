@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import orderReducer from './slices/order';
 import userReducer from './slices/user';
 import driverReducer from './slices/driver';
+import busReducer from './slices/bus';
 
 // ----------------------------------------------------------------------
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   order: orderReducer,
   user: userReducer,
   driver: driverReducer,
+  bus: busReducer,
 });
 
 export { rootPersistConfig, rootReducer };

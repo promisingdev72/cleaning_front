@@ -1,17 +1,14 @@
 import { paramCase } from 'change-case';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // @mui
 import {
   Box,
-  Tab,
-  Tabs,
   Card,
   Table,
   Switch,
   Button,
   Tooltip,
-  Divider,
   TableBody,
   Container,
   IconButton,
@@ -19,12 +16,15 @@ import {
   TablePagination,
   FormControlLabel,
 } from '@mui/material';
+
+import { useSnackbar } from 'notistack';
+import useBus from '../../../hooks/useBus';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
-import useTabs from '../../../hooks/useTabs';
 import useSettings from '../../../hooks/useSettings';
 import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
+import useAuth from '../../../hooks/useAuth';
 // _mock_
 import { _userList } from '../../../_mock';
 // components
@@ -36,21 +36,24 @@ import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } fr
 // sections
 import { BusTableToolbar, BusTableRow } from '../../../sections/@dashboard/bus/list';
 
+// redux
+import { useDispatch, useSelector } from '../../../redux/store';
+
+import { getBuses } from '../../../redux/slices/bus';
+
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'bus_company_name', label: 'Bus company name', align: 'left' },
-  { id: 'bus_numbers', label: 'Bus numbers', align: 'left' },
-  { id: 'bus_driver_name', label: 'Bus driver name', align: 'left' },
-  { id: 'bus_driver_phone_number ', label: 'Bus driver phone number ', align: 'center' },
-  { id: 'bus_departing_time', label: 'Bus departing time', align: 'left' },
-  { id: 'bus_arriving_time', label: 'Bus arriving time', align: 'left' },
-  { id: '' },
+  { id: 'busNumber', label: 'Bus Number', align: 'left' },
+  { id: 'busPlates', label: 'Bus Plates', align: 'left' },
+  { id: 'busGasCode', label: 'Bus Gas Code', align: 'left' },
+  { id: '', align: 'left' },
 ];
 
 // ----------------------------------------------------------------------
 
 export default function BusList() {
+  const { user } = useAuth();
   const {
     dense,
     page,
@@ -74,7 +77,22 @@ export default function BusList() {
 
   const navigate = useNavigate();
 
-  const [tableData, setTableData] = useState(_userList);
+  const dispatch = useDispatch();
+
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(() => {
+    const customerId = user.id;
+    dispatch(getBuses(customerId));
+  }, [dispatch]);
+
+  const { buses } = useSelector((state) => state.bus);
+
+  useEffect(() => {
+    if (buses) {
+      setTableData(buses);
+    }
+  }, [buses]);
 
   const [filterName, setFilterName] = useState('');
 
@@ -177,7 +195,7 @@ export default function BusList() {
                       selected={selected.includes(row.id)}
                       onSelectRow={() => onSelectRow(row.id)}
                       onDeleteRow={() => handleDeleteRow(row.id)}
-                      onEditRow={() => handleEditRow(row.name)}
+                      onEditRow={() => handleEditRow(row.busNumber)}
                     />
                   ))}
 
