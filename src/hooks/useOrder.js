@@ -11,8 +11,8 @@ export default function useOrder() {
 
   return {
     // --------------  Editing part ---------------------
-    editOrder: ({ data }) => {
-      dispatch(editOrder({ data }));
+    editOrder: ({ resData }) => {
+      dispatch(editOrder({ resData }));
     },
     // --------------  Creating part ---------------------
     addOrder: ({ resData }) => {

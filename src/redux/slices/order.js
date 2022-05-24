@@ -45,7 +45,6 @@ export function getAllOrders() {
 }
 
 export function addOrder({ resData }) {
-  console.log('orderData', resData);
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
@@ -67,11 +66,11 @@ export function deleteOrder(driverId) {
   };
 }
 
-export function editOrder({ data }) {
+export function editOrder({ resData }) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      await axios.post('/api/account/editorder', data);
+      await axios.post('/api/account/editorder', resData);
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

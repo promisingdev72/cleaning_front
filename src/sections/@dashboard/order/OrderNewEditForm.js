@@ -71,7 +71,6 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
       const tmpEndDate = currentOrder.endDate.split('.')[0];
       const startDate = `${tmpStartDate}`;
       const endDate = `${tmpEndDate}`;
-      console.log(startDate, endDate);
       setStartDate(new Date(startDate));
       setEndDate(new Date(endDate));
     }
@@ -99,8 +98,6 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
       bus: currentOrder?.busNumber || '',
       program: currentOrder?.program || '',
       driver: currentOrder?.driverName || '',
-      // startDate: currentOrder?.startDate || '',
-      // endDate: currentOrder?.endDate || '',
     }),
     [currentOrder]
   );
@@ -151,11 +148,23 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
       };
 
       if (isEdit) {
+        const currentOrderId = {
+          orderId: currentOrder.id,
+        };
+        const resData = {
+          ...currentBusDetail,
+          ...currentDriverDetail,
+          ...currentDateDetail,
+          ...currentUserId,
+          ...currentOrderId,
+          ...program,
+        };
         await editOrder({ resData });
         reset();
-      } else await addOrder({ resData });
-
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      } else {
+        await addOrder({ resData });
+        console.log('resData', resData);
+      }
       reset();
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
       navigate(PATH_DASHBOARD.task.tasklist);

@@ -28,6 +28,7 @@ exports.getAllOrders = (req, res) => {
   Order.findAll()
     .then((orderInfos) => {
       const orders = [];
+      // eslint-disable-next-line array-callback-return
       orderInfos.map((orderInfo) => {
         const {
           id,
@@ -68,33 +69,27 @@ exports.getAllOrders = (req, res) => {
     });
 };
 
-// exports.editOrder = (req, res) => {
-//   let busName = req.body.busName;
-//   let program = req.body.program;
-//   let busDriverName = req.body.busDriverName;
-//   let employeeId = req.body.employeeId;
-//   let arival = req.body.arival;
-//   let depart = req.body.depart;
-//   let status = req.body.status;
-//   Order.update(
-//     {
-//       busName: busName,
-//       program: program,
-//       busDriverName: busDriverName,
-//       employeeId: employeeId,
-//       arival: arival,
-//       depart: depart,
-//       status: status,
-//     },
-//     { where: { bus_number: busNumber } }
-//   )
-//     .then(() => {
-//       res.status(200).send({ message: "Update is success" });
-//     })
-//     .catch((err) => {
-//       return res.status(500).send({ message: err });
-//     });
-// };
+exports.editOrder = (req, res) => {
+  const { busGasCode, busNumber, program, busPlates, driverName, driverPhoneNumber, startDate, endDate, orderId } =
+    req.body;
+  Order.update(
+    {
+      busNumber,
+      program,
+      busGasCode,
+      busPlates,
+      driverName,
+      driverPhoneNumber,
+      startDate,
+      endDate,
+    },
+    { where: { id: orderId } }
+  )
+    .then(() => {
+      res.status(200).send({ message: 'Update is success' });
+    })
+    .catch((err) => res.status(500).send({ message: err }));
+};
 
 // exports.delOrder = (req, res) => {
 //   let busId = req.body.busId;

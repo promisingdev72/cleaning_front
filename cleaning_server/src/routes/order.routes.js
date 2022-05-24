@@ -9,6 +9,6 @@ module.exports = (app) => {
 
   app.post('/api/account/addorder', ordercontroller.addOrder);
   app.get('/api/account/getallorder', ordercontroller.getAllOrders);
-  // app.post("/api/account/editorder", ordercontroller.editOrder);
+  app.post('/api/account/editorder', ordercontroller.editOrder);
   // app.post("/api/account/delorder", ordercontroller.delOrder);
 };

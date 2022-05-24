@@ -8,12 +8,10 @@ import { Container } from '@mui/material';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
 import useSettings from '../../../hooks/useSettings';
-import useAuth from '../../../hooks/useAuth';
+// import useAuth from '../../../hooks/useAuth';
 // redux
 import { useDispatch, useSelector } from '../../../redux/store';
 import { getAllOrders } from '../../../redux/slices/order';
-// _mock_
-import { _userList } from '../../../_mock';
 // components
 import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
@@ -24,7 +22,7 @@ import OrderNewEditForm from '../../../sections/@dashboard/order/OrderNewEditFor
 
 export default function OrderCreate() {
   const dispatch = useDispatch();
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
   const { themeStretch } = useSettings();
 
@@ -33,8 +31,6 @@ export default function OrderCreate() {
   const { name = '' } = useParams();
 
   const isEdit = pathname.includes('edit');
-
-  const currentUser = _userList.find((user) => paramCase(user.name) === name);
 
   const [currentOrder, setCurrentOrder] = useState({});
 
