@@ -1,4 +1,3 @@
-import { filter } from 'lodash';
 import { createSlice } from '@reduxjs/toolkit';
 // utils
 import axios from '../../utils/axios';
@@ -39,6 +38,40 @@ export function getAllOrders() {
     try {
       const response = await axios.get('/api/account/getallorder');
       dispatch(slice.actions.getOrderSuccess(response.data.orders));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function addOrder({ resData }) {
+  console.log('orderData', resData);
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      await axios.post('/api/account/addorder', resData);
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function deleteOrder(driverId) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      await axios.post('/api/account/deldriver', { driverId });
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function editOrder({ data }) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      await axios.post('/api/account/editorder', data);
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

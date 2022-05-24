@@ -22,10 +22,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
     },
     startDate: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DATE,
     },
     endDate: {
-      type: Sequelize.STRING,
+      type: Sequelize.DATE,
     },
     AssignedEmployees: {
       type: Sequelize.STRING,

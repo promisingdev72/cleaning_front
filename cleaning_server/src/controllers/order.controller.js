@@ -3,21 +3,18 @@ const db = require('../models');
 const Order = db.order;
 
 exports.addOrder = (req, res) => {
-  const { busName } = req.body;
-  const { program } = req.body;
-  const { busDriverName } = req.body;
-  const { employeeId } = req.body;
-  const { arival } = req.body;
-  const { depart } = req.body;
-  const { status } = req.body;
+  const { customerId, program, busNumber, busPlates, busGasCode, driverName, driverPhoneNumber, startDate, endDate } =
+    req.body;
   Order.create({
-    busName,
+    userId: customerId,
     program,
-    busDriverName,
-    employeeId,
-    arival,
-    depart,
-    status,
+    busNumber,
+    busPlates,
+    busGasCode,
+    driverName,
+    driverPhoneNumber,
+    startDate,
+    endDate,
   })
     .then(() => {
       res.status(200).send({ message: 'Order Added!' });

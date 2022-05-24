@@ -16,6 +16,7 @@ import { getBuses } from '../../../redux/slices/bus';
 import { getDrivers } from '../../../redux/slices/driver';
 // hook
 import useAuth from '../../../hooks/useAuth';
+import useOrder from '../../../hooks/useOrder';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
@@ -29,6 +30,8 @@ OrderNewEditForm.propTypes = {
 };
 
 export default function OrderNewEditForm({ isEdit, currentOrder }) {
+  const { addOrder, editOrder } = useOrder();
+
   const { user } = useAuth();
 
   const [buslist, setBusList] = useState([]);
@@ -118,8 +121,13 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
         startDate,
         endDate,
       };
+
       const currentUserId = {
         customerId: user.id,
+      };
+
+      const program = {
+        program: data.program,
       };
 
       const resData = {
@@ -127,9 +135,13 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
         ...currentDriverDetail,
         ...currentDateDetail,
         ...currentUserId,
+        ...program,
       };
 
-      console.log('resData', resData.startDate);
+      if (isEdit) {
+        await editOrder({ resData });
+        reset();
+      } else await addOrder({ resData });
 
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
