@@ -1,23 +1,25 @@
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Switch, Typography, FormControlLabel } from '@mui/material';
-// utils
-import { fData } from '../../../utils/formatNumber';
+import { Box, Card, Grid, Stack } from '@mui/material';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+// redux
+import { useDispatch, useSelector } from '../../../redux/store';
+import { getBuses } from '../../../redux/slices/bus';
+import { getDrivers } from '../../../redux/slices/driver';
+// hook
+import useAuth from '../../../hooks/useAuth';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
-// _mock
-import { countries } from '../../../_mock';
 // components
-import Label from '../../../components/Label';
-import { FormProvider, RHFSelect, RHFSwitch, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
+import { FormProvider, RHFSelect, RHFTextField } from '../../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -27,40 +29,53 @@ OrderNewEditForm.propTypes = {
 };
 
 export default function OrderNewEditForm({ isEdit, currentOrder }) {
+  const { user } = useAuth();
+
+  const [buslist, setBusList] = useState([]);
+  const [driverlist, setDriverList] = useState([]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getBuses(user.id));
+    dispatch(getDrivers(user.id));
+  }, [dispatch]);
+
+  const { buses } = useSelector((state) => state.bus);
+  const { drivers } = useSelector((state) => state.driver);
+
+  useEffect(() => {
+    if (buses && drivers) {
+      setBusList(buses);
+      setDriverList(drivers);
+    }
+  }, [buses, drivers]);
+
+  const programs = [
+    { id: 1, name: 'Program1' },
+    { id: 2, name: 'Program2' },
+    { id: 3, name: 'Program3' },
+    { id: 4, name: 'Program4' },
+  ];
+
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const NewOrderSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    email: Yup.string().required('Email is required').email(),
-    phoneNumber: Yup.string().required('Phone number is required'),
-    address: Yup.string().required('Address is required'),
-    country: Yup.string().required('country is required'),
-    company: Yup.string().required('Company is required'),
-    state: Yup.string().required('State is required'),
-    city: Yup.string().required('City is required'),
-    role: Yup.string().required('Role Number is required'),
-    avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
+    bus: Yup.string().required('Bus is required'),
+    program: Yup.string().required('Program is required'),
+    driver: Yup.string().required('Driver is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      name: currentOrder?.name || '',
-      email: currentOrder?.email || '',
-      phoneNumber: currentOrder?.phoneNumber || '',
-      address: currentOrder?.address || '',
-      country: currentOrder?.country || '',
-      state: currentOrder?.state || '',
-      city: currentOrder?.city || '',
-      zipCode: currentOrder?.zipCode || '',
-      avatarUrl: currentOrder?.avatarUrl || '',
-      isVerified: currentOrder?.isVerified || true,
-      status: currentOrder?.status,
-      company: currentOrder?.company || '',
-      role: currentOrder?.role || '',
+      bus: currentOrder?.bus || '',
+      program: currentOrder?.program || '',
+      driver: currentOrder?.driver || '',
+      startDate: currentOrder?.startDate || '',
+      endDate: currentOrder?.endDate || '',
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentOrder]
   );
 
@@ -71,14 +86,9 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
 
   const {
     reset,
-    watch,
-    control,
-    setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-
-  const values = watch();
 
   useEffect(() => {
     if (isEdit && currentOrder) {
@@ -87,151 +97,95 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
     if (!isEdit) {
       reset(defaultValues);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentOrder]);
 
-  const onSubmit = async () => {
+  const [startDate, setStartDate] = useState(new Date());
+
+  const handleChange1 = (newValue) => {
+    setStartDate(newValue);
+  };
+  const [endDate, setEndDate] = useState(new Date());
+
+  const handleChange2 = (newValue) => {
+    setEndDate(newValue);
+  };
+
+  const onSubmit = async (data) => {
     try {
+      const currentBusDetail = buslist.find((bus) => bus.busNumber === data.bus);
+      const currentDriverDetail = driverlist.find((driver) => driver.driverName === data.driver);
+      const currentDateDetail = {
+        startDate,
+        endDate,
+      };
+      const currentUserId = {
+        customerId: user.id,
+      };
+
+      const resData = {
+        ...currentBusDetail,
+        ...currentDriverDetail,
+        ...currentDateDetail,
+        ...currentUserId,
+      };
+
+      console.log('resData', resData.startDate);
+
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      navigate(PATH_DASHBOARD.order.list);
+      navigate(PATH_DASHBOARD.task.tasklist);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
-
-      if (file) {
-        setValue(
-          'avatarUrl',
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        );
-      }
-    },
-    [setValue]
-  );
-
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
-          <Card sx={{ py: 10, px: 3 }}>
-            {isEdit && (
-              <Label
-                color={values.status !== 'active' ? 'error' : 'success'}
-                sx={{ textTransform: 'uppercase', position: 'absolute', top: 24, right: 24 }}
-              >
-                {values.status}
-              </Label>
-            )}
-
-            <Box sx={{ mb: 5 }}>
-              <RHFUploadAvatar
-                name="avatarUrl"
-                accept="image/*"
-                maxSize={3145728}
-                onDrop={handleDrop}
-                helperText={
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      mt: 2,
-                      mx: 'auto',
-                      display: 'block',
-                      textAlign: 'center',
-                      color: 'text.secondary',
-                    }}
-                  >
-                    Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
-                  </Typography>
-                }
-              />
-            </Box>
-
-            {isEdit && (
-              <FormControlLabel
-                labelPlacement="start"
-                control={
-                  <Controller
-                    name="status"
-                    control={control}
-                    render={({ field }) => (
-                      <Switch
-                        {...field}
-                        checked={field.value !== 'active'}
-                        onChange={(event) => field.onChange(event.target.checked ? 'banned' : 'active')}
-                      />
-                    )}
-                  />
-                }
-                label={
-                  <>
-                    <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                      Banned
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      Apply disable account
-                    </Typography>
-                  </>
-                }
-                sx={{ mx: 0, mb: 3, width: 1, justifyContent: 'space-between' }}
-              />
-            )}
-
-            <RHFSwitch
-              name="isVerified"
-              labelPlacement="start"
-              label={
-                <>
-                  <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                    Email Verified
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Disabling this will automatically send the Order a verification email
-                  </Typography>
-                </>
-              }
-              sx={{ mx: 0, width: 1, justifyContent: 'space-between' }}
-            />
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={8} sx={{ margin: '0 auto' }}>
           <Card sx={{ p: 3 }}>
-            <Box
-              sx={{
-                display: 'grid',
-                columnGap: 2,
-                rowGap: 3,
-                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
-              }}
-            >
-              <RHFTextField name="name" label="Full Name" />
-              <RHFTextField name="email" label="Email Address" />
-              <RHFTextField name="phoneNumber" label="Phone Number" />
-
-              <RHFSelect name="country" label="Country" placeholder="Country">
+            <Box>
+              <RHFSelect name="bus" label="Bus" placeholder="Bus" sx={{ mt: 3 }}>
                 <option value="" />
-                {countries.map((option) => (
-                  <option key={option.code} value={option.label}>
-                    {option.label}
+                {buslist.map((bus) => (
+                  <option key={bus.id} value={bus.busNumber}>
+                    {bus.busNumber}
                   </option>
                 ))}
               </RHFSelect>
-
-              <RHFTextField name="state" label="State/Region" />
-              <RHFTextField name="city" label="City" />
-              <RHFTextField name="address" label="Address" />
-              <RHFTextField name="zipCode" label="Zip/Code" />
-              <RHFTextField name="company" label="Company" />
-              <RHFTextField name="role" label="Role" />
+              <RHFSelect name="program" label="Program" placeholder="Program" sx={{ mt: 3 }}>
+                <option value="" />
+                {programs.map((program) => (
+                  <option key={program.id} value={program.name}>
+                    {program.name}
+                  </option>
+                ))}
+              </RHFSelect>
+              <RHFSelect name="driver" label="Driver" placeholder="Driver" sx={{ mt: 3 }}>
+                <option value="" />
+                {driverlist.map((driver) => (
+                  <option key={driver.id} value={driver.driverName}>
+                    {driver.driverName}
+                  </option>
+                ))}
+              </RHFSelect>
+              <Box m={3} />
+              <DateTimePicker
+                name="startDate"
+                label="Start Date"
+                value={startDate}
+                onChange={handleChange1}
+                renderInput={(params) => <RHFTextField {...params} />}
+              />
+              <Box m={3} />
+              <DateTimePicker
+                name="endDate"
+                label="End Date"
+                value={endDate}
+                onChange={handleChange2}
+                renderInput={(params) => <RHFTextField {...params} />}
+              />
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>

@@ -4,14 +4,11 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // @mui
 import {
   Box,
-  Tab,
-  Tabs,
   Card,
   Table,
   Switch,
   Button,
   Tooltip,
-  Divider,
   TableBody,
   Container,
   IconButton,
@@ -34,6 +31,8 @@ import Scrollbar from '../../../components/Scrollbar';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
 import SimpleDialog from '../../../components/SimpleDialog';
+
+import useAuth from '../../../hooks/useAuth';
 
 // sections
 import { OrderTableToolbar, OrderTableRow } from '../../../sections/@dashboard/order/list';
@@ -87,6 +86,8 @@ export default function OrderList() {
 
   const [tableData, setTableData] = useState([]);
 
+  const { user } = useAuth();
+
   useEffect(() => {
     if (orders) {
       setTableData(orders);
@@ -97,15 +98,9 @@ export default function OrderList() {
 
   const [filterName, setFilterName] = useState('');
 
-  const [filterRole, setFilterRole] = useState('all');
-
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
     setPage(0);
-  };
-
-  const handleFilterRole = (event) => {
-    setFilterRole(event.target.value);
   };
 
   const handleDeleteRow = (id) => {
@@ -150,16 +145,18 @@ export default function OrderList() {
         <HeaderBreadcrumbs
           heading="Task List"
           links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'TaksList' }]}
-          // action={
-          // <Button
-          //   variant="contained"
-          //   component={RouterLink}
-          //   to={PATH_DASHBOARD.task.new}
-          //   startIcon={<Iconify icon={'eva:plus-fill'} />}
-          // >
-          //   New Task
-          // </Button>
-          // }
+          action={
+            user.roleId === 'CUSTOMER' && (
+              <Button
+                variant="contained"
+                component={RouterLink}
+                to={PATH_DASHBOARD.task.new}
+                startIcon={<Iconify icon={'eva:plus-fill'} />}
+              >
+                New Task
+              </Button>
+            )
+          }
         />
 
         <Card>

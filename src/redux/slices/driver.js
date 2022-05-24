@@ -1,4 +1,3 @@
-import { filter } from 'lodash';
 import { createSlice } from '@reduxjs/toolkit';
 // utils
 import axios from '../../utils/axios';
@@ -22,7 +21,7 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    // GET Orders
+    // GET Drivers
     getDriverSuccess(state, action) {
       state.isLoading = false;
       state.drivers = action.payload;
