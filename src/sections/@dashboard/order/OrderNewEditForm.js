@@ -30,7 +30,17 @@ OrderNewEditForm.propTypes = {
 };
 
 export default function OrderNewEditForm({ isEdit, currentOrder }) {
-  console.log(currentOrder);
+  const [startDate, setStartDate] = useState(new Date());
+
+  const handleChange1 = (newValue) => {
+    setStartDate(newValue);
+  };
+  const [endDate, setEndDate] = useState(new Date());
+
+  const handleChange2 = (newValue) => {
+    setEndDate(newValue);
+  };
+
   const { addOrder, editOrder } = useOrder();
 
   const { user } = useAuth();
@@ -55,6 +65,18 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
     }
   }, [buses, drivers]);
 
+  useEffect(() => {
+    if (currentOrder && currentOrder.startDate) {
+      const tmpStartDate = currentOrder.startDate.split('.')[0];
+      const tmpEndDate = currentOrder.endDate.split('.')[0];
+      const startDate = `${tmpStartDate}`;
+      const endDate = `${tmpEndDate}`;
+      console.log(startDate, endDate);
+      setStartDate(new Date(startDate));
+      setEndDate(new Date(endDate));
+    }
+  }, [currentOrder]);
+
   const programs = [
     { id: 1, name: 'Program1' },
     { id: 2, name: 'Program2' },
@@ -74,11 +96,11 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
 
   const defaultValues = useMemo(
     () => ({
-      bus: currentOrder?.bus || '',
+      bus: currentOrder?.busNumber || '',
       program: currentOrder?.program || '',
-      driver: currentOrder?.driver || '',
-      startDate: currentOrder?.startDate || '',
-      endDate: currentOrder?.endDate || '',
+      driver: currentOrder?.driverName || '',
+      // startDate: currentOrder?.startDate || '',
+      // endDate: currentOrder?.endDate || '',
     }),
     [currentOrder]
   );
@@ -102,17 +124,6 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
       reset(defaultValues);
     }
   }, [isEdit, currentOrder]);
-
-  const [startDate, setStartDate] = useState(new Date());
-
-  const handleChange1 = (newValue) => {
-    setStartDate(newValue);
-  };
-  const [endDate, setEndDate] = useState(new Date());
-
-  const handleChange2 = (newValue) => {
-    setEndDate(newValue);
-  };
 
   const onSubmit = async (data) => {
     try {
