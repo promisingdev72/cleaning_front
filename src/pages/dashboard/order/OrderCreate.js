@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { paramCase, capitalCase } from 'change-case';
 import { useParams, useLocation } from 'react-router-dom';
 // @mui
@@ -6,6 +8,10 @@ import { Container } from '@mui/material';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
 import useSettings from '../../../hooks/useSettings';
+import useAuth from '../../../hooks/useAuth';
+// redux
+import { useDispatch, useSelector } from '../../../redux/store';
+import { getAllOrders } from '../../../redux/slices/order';
 // _mock_
 import { _userList } from '../../../_mock';
 // components
@@ -17,6 +23,9 @@ import OrderNewEditForm from '../../../sections/@dashboard/order/OrderNewEditFor
 // ----------------------------------------------------------------------
 
 export default function OrderCreate() {
+  const dispatch = useDispatch();
+  const { user } = useAuth();
+
   const { themeStretch } = useSettings();
 
   const { pathname } = useLocation();
@@ -26,6 +35,20 @@ export default function OrderCreate() {
   const isEdit = pathname.includes('edit');
 
   const currentUser = _userList.find((user) => paramCase(user.name) === name);
+
+  const [currentOrder, setCurrentOrder] = useState({});
+
+  useEffect(() => {
+    dispatch(getAllOrders());
+  }, [dispatch]);
+
+  const { orders } = useSelector((state) => state.order);
+
+  useEffect(() => {
+    if (orders) {
+      setCurrentOrder(orders.find((order) => paramCase(order.busNumber) === name));
+    }
+  }, [orders]);
 
   return (
     <Page title="Create a new order">
@@ -39,7 +62,7 @@ export default function OrderCreate() {
           ]}
         />
 
-        <OrderNewEditForm isEdit={isEdit} currentUser={currentUser} />
+        <OrderNewEditForm isEdit={isEdit} currentOrder={currentOrder} />
       </Container>
     </Page>
   );

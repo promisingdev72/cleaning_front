@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { paramCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -55,6 +56,8 @@ const TABLE_HEAD = [
 // ----------------------------------------------------------------------
 
 export default function OrderList() {
+  const { user } = useAuth();
+
   const {
     dense,
     page,
@@ -86,11 +89,14 @@ export default function OrderList() {
 
   const [tableData, setTableData] = useState([]);
 
-  const { user } = useAuth();
-
   useEffect(() => {
     if (orders) {
-      setTableData(orders);
+      if (user.roleId !== 'ADMIN') {
+        const tempOrder = orders.filter((order) => Number(order.userId) === user.id);
+        setTableData(tempOrder);
+      } else {
+        setTableData(orders);
+      }
     }
   }, [orders]);
 
@@ -210,7 +216,7 @@ export default function OrderList() {
                       onSelectRow={() => onSelectRow(row.id)}
                       onAssignRow={() => handleClickOpen()}
                       onDeleteRow={() => handleDeleteRow(row.id)}
-                      onEditRow={() => handleEditRow(row.name)}
+                      onEditRow={() => handleEditRow(row.busNumber)}
                     />
                   ))}
 

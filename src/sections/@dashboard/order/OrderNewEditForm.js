@@ -30,6 +30,7 @@ OrderNewEditForm.propTypes = {
 };
 
 export default function OrderNewEditForm({ isEdit, currentOrder }) {
+  console.log(currentOrder);
   const { addOrder, editOrder } = useOrder();
 
   const { user } = useAuth();

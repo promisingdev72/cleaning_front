@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Avatar, Checkbox, TableRow, TableCell, Typography, MenuItem } from '@mui/material';
+import { Checkbox, TableRow, TableCell, MenuItem } from '@mui/material';
+
+import useAuth from '../../../../hooks/useAuth';
 // components
-import Label from '../../../../components/Label';
 import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 
@@ -15,15 +15,23 @@ OrderTableRow.propTypes = {
   selected: PropTypes.bool,
   onEditRow: PropTypes.func,
   onAssignRow: PropTypes.func,
+  onStatusRow: PropTypes.func,
   onSelectRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
 };
 
-export default function OrderTableRow({ row, selected, onEditRow, onAssignRow, onSelectRow, onDeleteRow }) {
-  const theme = useTheme();
+export default function OrderTableRow({
+  row,
+  selected,
+  onEditRow,
+  onAssignRow,
+  onStatusRow,
+  onSelectRow,
+  onDeleteRow,
+}) {
+  const { user } = useAuth();
 
   const {
-    id,
     AssignedEmployees,
     busGasCode,
     busNumber,
@@ -31,7 +39,6 @@ export default function OrderTableRow({ row, selected, onEditRow, onAssignRow, o
     driverName,
     driverPhoneNumber,
     endDate,
-    program,
     startDate,
     status,
   } = row;
@@ -60,15 +67,7 @@ export default function OrderTableRow({ row, selected, onEditRow, onAssignRow, o
       <TableCell align="left">{startDate}</TableCell>
       <TableCell align="left">{endDate}</TableCell>
       <TableCell align="left">{AssignedEmployees !== '' ? AssignedEmployees : 'Not Yet'}</TableCell>
-      <TableCell align="left">
-        <Label
-          variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-          color={(status === 'banned' && 'error') || 'success'}
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {status}
-        </Label>
-      </TableCell>
+      <TableCell align="left">{status}</TableCell>
 
       <TableCell align="right">
         <TableMoreMenu
@@ -77,34 +76,51 @@ export default function OrderTableRow({ row, selected, onEditRow, onAssignRow, o
           onClose={handleCloseMenu}
           actions={
             <>
-              <MenuItem
-                onClick={() => {
-                  onDeleteRow();
-                  handleCloseMenu();
-                }}
-                sx={{ color: 'error.main' }}
-              >
-                <Iconify icon={'eva:trash-2-outline'} />
-                Delete
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  onEditRow();
-                  handleCloseMenu();
-                }}
-              >
-                <Iconify icon={'eva:edit-fill'} />
-                Edit
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  onAssignRow();
-                  handleCloseMenu();
-                }}
-              >
-                <Iconify icon={'clarity:assign-user-solid'} />
-                Assign
-              </MenuItem>
+              {user.roleId === 'CUSTOMER' && (
+                <MenuItem
+                  onClick={() => {
+                    onDeleteRow();
+                    handleCloseMenu();
+                  }}
+                  sx={{ color: 'error.main' }}
+                >
+                  <Iconify icon={'eva:trash-2-outline'} />
+                  Delete
+                </MenuItem>
+              )}
+              {user.roleId === 'CUSTOMER' && (
+                <MenuItem
+                  onClick={() => {
+                    onEditRow();
+                    handleCloseMenu();
+                  }}
+                >
+                  <Iconify icon={'eva:edit-fill'} />
+                  Edit
+                </MenuItem>
+              )}
+              {user.roleId === 'ADMIN' && (
+                <MenuItem
+                  onClick={() => {
+                    onAssignRow();
+                    handleCloseMenu();
+                  }}
+                >
+                  <Iconify icon={'clarity:assign-user-solid'} />
+                  Assign
+                </MenuItem>
+              )}
+              {user.roleId === 'EMPLOYEE' && (
+                <MenuItem
+                  onClick={() => {
+                    onStatusRow();
+                    handleCloseMenu();
+                  }}
+                >
+                  <Iconify icon={'material-symbols:task-alt-rounded'} />
+                  Status
+                </MenuItem>
+              )}
             </>
           }
         />

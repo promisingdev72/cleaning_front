@@ -28,10 +28,10 @@ exports.getAllOrders = (req, res) => {
   Order.findAll()
     .then((orderInfos) => {
       const orders = [];
-      // eslint-disable-next-line array-callback-return
       orderInfos.map((orderInfo) => {
         const {
           id,
+          userId,
           busNumber,
           busPlates,
           busGasCode,
@@ -46,6 +46,7 @@ exports.getAllOrders = (req, res) => {
 
         const order = {
           id,
+          userId,
           busNumber,
           busPlates,
           busGasCode,
