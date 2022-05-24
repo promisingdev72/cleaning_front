@@ -55,11 +55,11 @@ export function addOrder({ resData }) {
   };
 }
 
-export function deleteOrder(driverId) {
+export function deleteOrder(orderId) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      await axios.post('/api/account/deldriver', { driverId });
+      await axios.post('/api/account/delorder', { orderId });
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

@@ -91,17 +91,17 @@ exports.editOrder = (req, res) => {
     .catch((err) => res.status(500).send({ message: err }));
 };
 
-// exports.delOrder = (req, res) => {
-//   let busId = req.body.busId;
-//   Order.destroy({
-//     where: {
-//       id: busId,
-//     },
-//   })
-//     .then(() => {
-//       res.status(200).send({ message: "Bus Deleted!" });
-//     })
-//     .catch((err) => {
-//       res.status(500).send({ message: err });
-//     });
-// };
+exports.delOrder = (req, res) => {
+  const { orderId } = req.body;
+  Order.destroy({
+    where: {
+      id: orderId,
+    },
+  })
+    .then(() => {
+      res.status(200).send({ message: 'Order Deleted!' });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err });
+    });
+};

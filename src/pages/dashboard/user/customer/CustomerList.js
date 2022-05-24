@@ -5,8 +5,6 @@ import { useSnackbar } from 'notistack';
 // @mui
 import {
   Box,
-  Tab,
-  Tabs,
   Card,
   Table,
   Switch,
@@ -26,7 +24,6 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 import { useDispatch, useSelector } from '../../../../redux/store';
 import { getCustomers } from '../../../../redux/slices/user';
 // hooks
-import useTabs from '../../../../hooks/useTabs';
 import useCustomer from '../../../../hooks/useCustomer';
 import useSettings from '../../../../hooks/useSettings';
 import useTable, { getComparator, emptyRows } from '../../../../hooks/useTable';
@@ -93,15 +90,9 @@ export default function CustomerList() {
 
   const [filterName, setFilterName] = useState('');
 
-  const [filterRole, setFilterRole] = useState('all');
-
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
     setPage(0);
-  };
-
-  const handleFilterRole = (event) => {
-    setFilterRole(event.target.value);
   };
 
   const handleDeleteRow = (id) => {
@@ -128,7 +119,6 @@ export default function CustomerList() {
     tableData,
     comparator: getComparator(order, orderBy),
     filterName,
-    filterRole,
   });
 
   const denseHeight = dense ? 52 : 72;

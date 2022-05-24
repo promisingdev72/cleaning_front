@@ -2,6 +2,8 @@
 import { paramCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+
 // @mui
 import {
   Box,
@@ -25,6 +27,8 @@ import { getAllOrders } from '../../../redux/slices/order';
 // hooks
 import useSettings from '../../../hooks/useSettings';
 import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
+import useOrder from '../../../hooks/useOrder';
+
 // components
 import Page from '../../../components/Page';
 import Iconify from '../../../components/Iconify';
@@ -57,6 +61,8 @@ const TABLE_HEAD = [
 
 export default function OrderList() {
   const { user } = useAuth();
+  const { enqueueSnackbar } = useSnackbar();
+  const { deleteOrder } = useOrder();
 
   const {
     dense,
@@ -110,15 +116,20 @@ export default function OrderList() {
   };
 
   const handleDeleteRow = (id) => {
+    console.log('deleteId', id);
     const deleteRow = tableData.filter((row) => row.id !== id);
     setSelected([]);
     setTableData(deleteRow);
+    deleteOrder(id);
+    enqueueSnackbar('Success Deleted!');
   };
 
   const handleDeleteRows = (selected) => {
     const deleteRows = tableData.filter((row) => !selected.includes(row.id));
     setSelected([]);
     setTableData(deleteRows);
+    deleteOrder(selected);
+    enqueueSnackbar('Success Deleted!');
   };
 
   const handleEditRow = (id) => {
