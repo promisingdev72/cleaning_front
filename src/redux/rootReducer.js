@@ -5,6 +5,7 @@ import orderReducer from './slices/order';
 import userReducer from './slices/user';
 import driverReducer from './slices/driver';
 import busReducer from './slices/bus';
+import assignReducer from './slices/assign';
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   driver: driverReducer,
   bus: busReducer,
+  assign: assignReducer,
 });
 
 export { rootPersistConfig, rootReducer };

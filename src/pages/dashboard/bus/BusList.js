@@ -17,8 +17,6 @@ import {
   FormControlLabel,
 } from '@mui/material';
 
-import { useSnackbar } from 'notistack';
-import useBus from '../../../hooks/useBus';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks

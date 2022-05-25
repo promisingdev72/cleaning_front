@@ -57,5 +57,6 @@ require('./routes/user.routes')(app);
 require('./routes/bus.routes')(app);
 require('./routes/driver.routes')(app);
 require('./routes/order.routes')(app);
+require('./routes/assign.routes')(app);
 
 module.exports = app;

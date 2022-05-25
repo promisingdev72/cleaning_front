@@ -3,10 +3,13 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Avatar, Button, List, ListItem, ListItemText, Checkbox, Typography, Dialog, DialogTitle } from '@mui/material';
+
+import useAssign from '../hooks/useAssign';
+
 // redux
 import { useDispatch, useSelector } from '../redux/store';
 import { getEmployees } from '../redux/slices/user';
-import { getAllOrders } from '../redux/slices/order';
+import { getAssignEmployees } from '../redux/slices/assign';
 
 SimpleDialog.propTypes = {
   open: PropTypes.bool.isRequired,
@@ -14,19 +17,20 @@ SimpleDialog.propTypes = {
 };
 
 export default function SimpleDialog({ open, onClose, orderId }) {
+  const { addAssignEmployees } = useAssign();
   const [employeeList, setEmployeeList] = useState([]);
-  // const [orderList, setOrderList] = useState([]);
+  const [assignEmployees, setAssignEmployeeList] = useState([]);
   const dispatch = useDispatch();
 
   const assingedEmployee = [];
 
   useEffect(() => {
     dispatch(getEmployees());
-    dispatch(getAllOrders());
+    dispatch(getAssignEmployees(orderId));
   }, [dispatch]);
 
   const { employees } = useSelector((state) => state.user);
-  // const { orders } = useSelector((state) => state.order);
+  const { assignes } = useSelector((state) => state.assign);
 
   useEffect(() => {
     if (employees) {
@@ -34,41 +38,51 @@ export default function SimpleDialog({ open, onClose, orderId }) {
     }
   }, [employees]);
 
-  // useEffect(() => {
-  //   if (orders) {
-  //     setOrderList(orders);
-  //   }
-  // }, [orders]);
+  useEffect(() => {
+    if (assignes) {
+      setAssignEmployeeList(assignes);
+    }
+  }, [assignes]);
 
   const handleClose = () => {
     onClose();
   };
 
-  const handleListItemClick = (value) => {
-    const tmpList = [];
-    employeeList.map((item, index) => {
-      const { isChecked } = item;
-      if (value === index) tmpList.push({ ...item, isChecked: !isChecked });
-      else tmpList.push(item);
-      return tmpList;
-    });
+  const [checkedEmployeeId, setCheckedEmployeeId] = useState([]);
 
-    setEmployeeList(tmpList);
+  const handleChange = (e) => {
+    if (e.target.checked) {
+      checkedEmployeeId.push(e.target.value);
+    } else {
+      const tmpCheckedEmployeeId = checkedEmployeeId.slice();
+      setCheckedEmployeeId(tmpCheckedEmployeeId.filter((ele) => ele !== e.target.value));
+    }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const assEmployees = {
+      checkedEmployeeId,
+      orderId,
+    };
+    try {
+      await addAssignEmployees(assEmployees);
+    } catch (err) {
+      console.log(err);
+    }
     onClose();
-    console.log(employeeList);
+    setCheckedEmployeeId([]);
   };
 
   return (
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>Select Employees for Assign</DialogTitle>
       <List>
-        {employeeList.map(({ name, isChecked }, index) => (
-          <ListItem button onClick={() => handleListItemClick(index)} key={name}>
-            <Checkbox checked={isChecked} />
-            <ListItemText primary={name} />
+        {employeeList.map(({ name, garage, phoneNumber, isChecked, id }, index) => (
+          <ListItem button key={index}>
+            <Checkbox value={id} onChange={handleChange} />
+            <ListItemText primary={name} sx={{ mx: 5 }} />
+            <ListItemText primary={garage} sx={{ mx: 5 }} />
+            <ListItemText primary={phoneNumber} sx={{ mx: 5 }} />
           </ListItem>
         ))}
       </List>
