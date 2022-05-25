@@ -24,6 +24,8 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 // redux
 import { useDispatch, useSelector } from '../../../redux/store';
 import { getAllOrders } from '../../../redux/slices/order';
+import { getAssignEmployees } from '../../../redux/slices/assign';
+
 // hooks
 import useSettings from '../../../hooks/useSettings';
 import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
@@ -63,6 +65,7 @@ export default function OrderList() {
   const { user } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
   const { deleteOrder } = useOrder();
+  const [assignEmployees, setAssignEmployeeList] = useState([]);
 
   const {
     dense,
@@ -92,6 +95,13 @@ export default function OrderList() {
   }, [dispatch]);
 
   const { orders } = useSelector((state) => state.order);
+  const { assignes } = useSelector((state) => state.assign);
+
+  useEffect(() => {
+    if (assignes) {
+      setAssignEmployeeList(assignes);
+    }
+  }, [assignes]);
 
   const [tableData, setTableData] = useState([]);
 
@@ -143,13 +153,14 @@ export default function OrderList() {
   });
 
   const [open, setOpen] = useState(false);
-  const [orderId, setOrderId] = useState('');
+  const [orderId, setOrderId] = useState(0);
 
   const handleClose = () => {
     setOpen(false);
   };
 
   const handleAssign = (orderId) => {
+    dispatch(getAssignEmployees(orderId));
     setOpen(true);
     setOrderId(orderId);
   };
@@ -260,7 +271,7 @@ export default function OrderList() {
           </Box>
         </Card>
       </Container>
-      <SimpleDialog open={open} onClose={handleClose} orderId={orderId} />
+      <SimpleDialog open={open} onClose={handleClose} orderId={orderId} assignEmployees={assignEmployees} />
     </Page>
   );
 }
