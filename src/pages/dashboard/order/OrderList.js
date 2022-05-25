@@ -143,13 +143,15 @@ export default function OrderList() {
   });
 
   const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const [orderId, setOrderId] = useState('');
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleAssign = (orderId) => {
+    setOpen(true);
+    setOrderId(orderId);
   };
 
   const denseHeight = dense ? 52 : 72;
@@ -225,7 +227,7 @@ export default function OrderList() {
                       row={row}
                       selected={selected.includes(row.id)}
                       onSelectRow={() => onSelectRow(row.id)}
-                      onAssignRow={() => handleClickOpen()}
+                      onAssignRow={() => handleAssign(row.id)}
                       onDeleteRow={() => handleDeleteRow(row.id)}
                       onEditRow={() => handleEditRow(row.busNumber)}
                     />
@@ -258,7 +260,7 @@ export default function OrderList() {
           </Box>
         </Card>
       </Container>
-      <SimpleDialog open={open} onClose={handleClose} />
+      <SimpleDialog open={open} onClose={handleClose} orderId={orderId} />
     </Page>
   );
 }
@@ -277,7 +279,7 @@ function applySortFilter({ tableData, comparator, filterName }) {
   tableData = stabilizedThis.map((el) => el[0]);
 
   if (filterName) {
-    tableData = tableData.filter((item) => item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1);
+    tableData = tableData.filter((item) => item.busNumber.toLowerCase().indexOf(filterName.toLowerCase()) !== -1);
   }
 
   return tableData;

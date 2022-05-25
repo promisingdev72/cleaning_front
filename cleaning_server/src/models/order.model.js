@@ -27,9 +27,6 @@ module.exports = (sequelize, Sequelize) => {
     endDate: {
       type: Sequelize.DATE,
     },
-    AssignedEmployees: {
-      type: Sequelize.STRING,
-    },
     status: {
       type: Sequelize.STRING,
     },

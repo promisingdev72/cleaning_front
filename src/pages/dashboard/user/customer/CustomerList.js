@@ -245,7 +245,7 @@ function applySortFilter({ tableData, comparator, filterName, filterStatus, filt
   tableData = stabilizedThis.map((el) => el[0]);
 
   if (filterName) {
-    tableData = tableData.filter((item) => item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1);
+    tableData = tableData.filter((item) => item.companyName.toLowerCase().indexOf(filterName.toLowerCase()) !== -1);
   }
 
   if (filterStatus !== 'all') {

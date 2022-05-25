@@ -13,9 +13,9 @@ SimpleDialog.propTypes = {
   onClose: PropTypes.func,
 };
 
-export default function SimpleDialog({ open, onClose }) {
+export default function SimpleDialog({ open, onClose, orderId }) {
   const [employeeList, setEmployeeList] = useState([]);
-  const [orderList, setOrderList] = useState([]);
+  // const [orderList, setOrderList] = useState([]);
   const dispatch = useDispatch();
 
   const assingedEmployee = [];
@@ -26,7 +26,7 @@ export default function SimpleDialog({ open, onClose }) {
   }, [dispatch]);
 
   const { employees } = useSelector((state) => state.user);
-  const { orders } = useSelector((state) => state.order);
+  // const { orders } = useSelector((state) => state.order);
 
   useEffect(() => {
     if (employees) {
@@ -34,11 +34,11 @@ export default function SimpleDialog({ open, onClose }) {
     }
   }, [employees]);
 
-  useEffect(() => {
-    if (orders) {
-      setOrderList(orders);
-    }
-  }, [orders]);
+  // useEffect(() => {
+  //   if (orders) {
+  //     setOrderList(orders);
+  //   }
+  // }, [orders]);
 
   const handleClose = () => {
     onClose();
