@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('../models');
 const config = require('../config/auth.config');
+
 const JWT_SECRET = config.secret;
 const JWT_EXPIRES_IN = 86400;
 const User = db.user;
@@ -114,15 +115,15 @@ exports.addEmployee = (req, res) => {
   const roleId = 2;
 
   User.create({
-    name: name,
-    phoneNumber: phoneNumber,
+    name,
+    phoneNumber,
     password: bcrypt.hashSync(password, 8),
-    roleId: roleId,
+    roleId,
   })
     .then((employeeInfo) => {
       Garage.create({
         userId: employeeInfo.id,
-        garage: garage,
+        garage,
       }).then((garageInfo) => {
         const employee = {
           id: employeeInfo.id,
@@ -145,18 +146,18 @@ exports.addCustomer = (req, res) => {
   const roleId = 3;
   User.create({
     name: inCharge,
-    phoneNumber: phoneNumber,
+    phoneNumber,
     password: bcrypt.hashSync(password, 8),
-    roleId: roleId,
+    roleId,
   })
     .then((customerInfo) => {
       Garage.create({
         userId: customerInfo.id,
-        garage: garage,
+        garage,
       }).then((garageInfo) => {
         Company.create({
           userId: customerInfo.id,
-          companyName: companyName,
+          companyName,
         }).then((companyInfo) => {
           const customer = {
             id: customerInfo.id,
@@ -179,25 +180,23 @@ exports.editEmployee = (req, res) => {
   const { id, name, phoneNumber, garage } = req.body;
   User.update(
     {
-      name: name,
-      phoneNumber: phoneNumber,
+      name,
+      phoneNumber,
     },
-    { where: { id: id } }
+    { where: { id } }
   )
     .then((response) => {
       if (response[0]) {
         Garage.update(
           {
-            garage: garage,
+            garage,
           },
           { where: { userId: id } }
         );
         res.status(200).send({ message: 'update is success' });
       } else res.status(500).send({ message: 'update is failed' });
     })
-    .catch((err) => {
-      return res.status(500).send({ message: err });
-    });
+    .catch((err) => res.status(500).send({ message: err }));
 };
 
 exports.editCustomer = (req, res) => {
@@ -205,30 +204,28 @@ exports.editCustomer = (req, res) => {
   User.update(
     {
       name: inCharge,
-      phoneNumber: phoneNumber,
+      phoneNumber,
     },
-    { where: { id: id } }
+    { where: { id } }
   )
     .then((response) => {
       if (response[0]) {
         Garage.update(
           {
-            garage: garage,
+            garage,
           },
           { where: { userId: id } }
         );
         Company.update(
           {
-            companyName: companyName,
+            companyName,
           },
           { where: { userId: id } }
         );
       }
       res.status(200).send('update is success');
     })
-    .catch((error) => {
-      return res.status(500).send('update is unsuccessfull');
-    });
+    .catch(() => res.status(500).send('update is unsuccessfull'));
 };
 
 exports.delEmployee = async (req, res) => {
@@ -244,7 +241,7 @@ exports.delEmployee = async (req, res) => {
 };
 
 exports.delCustomer = (req, res) => {
-  let customerId = req.body.customerId;
+  const { customerId } = req.body;
   User.destroy({
     where: {
       id: customerId,

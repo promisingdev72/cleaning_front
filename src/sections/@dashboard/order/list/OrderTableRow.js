@@ -31,17 +31,8 @@ export default function OrderTableRow({
 }) {
   const { user } = useAuth();
 
-  const {
-    AssignedEmployees,
-    busGasCode,
-    busNumber,
-    busPlates,
-    driverName,
-    driverPhoneNumber,
-    endDate,
-    startDate,
-    status,
-  } = row;
+  const { userNames, busGasCode, busNumber, busPlates, driverName, driverPhoneNumber, endDate, startDate, status } =
+    row;
 
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -55,9 +46,11 @@ export default function OrderTableRow({
 
   return (
     <TableRow hover selected={selected}>
-      <TableCell padding="checkbox">
-        <Checkbox checked={selected} onClick={onSelectRow} />
-      </TableCell>
+      {user.roleId === 'CUSTOMER' && (
+        <TableCell padding="checkbox">
+          <Checkbox checked={selected} onClick={onSelectRow} />
+        </TableCell>
+      )}
 
       <TableCell align="left">{busNumber}</TableCell>
       <TableCell align="left">{busPlates}</TableCell>
@@ -66,7 +59,7 @@ export default function OrderTableRow({
       <TableCell align="left">{driverPhoneNumber}</TableCell>
       <TableCell align="left">{startDate}</TableCell>
       <TableCell align="left">{endDate}</TableCell>
-      <TableCell align="left">{AssignedEmployees !== '' ? AssignedEmployees : 'Not Yet'}</TableCell>
+      <TableCell align="left">{userNames.length !== 0 ? userNames : 'Not Yet'}</TableCell>
       <TableCell align="left">{status}</TableCell>
 
       <TableCell align="right">

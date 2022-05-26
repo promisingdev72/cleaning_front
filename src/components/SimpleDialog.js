@@ -20,6 +20,8 @@ export default function SimpleDialog({ open, onClose, orderId, assignEmployees }
   const { addAssignEmployees } = useAssign();
   const [employeeList, setEmployeeList] = useState([]);
   const [isChecked, setIsChecked] = useState([]);
+  const [checkedEmployeeId, setCheckedEmployeeId] = useState([]);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,7 +50,7 @@ export default function SimpleDialog({ open, onClose, orderId, assignEmployees }
     onClose();
   };
 
-  const [checkedEmployeeId, setCheckedEmployeeId] = useState([]);
+  console.log(employees);
 
   const handleChange = (id, index) => {
     const tmpIsChecked = isChecked.slice();
@@ -65,7 +67,6 @@ export default function SimpleDialog({ open, onClose, orderId, assignEmployees }
   };
 
   const handleSubmit = async () => {
-    console.log(checkedEmployeeId);
     const assEmployees = {
       checkedEmployeeId,
       orderId,

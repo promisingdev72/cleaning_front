@@ -126,7 +126,6 @@ export default function OrderList() {
   };
 
   const handleDeleteRow = (id) => {
-    console.log('deleteId', id);
     const deleteRow = tableData.filter((row) => row.id !== id);
     setSelected([]);
     setTableData(deleteRow);

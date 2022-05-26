@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 // @mui
 import { Box, Checkbox, TableRow, TableCell, TableHead, TableSortLabel } from '@mui/material';
+import useAuth from '../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -39,10 +40,11 @@ export default function TableHeadCustom({
   onSelectAllRows,
   sx,
 }) {
+  const { user } = useAuth();
   return (
     <TableHead sx={sx}>
       <TableRow>
-        {onSelectAllRows && (
+        {onSelectAllRows && user.roleId === 'CUSTOMER' && (
           <TableCell padding="checkbox">
             <Checkbox
               indeterminate={numSelected > 0 && numSelected < rowCount}
