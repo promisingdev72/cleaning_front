@@ -37,34 +37,3 @@ exports.getAssignEmployees = (req, res) => {
       res.status(500).send({ message: err });
     });
 };
-
-// exports.editBus = (req, res) => {
-//   const { busNumber, busPlates, busGasCode, busId } = req.body;
-//   Bus.update(
-//     {
-//       busNumber,
-//       busPlates,
-//       busGasCode,
-//     },
-//     { where: { id: busId } }
-//   )
-//     .then(() => {
-//       res.status(200).send({ message: 'Update is success' });
-//     })
-//     .catch((err) => res.status(500).send({ message: err }));
-// };
-
-// exports.delBus = (req, res) => {
-//   const { busId } = req.body;
-//   Bus.destroy({
-//     where: {
-//       id: busId,
-//     },
-//   })
-//     .then(() => {
-//       res.status(200).send({ message: 'Bus Deleted!' });
-//     })
-//     .catch((err) => {
-//       res.status(500).send({ message: err });
-//     });
-// };

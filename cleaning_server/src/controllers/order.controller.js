@@ -68,12 +68,10 @@ async function getOrderData(orderInfos) {
         const { id, name } = user;
         employeeIds.map((userId) => {
           if (userId === id) userNames.push(name);
-          return name;
+          return userNames;
         });
         return user;
       });
-
-      console.log({ orderId: id, userNames });
 
       const order = {
         id,

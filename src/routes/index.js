@@ -31,6 +31,7 @@ export default function Router() {
   const role2 = ['EMPLOYEE'];
   const role3 = ['CUSTOMER'];
   const role4 = ['ADMIN', 'EMPLOYEE', 'CUSTOMER'];
+  const role5 = ['ADMIN', 'CUSTOMER'];
   return useRoutes([
     {
       path: 'auth',
@@ -70,7 +71,7 @@ export default function Router() {
             {
               path: 'new',
               element: (
-                <RoleBasedGuard roles={role4} hasContent>
+                <RoleBasedGuard roles={role5} hasContent>
                   <TaskCreate />
                 </RoleBasedGuard>
               ),
@@ -78,7 +79,7 @@ export default function Router() {
             {
               path: ':name/edit',
               element: (
-                <RoleBasedGuard roles={role4} hasContent>
+                <RoleBasedGuard roles={role5} hasContent>
                   <TaskCreate />
                 </RoleBasedGuard>
               ),

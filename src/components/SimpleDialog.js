@@ -8,6 +8,7 @@ import useAssign from '../hooks/useAssign';
 // redux
 import { useDispatch, useSelector } from '../redux/store';
 import { getEmployees } from '../redux/slices/user';
+import { getAllOrders } from '../redux/slices/order';
 
 SimpleDialog.propTypes = {
   open: PropTypes.bool.isRequired,
@@ -50,8 +51,6 @@ export default function SimpleDialog({ open, onClose, orderId, assignEmployees }
     onClose();
   };
 
-  console.log(employees);
-
   const handleChange = (id, index) => {
     const tmpIsChecked = isChecked.slice();
     tmpIsChecked[index] = !tmpIsChecked[index];
@@ -73,6 +72,7 @@ export default function SimpleDialog({ open, onClose, orderId, assignEmployees }
     };
     try {
       await addAssignEmployees(assEmployees);
+      dispatch(getAllOrders());
     } catch (err) {
       console.log(err);
     }

@@ -44,7 +44,7 @@ export default function TableHeadCustom({
   return (
     <TableHead sx={sx}>
       <TableRow>
-        {onSelectAllRows && user.roleId === 'CUSTOMER' && (
+        {onSelectAllRows && user.roleId !== 'EMPLOYEE' && (
           <TableCell padding="checkbox">
             <Checkbox
               indeterminate={numSelected > 0 && numSelected < rowCount}

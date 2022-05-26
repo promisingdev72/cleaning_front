@@ -3,17 +3,7 @@ import { styled } from '@mui/material/styles';
 // components
 import Page from '../components/Page';
 // sections
-import {
-  HomeHero,
-  HomeMinimal,
-  HomeDarkMode,
-  HomeLookingFor,
-  HomeColorPresets,
-  HomePricingPlans,
-  HomeAdvertisement,
-  HomeCleanInterfaces,
-  HomeHugePackElements,
-} from '../sections/home';
+import { HomeHero, HomeAdvertisement } from '../sections/home';
 
 // ----------------------------------------------------------------------
 
@@ -29,22 +19,7 @@ export default function HomePage() {
   return (
     <Page title="Buswash Aps">
       <HomeHero />
-
       <ContentStyle>
-        <HomeMinimal />
-
-        <HomeHugePackElements />
-
-        <HomeDarkMode />
-
-        <HomeColorPresets />
-
-        <HomeCleanInterfaces />
-
-        <HomePricingPlans />
-
-        <HomeLookingFor />
-
         <HomeAdvertisement />
       </ContentStyle>
     </Page>

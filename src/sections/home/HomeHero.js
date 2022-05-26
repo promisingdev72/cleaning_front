@@ -75,50 +75,6 @@ export default function HomeHero() {
           src="https://minimal-assets-api-dev.vercel.app/assets/images/home/hero.png"
           variants={varFade().inUp}
         />
-
-        <Container>
-          <ContentStyle>
-            <m.div variants={varFade().inRight}>
-              <Typography variant="h1" sx={{ color: 'common.white' }}>
-                ddddd
-              </Typography>
-            </m.div>
-
-            <m.div variants={varFade().inRight}>
-              <Typography sx={{ color: 'common.white' }}>The starting point fdddddd</Typography>
-            </m.div>
-
-            <m.div variants={varFade().inRight}>
-              <Button
-                size="large"
-                variant="contained"
-                component={RouterLink}
-                to={PATH_DASHBOARD.root}
-                startIcon={<Iconify icon={'eva:flash-fill'} width={20} height={20} />}
-              >
-                Live Preview
-              </Button>
-            </m.div>
-
-            <Stack spacing={2.5}>
-              <m.div variants={varFade().inRight}>
-                <Typography variant="overline" sx={{ color: 'primary.light' }}>
-                  Available For
-                </Typography>
-              </m.div>
-
-              <Stack direction="row" spacing={1.5} justifyContent={{ xs: 'center', md: 'flex-start' }}>
-                {['ic_sketch', 'ic_figma', 'ic_js', 'ic_ts', 'ic_nextjs'].map((resource) => (
-                  <m.img
-                    key={resource}
-                    variants={varFade().inRight}
-                    src={`https://minimal-assets-api-dev.vercel.app/assets/images/home/${resource}.svg`}
-                  />
-                ))}
-              </Stack>
-            </Stack>
-          </ContentStyle>
-        </Container>
       </RootStyle>
       <Box sx={{ height: { md: '100vh' } }} />
     </MotionContainer>

@@ -46,7 +46,7 @@ export default function OrderTableRow({
 
   return (
     <TableRow hover selected={selected}>
-      {user.roleId === 'CUSTOMER' && (
+      {user.roleId !== 'EMPLOYEE' && (
         <TableCell padding="checkbox">
           <Checkbox checked={selected} onClick={onSelectRow} />
         </TableCell>
@@ -59,7 +59,7 @@ export default function OrderTableRow({
       <TableCell align="left">{driverPhoneNumber}</TableCell>
       <TableCell align="left">{startDate}</TableCell>
       <TableCell align="left">{endDate}</TableCell>
-      <TableCell align="left">{userNames.length !== 0 ? userNames : 'Not Yet'}</TableCell>
+      <TableCell align="left">{userNames.length !== 0 ? userNames.join(' ') : 'Not Yet'}</TableCell>
       <TableCell align="left">{status}</TableCell>
 
       <TableCell align="right">
@@ -69,7 +69,7 @@ export default function OrderTableRow({
           onClose={handleCloseMenu}
           actions={
             <>
-              {user.roleId === 'CUSTOMER' && (
+              {user.roleId !== 'EMPLOYEE' && (
                 <MenuItem
                   onClick={() => {
                     onDeleteRow();

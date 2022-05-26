@@ -52,10 +52,10 @@ const TABLE_HEAD = [
   { id: 'busGasCode', label: 'Bus Gas Code', align: 'left' },
   { id: 'driverName', label: 'Driver Name', align: 'left' },
   { id: 'driverPhoneNuber', label: 'Driver Phone Number', align: 'left' },
-  { id: 'startDate', label: 'Start', align: 'left' },
-  { id: 'endDate', label: 'End', align: 'left' },
+  { id: 'startDate', label: 'Start Date', align: 'left' },
+  { id: 'endDate', label: 'End Date', align: 'left' },
   { id: 'assginEmployees', label: 'Assigned Employees', align: 'left' },
-  { id: 'status', label: 'Status', align: 'left' },
+  { id: 'status', label: 'Task Status', align: 'left' },
   { id: '' },
 ];
 
@@ -90,12 +90,12 @@ export default function OrderList() {
 
   const dispatch = useDispatch();
 
+  const { orders } = useSelector((state) => state.order);
+  const { assignes } = useSelector((state) => state.assign);
+
   useEffect(() => {
     dispatch(getAllOrders());
   }, [dispatch]);
-
-  const { orders } = useSelector((state) => state.order);
-  const { assignes } = useSelector((state) => state.assign);
 
   useEffect(() => {
     if (assignes) {
@@ -107,11 +107,14 @@ export default function OrderList() {
 
   useEffect(() => {
     if (orders) {
-      if (user.roleId !== 'ADMIN') {
+      if (user.roleId === 'ADMIN') {
+        setTableData(orders);
+      } else if (user.roleId === 'CUSTOMER') {
         const tempOrder = orders.filter((order) => Number(order.userId) === user.id);
         setTableData(tempOrder);
-      } else {
-        setTableData(orders);
+      } else if (user.roleId === 'EMPLOYEE') {
+        console.log('Here is Employee', orders);
+        // console.log('Here is Employee', assignEmployees);
       }
     }
   }, [orders]);

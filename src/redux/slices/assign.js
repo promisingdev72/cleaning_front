@@ -37,7 +37,7 @@ export function addAssignEmployees({ data }) {
     dispatch(slice.actions.startLoading());
     try {
       const response = await axios.post('/api/account/addassignemployees', data);
-      dispatch(slice.actions.getAssignEmployeeSuccess(response.data.assignEmployee));
+      dispatch(slice.actions.getAssignEmployeeSuccess(response.data.assignEmployees));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
