@@ -29,13 +29,12 @@ exports.addOrder = (req, res) => {
 };
 
 exports.addStatus = (req, res) => {
-  const { orderId, status } = req.body;
-  console.log(orderId, status);
-  Order.update(
+  const { orderId, status, userId } = req.body;
+  Assign.update(
     {
       status,
     },
-    { where: { id: orderId } }
+    { where: { orderId, employeeId: userId } }
   )
     .then(() => {
       res.status(200).send({ message: 'Status Updated!' });
@@ -56,39 +55,36 @@ exports.getAssingedOrders = async (req, res) => {
 async function getAssignedOrderData(assignedEmployeeInfos) {
   const asyncRes = await Promise.all(
     assignedEmployeeInfos.map(async (assignedEmployeeInfo) => {
-      const { orderId } = assignedEmployeeInfo;
-      const assinedOrderData = await Order.findAll({ where: { id: orderId } });
+      const { orderId, status } = assignedEmployeeInfo;
+      const assinedOrderData = await Order.findOne({ where: { id: orderId } });
       const assignedOrders = [];
-      assinedOrderData.map(async (assinedOrder) => {
-        const {
-          id,
-          userId,
-          busNumber,
-          busPlates,
-          busGasCode,
-          program,
-          driverName,
-          driverPhoneNumber,
-          startDate,
-          endDate,
-          status,
-        } = assinedOrder;
+      const {
+        id,
+        userId,
+        busNumber,
+        busPlates,
+        busGasCode,
+        program,
+        driverName,
+        driverPhoneNumber,
+        startDate,
+        endDate,
+      } = assinedOrderData;
 
-        const assignedOrder = {
-          id,
-          userId,
-          busNumber,
-          busPlates,
-          busGasCode,
-          program,
-          driverName,
-          driverPhoneNumber,
-          startDate,
-          endDate,
-          status,
-        };
-        assignedOrders.push(assignedOrder);
-      });
+      const assignedOrder = {
+        id,
+        userId,
+        busNumber,
+        busPlates,
+        busGasCode,
+        program,
+        driverName,
+        driverPhoneNumber,
+        startDate,
+        endDate,
+        status,
+      };
+      assignedOrders.push(assignedOrder);
       return assignedOrders;
     })
   );
@@ -116,17 +112,21 @@ async function getOrderData(orderInfos) {
         driverPhoneNumber,
         startDate,
         endDate,
-        status,
+        // status,
       } = orderInfo;
+
+      const statusLevels = { pending: 0, 'in progress': 1, complete: 2, 'Not Yet': 3 };
 
       const assignEmployeeData = await Assign.findAll({ where: { orderId: id } });
 
-      // eslint-disable-next-line array-callback-return
       const employeeIds = [];
-      // eslint-disable-next-line array-callback-return
+      const currentStatus = [];
+
       assignEmployeeData.map((assignEmployee) => {
-        const { employeeId } = assignEmployee;
+        const { employeeId, status } = assignEmployee;
         employeeIds.push(employeeId);
+        currentStatus.push(status);
+        return status;
       });
 
       const users = await User.findAll();
@@ -141,6 +141,15 @@ async function getOrderData(orderInfos) {
         });
         return user;
       });
+
+      console.log('AAAAAAAAAAAAAAAAAAA', currentStatus);
+      let status = 'Not Yet';
+      // eslint-disable-next-line no-restricted-syntax
+      for (const cstatus of currentStatus) {
+        if (statusLevels[cstatus] < statusLevels[status]) {
+          status = cstatus;
+        }
+      }
 
       const order = {
         id,
