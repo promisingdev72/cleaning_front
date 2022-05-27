@@ -34,7 +34,6 @@ exports.getDrivers = (req, res) => {
         };
         drivers.push(driver);
       });
-      // console.log(driverList);
       res.status(200).send({ drivers });
     })
     .catch((err) => {

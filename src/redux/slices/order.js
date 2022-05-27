@@ -6,6 +6,7 @@ const initialState = {
   isLoading: false,
   error: false,
   orders: [],
+  assignedOrders: [],
 };
 
 const slice = createSlice({
@@ -26,6 +27,10 @@ const slice = createSlice({
       state.isLoading = false;
       state.orders = action.payload;
     },
+    getAssignedOrderSuccess(state, action) {
+      state.isLoading = false;
+      state.assignedOrders = action.payload;
+    },
   },
 });
 
@@ -38,6 +43,18 @@ export function getAllOrders() {
     try {
       const response = await axios.get('/api/account/getallorder');
       dispatch(slice.actions.getOrderSuccess(response.data.orders));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function getAssignedOrders(employeeId) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get('/api/account/getassignedorder', { params: { employeeId } });
+      dispatch(slice.actions.getAssignedOrderSuccess(response.data.assignedOrders));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

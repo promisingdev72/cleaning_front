@@ -59,7 +59,9 @@ export default function OrderTableRow({
       <TableCell align="left">{driverPhoneNumber}</TableCell>
       <TableCell align="left">{startDate}</TableCell>
       <TableCell align="left">{endDate}</TableCell>
-      <TableCell align="left">{userNames.length !== 0 ? userNames.join(' ') : 'Not Yet'}</TableCell>
+      {user.roleId !== 'EMPLOYEE' && (
+        <TableCell align="left">{userNames.length !== 0 ? userNames.join(' ') : 'Not Yet'}</TableCell>
+      )}
       <TableCell align="left">{status}</TableCell>
 
       <TableCell align="right">
@@ -104,15 +106,26 @@ export default function OrderTableRow({
                 </MenuItem>
               )}
               {user.roleId === 'EMPLOYEE' && (
-                <MenuItem
-                  onClick={() => {
-                    onStatusRow();
-                    handleCloseMenu();
-                  }}
-                >
-                  <Iconify icon={'material-symbols:task-alt-rounded'} />
-                  Status
-                </MenuItem>
+                <>
+                  <MenuItem
+                    onClick={() => {
+                      onStatusRow();
+                      handleCloseMenu();
+                    }}
+                  >
+                    <Iconify icon={'cil:av-timer'} />
+                    In Progress
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      onStatusRow();
+                      handleCloseMenu();
+                    }}
+                  >
+                    <Iconify icon={'material-symbols:task-alt-rounded'} />
+                    Complete
+                  </MenuItem>
+                </>
               )}
             </>
           }

@@ -26,6 +26,56 @@ exports.addOrder = (req, res) => {
     });
 };
 
+exports.getAssingedOrders = async (req, res) => {
+  const { employeeId } = req.query;
+  Assign.findAll({ where: { employeeId } }).then(async (assignedEmployeeInfos) => {
+    const assignedOrders = await getAssignedOrderData(assignedEmployeeInfos);
+    res.status(200).send({ assignedOrders });
+  });
+};
+
+async function getAssignedOrderData(assignedEmployeeInfos) {
+  const asyncRes = await Promise.all(
+    assignedEmployeeInfos.map(async (assignedEmployeeInfo) => {
+      const { orderId } = assignedEmployeeInfo;
+      const assinedOrderData = await Order.findAll({ where: { id: orderId } });
+      const assignedOrders = [];
+      assinedOrderData.map(async (assinedOrder) => {
+        const {
+          id,
+          userId,
+          busNumber,
+          busPlates,
+          busGasCode,
+          program,
+          driverName,
+          driverPhoneNumber,
+          startDate,
+          endDate,
+          status,
+        } = assinedOrder;
+
+        const assignedOrder = {
+          id,
+          userId,
+          busNumber,
+          busPlates,
+          busGasCode,
+          program,
+          driverName,
+          driverPhoneNumber,
+          startDate,
+          endDate,
+          status,
+        };
+        assignedOrders.push(assignedOrder);
+      });
+      return assignedOrders;
+    })
+  );
+  return asyncRes.flatMap((asyncResEle) => asyncResEle);
+}
+
 exports.getAllOrders = async (req, res) => {
   Order.findAll().then(async (orderInfos) => {
     const orders = await getOrderData(orderInfos);

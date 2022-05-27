@@ -45,7 +45,6 @@ export function getBuses(customerId) {
 }
 
 export function addBus({ data }) {
-  console.log(data);
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {

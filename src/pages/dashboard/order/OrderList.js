@@ -23,7 +23,7 @@ import {
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // redux
 import { useDispatch, useSelector } from '../../../redux/store';
-import { getAllOrders } from '../../../redux/slices/order';
+import { getAllOrders, getAssignedOrders } from '../../../redux/slices/order';
 import { getAssignEmployees } from '../../../redux/slices/assign';
 
 // hooks
@@ -46,7 +46,7 @@ import { OrderTableToolbar, OrderTableRow } from '../../../sections/@dashboard/o
 
 // ----------------------------------------------------------------------
 
-const TABLE_HEAD = [
+const TABLE_HEAD1 = [
   { id: 'busNumber', label: 'Bus Number', align: 'left' },
   { id: 'busPlates', label: 'Bus Plates', align: 'left' },
   { id: 'busGasCode', label: 'Bus Gas Code', align: 'left' },
@@ -55,6 +55,17 @@ const TABLE_HEAD = [
   { id: 'startDate', label: 'Start Date', align: 'left' },
   { id: 'endDate', label: 'End Date', align: 'left' },
   { id: 'assginEmployees', label: 'Assigned Employees', align: 'left' },
+  { id: 'status', label: 'Task Status', align: 'left' },
+  { id: '' },
+];
+const TABLE_HEAD2 = [
+  { id: 'busNumber', label: 'Bus Number', align: 'left' },
+  { id: 'busPlates', label: 'Bus Plates', align: 'left' },
+  { id: 'busGasCode', label: 'Bus Gas Code', align: 'left' },
+  { id: 'driverName', label: 'Driver Name', align: 'left' },
+  { id: 'driverPhoneNuber', label: 'Driver Phone Number', align: 'left' },
+  { id: 'startDate', label: 'Start Date', align: 'left' },
+  { id: 'endDate', label: 'End Date', align: 'left' },
   { id: 'status', label: 'Task Status', align: 'left' },
   { id: '' },
 ];
@@ -92,9 +103,11 @@ export default function OrderList() {
 
   const { orders } = useSelector((state) => state.order);
   const { assignes } = useSelector((state) => state.assign);
+  const { assignedOrders } = useSelector((state) => state.order);
 
   useEffect(() => {
     dispatch(getAllOrders());
+    dispatch(getAssignedOrders(user.id));
   }, [dispatch]);
 
   useEffect(() => {
@@ -112,12 +125,14 @@ export default function OrderList() {
       } else if (user.roleId === 'CUSTOMER') {
         const tempOrder = orders.filter((order) => Number(order.userId) === user.id);
         setTableData(tempOrder);
-      } else if (user.roleId === 'EMPLOYEE') {
-        console.log('Here is Employee', orders);
-        // console.log('Here is Employee', assignEmployees);
       }
     }
-  }, [orders]);
+    if (assignedOrders) {
+      if (user.roleId === 'EMPLOYEE') {
+        setTableData(assignedOrders);
+      }
+    }
+  }, [orders, assignedOrders]);
 
   const navigate = useNavigate();
 
@@ -221,7 +236,7 @@ export default function OrderList() {
                 <TableHeadCustom
                   order={order}
                   orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
+                  headLabel={user.roleId !== 'EMPLOYEE' ? TABLE_HEAD1 : TABLE_HEAD2}
                   rowCount={tableData.length}
                   numSelected={selected.length}
                   onSort={onSort}

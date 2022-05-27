@@ -163,7 +163,6 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
         reset();
       } else {
         await addOrder({ resData });
-        console.log('resData', resData);
       }
       reset();
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
