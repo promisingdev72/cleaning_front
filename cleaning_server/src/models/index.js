@@ -18,7 +18,6 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.user = require('./user.model')(sequelize, Sequelize);
-db.role = require('./role.model')(sequelize, Sequelize);
 db.garage = require('./garage.model')(sequelize, Sequelize);
 db.driver = require('./driver.model')(sequelize, Sequelize);
 db.bus = require('./bus.model')(sequelize, Sequelize);
@@ -31,20 +30,6 @@ db.order.hasMany(db.assEmployee, {
   foreignKey: 'orderId',
 });
 db.assEmployee.belongsTo(db.order);
-
-// user vs role
-
-db.user.belongsToMany(db.role, {
-  through: 'user_role',
-  foreignKey: 'userId',
-  otherKey: 'roleId',
-});
-
-db.role.belongsToMany(db.user, {
-  through: 'user_role',
-  foreignKey: 'roleId',
-  otherKey: 'userId',
-});
 
 // user vs garage
 
