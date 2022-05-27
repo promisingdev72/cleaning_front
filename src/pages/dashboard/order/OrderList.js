@@ -75,7 +75,7 @@ const TABLE_HEAD2 = [
 export default function OrderList() {
   const { user } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
-  const { deleteOrder } = useOrder();
+  const { addStatus, deleteOrder } = useOrder();
   const [assignEmployees, setAssignEmployeeList] = useState([]);
 
   const {
@@ -182,6 +182,14 @@ export default function OrderList() {
     setOrderId(orderId);
   };
 
+  const handleStatus = (orderId, status) => {
+    const statusData = {
+      orderId,
+      status,
+    };
+    addStatus({ statusData });
+  };
+
   const denseHeight = dense ? 52 : 72;
 
   const isNotFound = !dataFiltered.length && !!filterName;
@@ -256,6 +264,7 @@ export default function OrderList() {
                       selected={selected.includes(row.id)}
                       onSelectRow={() => onSelectRow(row.id)}
                       onAssignRow={() => handleAssign(row.id)}
+                      onStatusRow={(status) => handleStatus(row.id, status)}
                       onDeleteRow={() => handleDeleteRow(row.id)}
                       onEditRow={() => handleEditRow(row.busNumber)}
                     />

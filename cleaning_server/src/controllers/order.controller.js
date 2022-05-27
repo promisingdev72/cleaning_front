@@ -26,6 +26,23 @@ exports.addOrder = (req, res) => {
     });
 };
 
+exports.addStatus = (req, res) => {
+  const { orderId, status } = req.body;
+  console.log(orderId, status);
+  Order.update(
+    {
+      status,
+    },
+    { where: { id: orderId } }
+  )
+    .then(() => {
+      res.status(200).send({ message: 'Status Updated!' });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err });
+    });
+};
+
 exports.getAssingedOrders = async (req, res) => {
   const { employeeId } = req.query;
   Assign.findAll({ where: { employeeId } }).then(async (assignedEmployeeInfos) => {

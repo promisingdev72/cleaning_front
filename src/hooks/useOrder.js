@@ -2,7 +2,7 @@
 import { useDispatch } from 'react-redux';
 
 // redux
-import { addOrder, editOrder, deleteOrder } from '../redux/slices/order';
+import { addOrder, editOrder, deleteOrder, addStatus } from '../redux/slices/order';
 
 // ----------------------------------------------------------------------
 
@@ -17,6 +17,11 @@ export default function useOrder() {
     // --------------  Creating part ---------------------
     addOrder: ({ resData }) => {
       dispatch(addOrder({ resData }));
+    },
+
+    // --------------  Creating part ---------------------
+    addStatus: ({ statusData }) => {
+      dispatch(addStatus({ statusData }));
     },
 
     // --------------  Delete Employee ---------------------

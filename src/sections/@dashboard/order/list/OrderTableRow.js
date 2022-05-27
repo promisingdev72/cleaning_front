@@ -109,7 +109,7 @@ export default function OrderTableRow({
                 <>
                   <MenuItem
                     onClick={() => {
-                      onStatusRow();
+                      onStatusRow('in progress');
                       handleCloseMenu();
                     }}
                   >
@@ -118,7 +118,7 @@ export default function OrderTableRow({
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
-                      onStatusRow();
+                      onStatusRow('complete');
                       handleCloseMenu();
                     }}
                   >

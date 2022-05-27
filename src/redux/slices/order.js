@@ -72,6 +72,17 @@ export function addOrder({ resData }) {
   };
 }
 
+export function addStatus({ statusData }) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      await axios.post('/api/account/addstatus', statusData);
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
 export function deleteOrder(orderId) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());

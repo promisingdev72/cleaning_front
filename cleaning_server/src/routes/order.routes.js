@@ -8,6 +8,7 @@ module.exports = (app) => {
   });
 
   app.post('/api/account/addorder', ordercontroller.addOrder);
+  app.post('/api/account/addstatus', ordercontroller.addStatus);
   app.get('/api/account/getallorder', ordercontroller.getAllOrders);
   app.get('/api/account/getassignedorder', ordercontroller.getAssingedOrders);
   app.post('/api/account/editorder', ordercontroller.editOrder);
