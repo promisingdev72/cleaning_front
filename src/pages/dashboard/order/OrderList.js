@@ -76,6 +76,7 @@ export default function OrderList() {
   const { user } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
   const { addStatus, deleteOrder } = useOrder();
+  const [isFlag, setIsFlag] = useState();
   const [assignEmployees, setAssignEmployeeList] = useState([]);
 
   const {
@@ -108,7 +109,7 @@ export default function OrderList() {
   useEffect(() => {
     dispatch(getAllOrders());
     dispatch(getAssignedOrders(user.id));
-  }, [dispatch]);
+  }, [dispatch, isFlag]);
 
   useEffect(() => {
     if (assignes) {
@@ -188,6 +189,7 @@ export default function OrderList() {
       status,
     };
     addStatus({ statusData });
+    setIsFlag(!isFlag);
   };
 
   const denseHeight = dense ? 52 : 72;

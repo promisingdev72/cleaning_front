@@ -109,6 +109,15 @@ export default function OrderTableRow({
                 <>
                   <MenuItem
                     onClick={() => {
+                      onStatusRow('pending');
+                      handleCloseMenu();
+                    }}
+                  >
+                    <Iconify icon={'ic:baseline-history'} />
+                    Pending
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
                       onStatusRow('in progress');
                       handleCloseMenu();
                     }}

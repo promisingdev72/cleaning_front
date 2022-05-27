@@ -7,6 +7,7 @@ const Assign = db.assEmployee;
 exports.addOrder = (req, res) => {
   const { customerId, program, busNumber, busPlates, busGasCode, driverName, driverPhoneNumber, startDate, endDate } =
     req.body;
+  const status = 'pending';
   Order.create({
     userId: customerId,
     program,
@@ -14,6 +15,7 @@ exports.addOrder = (req, res) => {
     busPlates,
     busGasCode,
     driverName,
+    status,
     driverPhoneNumber,
     startDate,
     endDate,
