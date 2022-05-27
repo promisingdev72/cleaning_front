@@ -6,6 +6,9 @@ module.exports = (sequelize, Sequelize) => {
     employeeId: {
       type: Sequelize.INTEGER,
     },
+    status: {
+      type: Sequelize.STRING,
+    },
   });
   return assEmployee;
 };

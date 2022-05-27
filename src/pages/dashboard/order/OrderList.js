@@ -187,6 +187,7 @@ export default function OrderList() {
     const statusData = {
       orderId,
       status,
+      userId: user.id,
     };
     addStatus({ statusData });
     setIsFlag(!isFlag);
