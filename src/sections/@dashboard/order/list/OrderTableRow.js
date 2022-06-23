@@ -56,7 +56,7 @@ export default function OrderTableRow({
       <TableCell align="left">{busPlates}</TableCell>
       <TableCell align="left">{busGasCode}</TableCell>
       <TableCell align="left">{driverName}</TableCell>
-      <TableCell align="left">{driverPhoneNumber}</TableCell>
+      <TableCell align="left" sx={{ minWidth: '150px' }}>{driverPhoneNumber}</TableCell>
       <TableCell align="left">{startDate}</TableCell>
       <TableCell align="left">{endDate}</TableCell>
       {user.roleId !== 'EMPLOYEE' && (
