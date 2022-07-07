@@ -65,21 +65,39 @@ async function getCustomerData(customerInfos) {
   return asyncRes;
 }
 
-// exports.updateProfile = (req, res) => {
-//   User.update(
-//     {
-//       name: req.body.name,
-//       roles: 1,
-//     },
-//     { where: { email: req.body.email } }
-//   )
-//     .then(() => {
-//       res.status(200).send("update is success");
-//     })
-//     .catch((error) => {
-//       return res.status(500).send("update is unsuccessfull");
-//     });
-// };
+exports.editProfile = (req, res) => {
+  User.findOne({
+    where: {
+      name: req.body.name,
+    },
+  })
+    .then((userInfo) => {
+      const passwordIsValid = bcrypt.compareSync(req.body.oldPassword, userInfo.password);
+
+      console.log('passwordIsValid', passwordIsValid);
+
+      if (!passwordIsValid) {
+        return res.status(200).send({
+          accessToken: null,
+          message: 'Wrong Old Password!',
+        });
+      }
+
+      User.update(
+        {
+          password: bcrypt.hashSync(req.body.newPassword, 8),
+        },
+        { where: { name: req.body.name } }
+      )
+        .then(() => {
+          res.status(200).send({ message: 'update is success' });
+        })
+        .catch((error) => res.status(200).send({ message: 'update is unsuccessfull' }));
+    })
+    .catch((err) => {
+      res.status(200).send({ message: err.message });
+    });
+};
 
 exports.getProfile = (req, res) => {
   const { authorization } = req.headers;

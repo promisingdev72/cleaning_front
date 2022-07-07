@@ -1,0 +1,443 @@
+[33mcommit 462f3ee6c3ffc987cc3188014f4313070c24a5d3[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Fri May 27 16:52:29 2022 +0300
+
+    status part complete
+
+[33mcommit bccaa9fc74085904817895a125002a78a116e1ec[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Fri May 27 15:30:14 2022 +0300
+
+    remove role
+
+[33mcommit d70bdf6f2300fdd895c9ce4beed241d18188be17[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Fri May 27 15:16:35 2022 +0300
+
+    little fix
+
+[33mcommit a8ee56eb386e4dbf0c56be3bc733e44f42f21317[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Fri May 27 06:13:49 2022 +0300
+
+    main feature completed
+
+[33mcommit c08a8f4ec034ce74848fd401a17e958473971ef5[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Fri May 27 05:59:30 2022 +0300
+
+    update
+
+[33mcommit 0b86e6d284e6a2859bafc4242b7508c5589eed25[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Fri May 27 04:58:31 2022 +0300
+
+    update
+
+[33mcommit aa7e6e77c4046cbdfbf33ac350cb5dfe4e400898[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Thu May 26 12:42:57 2022 +0300
+
+    home page update
+
+[33mcommit d6c0bc1e6c1a0e08103b7160b6d637c57cef20ed[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Thu May 26 10:14:46 2022 +0300
+
+    update
+
+[33mcommit 15a85f85d7368838eb691093aef330d09ee21238[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 25 17:09:56 2022 +0300
+
+    update
+
+[33mcommit 512351c9853966165ddeff716032928e8ef56983[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 25 14:44:25 2022 +0300
+
+    update
+
+[33mcommit a3565619dba12367e533e80f931d65c95cd796e7[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 25 03:07:49 2022 +0300
+
+    fix search bar
+
+[33mcommit 9523b772685ca7b32921c81478b6f86d89eb13b7[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Tue May 24 14:00:09 2022 +0300
+
+    Delete Orders Complete
+
+[33mcommit 8dee609037e8fac8f006c905820f86a4f2a80a0a[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Tue May 24 12:14:51 2022 +0300
+
+    task edit complete
+
+[33mcommit 1eedf53744a931518594dde6183ad8d1771710bc[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Tue May 24 10:55:19 2022 +0300
+
+    Edit Order get Data
+
+[33mcommit 9e9e348c6f55a6443bca7e266f1b2273a7644369[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Tue May 24 09:03:04 2022 +0300
+
+    update
+
+[33mcommit a2dbab65b23ead1126c3136ab3c3270462001831[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Tue May 24 04:53:47 2022 +0300
+
+    Add Order
+
+[33mcommit 29ebda7f5c0d1ff0ace8892e699c00a0ed768ff1[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Tue May 24 03:58:26 2022 +0300
+
+    Before Add Orders
+
+[33mcommit ffd3d7f5c2d43b87b6a149256c77d5f0794ec730[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Mon May 23 11:41:12 2022 +0300
+
+    bus list complete
+
+[33mcommit cfc9c25f49da17739389f637ea431bee9abf7d3a[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Mon May 23 06:24:58 2022 +0300
+
+    driver CRUD complete
+
+[33mcommit d158be0fb508ec554b061a261aaef18a61bc43bb[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Mon May 23 04:44:14 2022 +0300
+
+    add driver
+
+[33mcommit 4918c5022701d9051959d237c2cfc1294f258e62[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Mon May 23 03:49:22 2022 +0300
+
+    update
+
+[33mcommit 4052632f77d49a5179026f75e9268648f9520e54[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Mon May 23 03:42:39 2022 +0300
+
+    update
+
+[33mcommit db12bd2344806e9cad104891049e3b8726a854ba[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Mon May 23 03:23:24 2022 +0300
+
+    update
+
+[33mcommit b611dc1db1f4b4173e31ec8047f9159c96f69f33[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Mon May 23 02:06:08 2022 +0300
+
+    'update'
+
+[33mcommit 0d0bce8e5d1cf03a0cc34f85eac81102263e88bb[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Fri May 20 12:39:35 2022 +0300
+
+    update
+
+[33mcommit 20ba65863ac92e8c415d689368da50f8c8409bae[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Fri May 20 08:13:58 2022 +0300
+
+    update
+
+[33mcommit fec89a4d6c132a0af2660d4d470fe0b8c4948279[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Fri May 20 05:52:15 2022 +0300
+
+    update
+
+[33mcommit 34ace91bf00c777cc1898d88c9f64f52c4654f9e[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Fri May 20 04:55:02 2022 +0300
+
+    Rebuilding Server
+
+[33mcommit c5da032f738edf4dfc1022510cbf53f4fa53b125[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 18 09:15:40 2022 +0300
+
+    update
+
+[33mcommit 549c9d6792e3f286f7da7b940f4c13c3943dd459[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 18 09:08:12 2022 +0300
+
+    bus list backend part is done
+
+[33mcommit e1b90680f878c7dec00ca91360c5f3ac7bdbae89[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Mon May 16 22:30:05 2022 +0300
+
+    updat
+
+[33mcommit 57ce419968dabeceac08248b8d7dd44aa4d397f8[m[33m ([m[1;32mmaster[m[33m)[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Mon May 16 21:58:31 2022 +0300
+
+    test
+
+[33mcommit e6f183490576eb5289e775def94303f489ec763c[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Mon May 16 04:56:43 2022 +0300
+
+    update
+
+[33mcommit a76bc20a0fa470333e68d2945a9c8bf7aba88cfd[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Sun May 15 16:55:54 2022 +0300
+
+    update
+
+[33mcommit 40c341346214a5727e61ba447652583ff6407235[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Sat May 14 20:16:31 2022 +0300
+
+    update
+
+[33mcommit ec306601b6b62d1bc4da18e1db1ebb56d584e1ad[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Sat May 14 16:35:20 2022 +0300
+
+    update
+
+[33mcommit baefc7bf49293c2272796bd6e684f0258a1d6a61[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Sat May 14 16:35:14 2022 +0300
+
+    update
+
+[33mcommit 08ef63a48d1f8305944722daaff2f47ba6544431[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Sat May 14 12:43:00 2022 +0300
+
+    update
+
+[33mcommit bb59f3b46f60c0dd115416fb52368733dda66b9d[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Sat May 14 12:42:52 2022 +0300
+
+    update
+
+[33mcommit f11ee25b7e46ef7c548368dc51ceda1d368446a9[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Sat May 14 07:08:54 2022 +0300
+
+    update
+
+[33mcommit 683b6fbde87df265979cb4f02ab79975a57f0679[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Fri May 13 15:12:11 2022 +0300
+
+    update
+
+[33mcommit 68abf7c4a1545fce85313cd5a233bc415f48d0ab[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Fri May 13 15:03:25 2022 +0300
+
+    update
+
+[33mcommit ee2cd18d810dea5cc6b2607b1da7bab6ef048f7a[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Fri May 13 11:28:45 2022 +0300
+
+    update
+
+[33mcommit a397b4a76f74796a3c28bf3e1c68a18f380e9b41[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Fri May 13 06:00:22 2022 +0300
+
+    update
+
+[33mcommit ec519c732e1b5b21d8fe4b2b26ca16e30243916d[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Thu May 12 18:48:15 2022 +0300
+
+    update
+
+[33mcommit 02122359f29b7458601c163949ec54f10a8381c7[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Thu May 12 16:04:26 2022 +0300
+
+    delete icons
+
+[33mcommit 3eea6a2eb3e1d8e6c41f28a72b4ba6365e9dd664[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Thu May 12 15:59:23 2022 +0300
+
+    update
+
+[33mcommit 7b129af94e12b47f443456a23647bb781f731d31[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Thu May 12 15:26:27 2022 +0300
+
+    update
+
+[33mcommit 5de789b6883c10478d2d3678e8b1f58d7a329ce5[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Thu May 12 08:59:09 2022 +0300
+
+    update
+
+[33mcommit e3acb6531c46d2a0efbf9e1df2cf57f9bc80e9b7[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Thu May 12 08:48:33 2022 +0300
+
+    update
+
+[33mcommit 0e2bc2ee8ffabc8153db19507bd25bb7bc511de0[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Thu May 12 08:43:44 2022 +0300
+
+    update
+
+[33mcommit c4f61c4ae688a318eac860400ef500867539d75b[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Thu May 12 08:23:13 2022 +0300
+
+    update
+
+[33mcommit 3522227ed8e3949a17d22efd1877d044b3a24775[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Thu May 12 08:18:43 2022 +0300
+
+    update
+
+[33mcommit 0e3018e96048352c16963e8bf66e07eee1791b7b[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Thu May 12 05:28:34 2022 +0300
+
+    update
+
+[33mcommit ff9038e45a36d290349c038f90f96b4b0fc6c9a0[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Thu May 12 04:55:45 2022 +0300
+
+    update
+
+[33mcommit d41f84887bcb6bdf66d2d76716565d45d0b04e15[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 11 22:39:25 2022 +0300
+
+    update
+
+[33mcommit 170a97daec433e9cc04b51a264c889a8cd9faeee[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 11 20:40:41 2022 +0300
+
+    update
+
+[33mcommit 88d9e64caca07bc2ea703c40a3cadb622e64052e[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 11 20:24:00 2022 +0300
+
+    update
+
+[33mcommit 7982c40f961e4892823f57a55c9753c2f19cc7a2[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 11 20:14:41 2022 +0300
+
+    update
+
+[33mcommit 0dbab326d970a727efad19d7118b6f9f4567d5a8[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 11 19:28:56 2022 +0300
+
+    update
+
+[33mcommit 45c3e680bfb6d06ad366c37385b244c25db60718[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 11 16:41:36 2022 +0300
+
+    update
+
+[33mcommit 38cc6dffa7559aef2d8708fda40cde5c0a9ccee0[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 11 08:01:34 2022 +0300
+
+    update
+
+[33mcommit c39ad1d1dde71b9a4310c6090e4daee470764bc7[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 11 06:11:39 2022 +0300
+
+    update
+
+[33mcommit 9dcf5221ec273d69ac11e697f9e21330f0894b05[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 11 06:10:34 2022 +0300
+
+    update
+
+[33mcommit 6ed387edf8170864a78ca1c544fcc00fd0ddd2af[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 11 06:09:22 2022 +0300
+
+    update
+
+[33mcommit 9a777189f8835f6fa7b833667c037f48e1c111e2[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 11 05:54:38 2022 +0300
+
+    update
+
+[33mcommit f1b145e4705c86bdd12b9df8b7d0f0a8cdae7931[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Wed May 11 03:47:43 2022 +0300
+
+    update
+
+[33mcommit 670a6e2fd4dba997069756a166070e933dd06301[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Tue May 10 22:01:29 2022 +0300
+
+    update
+
+[33mcommit 7e4a1b6599deda7ec6a08541c012a3477be8b338[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Tue May 10 19:09:28 2022 +0300
+
+    update
+
+[33mcommit 761df1ea7b5e30b1f811f88a04333de8ca989cda[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Tue May 10 18:37:25 2022 +0300
+
+    update
+
+[33mcommit b1de48073413f70ef3e6b1e2521eca18b0227886[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Tue May 10 18:13:44 2022 +0300
+
+    update
+
+[33mcommit 12a780c90321d53683a0391fbf9cd78070a6b22b[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Tue May 10 18:03:36 2022 +0300
+
+    update
+
+[33mcommit 4cb534ef016861264cbc1dd6493f5e0ddea137a3[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Tue May 10 04:26:05 2022 +0300
+
+    update
+
+[33mcommit ad93ad34f11bcb99a25d3cd44f3bc8c435ab84bd[m
+Author: promisingdev72 <promising.dev72@gmail.com>
+Date:   Tue May 10 04:00:08 2022 +0300
+
+    init

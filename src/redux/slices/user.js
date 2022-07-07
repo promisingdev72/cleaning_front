@@ -1,5 +1,6 @@
 import { filter } from 'lodash';
 import { createSlice } from '@reduxjs/toolkit';
+
 // utils
 import axios from '../../utils/axios';
 
@@ -33,6 +34,12 @@ const slice = createSlice({
     getProfileSuccess(state, action) {
       state.isLoading = false;
       state.myProfile = action.payload;
+    },
+
+    // GET PROFILE
+    editProfileSuccess(state, action) {
+      state.isLoading = false;
+      state.editMyProfile = action.payload;
     },
 
     // GET USERS
@@ -89,6 +96,22 @@ export function getProfile() {
     try {
       const response = await axios.get('/api/account/profile');
       dispatch(slice.actions.getProfileSuccess(response.data.profile));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+// ----------------------------------------------------------------------
+
+export function editProfile({ data }) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.post('/api/account/editProfile', data);
+      console.log('response', response.data.message);
+
+      // dispatch(slice.actions.editProfileSuccess(response.data.profile));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
