@@ -57,6 +57,7 @@ export default function AccountGeneral() {
       enqueueSnackbar('Update success!');
       reset();
     } catch (error) {
+      enqueueSnackbar('Update Default!');
       console.error(error);
     }
   };
