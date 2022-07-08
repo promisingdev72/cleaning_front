@@ -108,8 +108,8 @@ export function editProfile({ data }) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.post('/api/account/editProfile', data);
-      console.log('response', response.data.message);
+      await axios.post('/api/account/editProfile', data);
+      // console.log('response', response.data.message);
 
       // dispatch(slice.actions.editProfileSuccess(response.data.profile));
     } catch (error) {

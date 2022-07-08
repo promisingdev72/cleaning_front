@@ -5,7 +5,7 @@ import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Grid, Card, Stack, InputAdornment, IconButton } from '@mui/material';
+import { Grid, Card, Stack, InputAdornment, IconButton, Alert } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // hooks
 import useAuth from '../../../../hooks/useAuth';
@@ -47,16 +47,14 @@ export default function AccountGeneral() {
 
   const {
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
     reset,
   } = methods;
 
   const onSubmit = async (data) => {
     try {
       await editProfile({ data });
-
-      // console.log('response', message);
-      // enqueueSnackbar('Update success!');
+      enqueueSnackbar('Update success!');
       reset();
     } catch (error) {
       console.error(error);
@@ -65,6 +63,7 @@ export default function AccountGeneral() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <Card sx={{ p: 3 }}>
