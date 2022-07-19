@@ -51,4 +51,7 @@ export const PATH_DASHBOARD = {
   user: {
     profile: path(ROOTS_DASHBOARD, '/profile'),
   },
+  sms: {
+    smslist: path(ROOTS_DASHBOARD, '/sms'),
+  },
 };

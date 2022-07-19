@@ -10,6 +10,7 @@ const getIcon = (name) => <SvgIconStyle src={`/assets/icons/navbar/${name}.svg`}
 const ICONS = {
   user: getIcon('ic_user'),
   dashboard: getIcon('ic_dashboard'),
+  sms: getIcon('ic_sms'),
 };
 
 const navConfig = [
@@ -23,6 +24,7 @@ const navConfig = [
       { title: 'Manage Driver List', path: PATH_DASHBOARD.driver.driverlist, icon: ICONS.user },
       { title: 'Employees', path: PATH_DASHBOARD.employee.employeelist, icon: ICONS.user },
       { title: 'Customers', path: PATH_DASHBOARD.customer.customerlist, icon: ICONS.user },
+      { title: 'SMS', path: PATH_DASHBOARD.sms.smslist, icon: ICONS.sms },
     ],
   },
 ];

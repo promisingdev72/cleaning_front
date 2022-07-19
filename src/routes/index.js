@@ -200,11 +200,19 @@ export default function Router() {
               path: ':name/edit',
               element: (
                 <RoleBasedGuard roles={role1} hasContent>
-                  <CustomerCreate />{' '}
+                  <CustomerCreate />
                 </RoleBasedGuard>
               ),
             },
           ],
+        },
+        {
+          path: 'sms',
+          element: (
+            <RoleBasedGuard roles={role1} hasContent>
+              <SmsList />
+            </RoleBasedGuard>
+          ),
         },
         {
           path: 'profile',
@@ -261,6 +269,9 @@ const EmployeeCreate = Loadable(lazy(() => import('../pages/dashboard/user/emplo
 // Customer
 const Customers = Loadable(lazy(() => import('../pages/dashboard/user/customer/Customers')));
 const CustomerCreate = Loadable(lazy(() => import('../pages/dashboard/user/customer/CustomerCreate')));
+
+// Sms
+const SmsList = Loadable(lazy(() => import('../pages/dashboard/sms/Sms')));
 
 // MAIN
 const HomePage = Loadable(lazy(() => import('../pages/Home')));

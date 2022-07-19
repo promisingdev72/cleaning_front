@@ -50,7 +50,12 @@ export default function NavSectionVertical({ navConfig, isCollapse = false, ...o
 
           {group.items.map((list) => {
             if (user.roleId === 'ADMIN') {
-              if (list.title === 'Tasks' || list.title === 'Employees' || list.title === 'Customers')
+              if (
+                list.title === 'Tasks' ||
+                list.title === 'Employees' ||
+                list.title === 'Customers' ||
+                list.title === 'SMS'
+              )
                 return <NavListRoot key={list.title + list.path} list={list} isCollapse={isCollapse} />;
             } else if (user.roleId === 'CUSTOMER') {
               if (list.title === 'Manage Bus List' || list.title === 'Manage Driver List' || list.title === 'Tasks')
