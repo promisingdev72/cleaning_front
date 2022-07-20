@@ -124,7 +124,7 @@ export function getUsers() {
     dispatch(slice.actions.startLoading());
     try {
       const response = await axios.get('/api/account/users');
-      dispatch(slice.actions.getUserSuccess(response.data.users));
+      dispatch(slice.actions.getUserSuccess(response.data.userList));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

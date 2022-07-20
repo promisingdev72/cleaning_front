@@ -4,7 +4,7 @@ import { Container } from '@mui/material';
 import useSettings from '../../../hooks/useSettings';
 // components
 import Page from '../../../components/Page';
-import SmsList from '../../../sections/@dashboard/sms';
+import SmsList from './SmsList';
 
 // ----------------------------------------------------------------------
 
