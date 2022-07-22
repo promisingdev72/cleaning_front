@@ -31,8 +31,18 @@ export default function OrderTableRow({
 }) {
   const { user } = useAuth();
 
-  const { userNames, busGasCode, busNumber, busPlates, driverName, driverPhoneNumber, endDate, startDate, status } =
-    row;
+  const {
+    userNames,
+    busGasCode,
+    busNumber,
+    busPlates,
+    driverName,
+    driverPhoneNumber,
+    endDate,
+    startDate,
+    status,
+    program,
+  } = row;
 
   // console.log('startDate', new Date(startDate).toUTCString().slice(0, 22));
 
@@ -53,16 +63,26 @@ export default function OrderTableRow({
           <Checkbox checked={selected} onClick={onSelectRow} />
         </TableCell>
       )}
-
-      <TableCell align="left">{busNumber}</TableCell>
-      <TableCell align="left">{busPlates}</TableCell>
-      <TableCell align="left">{busGasCode}</TableCell>
-      <TableCell align="left">{driverName}</TableCell>
-      <TableCell align="left" sx={{ minWidth: '150px' }}>
-        {driverPhoneNumber}
+      <TableCell align="left" sx={{ minWidth: '100px' }}>
+        {busNumber}
       </TableCell>
-      <TableCell align="left">{new Date(startDate).toString().slice(0, 21)}</TableCell>
-      <TableCell align="left">{new Date(endDate).toString().slice(0, 21)}</TableCell>
+      {user.roleId !== 'EMPLOYEE' && <TableCell align="left">{busPlates}</TableCell>}
+      <TableCell align="left">{busGasCode}</TableCell>
+      {user.roleId !== 'EMPLOYEE' && (
+        <>
+          <TableCell align="left">{driverName}</TableCell>
+          <TableCell align="left" sx={{ minWidth: '150px' }}>
+            {driverPhoneNumber}
+          </TableCell>
+        </>
+      )}
+      {user.roleId === 'EMPLOYEE' && <TableCell align="left">{program}</TableCell>}
+      <TableCell align="left" sx={{ minWidth: '180px' }}>
+        {new Date(startDate).toString().slice(0, 21)}
+      </TableCell>
+      <TableCell align="left" sx={{ minWidth: '180px' }}>
+        {new Date(endDate).toString().slice(0, 21)}
+      </TableCell>
       {user.roleId !== 'EMPLOYEE' && (
         <TableCell align="left">{userNames.length !== 0 ? userNames.join(' ') : 'Not Yet'}</TableCell>
       )}

@@ -47,6 +47,10 @@ export default function SimpleDialog({ open, onClose, orderId, assignEmployees }
     }
   }, [employees, assignEmployees]);
 
+  // useEffect(() => {
+  //   console.log(isChecked);
+  // }, [employees, isChecked]);
+
   const handleClose = () => {
     onClose();
   };
@@ -70,12 +74,15 @@ export default function SimpleDialog({ open, onClose, orderId, assignEmployees }
       checkedEmployeeId,
       orderId,
     };
-    try {
-      await addAssignEmployees(assEmployees);
-      dispatch(getAllOrders());
-    } catch (err) {
-      console.log(err);
-    }
+
+    console.log('AAAAAAA', assEmployees);
+
+    // try {
+    //   await addAssignEmployees(assEmployees);
+    //   dispatch(getAllOrders());
+    // } catch (err) {
+    //   console.log(err);
+    // }
     onClose();
     setCheckedEmployeeId([]);
   };

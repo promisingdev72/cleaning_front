@@ -47,7 +47,7 @@ import { OrderTableToolbar, OrderTableRow } from '../../../sections/@dashboard/o
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD1 = [
-  { id: 'busNumber', label: 'Bus Number', align: 'left' },
+  { id: 'busNumber', label: 'BUS', align: 'left' },
   { id: 'busPlates', label: 'Bus Plates', align: 'left' },
   { id: 'busGasCode', label: 'Gas Code', align: 'left' },
   { id: 'driverName', label: 'Driver', align: 'left' },
@@ -59,17 +59,14 @@ const TABLE_HEAD1 = [
   { id: '' },
 ];
 const TABLE_HEAD2 = [
-  { id: 'busNumber', label: 'Bus Number', align: 'left' },
-  { id: 'busPlates', label: 'Bus Plates', align: 'left' },
+  { id: 'busNumber', label: 'BUS', align: 'left' },
   { id: 'busGasCode', label: 'Gas Code', align: 'left' },
-  { id: 'driverName', label: 'Driver', align: 'left' },
-  { id: 'driverPhoneNuber', label: 'Phone', align: 'left' },
+  { id: 'program', label: 'Program', align: 'left' },
   { id: 'startDate', label: 'Start Date', align: 'left' },
   { id: 'endDate', label: 'End Date', align: 'left' },
   { id: 'status', label: 'Task Status', align: 'left' },
   { id: '' },
 ];
-
 // ----------------------------------------------------------------------
 
 export default function OrderList() {

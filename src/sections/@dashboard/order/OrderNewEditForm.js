@@ -209,6 +209,7 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
                   label="Start Date"
                   value={startDate}
                   name="startDate"
+                  ampm={false}
                   onChange={handleChange1}
                   renderInput={(params) => <RHFTextField {...params} />}
                 />
@@ -216,6 +217,7 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
                   label="End Date"
                   value={endDate}
                   name="endDate"
+                  ampm={false}
                   onChange={handleChange2}
                   renderInput={(params) => <RHFTextField {...params} />}
                 />

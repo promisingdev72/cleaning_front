@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Stack, InputAdornment, TextField, MenuItem } from '@mui/material';
+import { Stack, InputAdornment, TextField } from '@mui/material';
 // components
 import Iconify from '../../../../components/Iconify';
 
@@ -8,11 +8,9 @@ import Iconify from '../../../../components/Iconify';
 BusTableToolbar.propTypes = {
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
-  onFilterRole: PropTypes.func,
-  optionsRole: PropTypes.arrayOf(PropTypes.string),
 };
 
-export default function BusTableToolbar({ filterName, onFilterName, optionsRole }) {
+export default function BusTableToolbar({ filterName, onFilterName }) {
   return (
     <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }} sx={{ py: 2.5, px: 3 }}>
       <TextField
