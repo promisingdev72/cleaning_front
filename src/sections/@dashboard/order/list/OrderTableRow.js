@@ -34,6 +34,8 @@ export default function OrderTableRow({
   const { userNames, busGasCode, busNumber, busPlates, driverName, driverPhoneNumber, endDate, startDate, status } =
     row;
 
+  // console.log('startDate', new Date(startDate).toUTCString().slice(0, 22));
+
   const [openMenu, setOpenMenuActions] = useState(null);
 
   const handleOpenMenu = (event) => {
@@ -56,9 +58,11 @@ export default function OrderTableRow({
       <TableCell align="left">{busPlates}</TableCell>
       <TableCell align="left">{busGasCode}</TableCell>
       <TableCell align="left">{driverName}</TableCell>
-      <TableCell align="left" sx={{ minWidth: '150px' }}>{driverPhoneNumber}</TableCell>
-      <TableCell align="left">{startDate}</TableCell>
-      <TableCell align="left">{endDate}</TableCell>
+      <TableCell align="left" sx={{ minWidth: '150px' }}>
+        {driverPhoneNumber}
+      </TableCell>
+      <TableCell align="left">{new Date(startDate).toString().slice(0, 21)}</TableCell>
+      <TableCell align="left">{new Date(endDate).toString().slice(0, 21)}</TableCell>
       {user.roleId !== 'EMPLOYEE' && (
         <TableCell align="left">{userNames.length !== 0 ? userNames.join(' ') : 'Not Yet'}</TableCell>
       )}

@@ -32,13 +32,13 @@ OrderNewEditForm.propTypes = {
 export default function OrderNewEditForm({ isEdit, currentOrder }) {
   const [startDate, setStartDate] = useState(new Date());
 
-  const handleChange1 = (newValue) => {
-    setStartDate(newValue);
+  const handleChange1 = (startDate) => {
+    setStartDate(startDate.toString().slice(0, 21));
   };
   const [endDate, setEndDate] = useState(new Date());
 
-  const handleChange2 = (newValue) => {
-    setEndDate(newValue);
+  const handleChange2 = (endDate) => {
+    setEndDate(endDate.toString().slice(0, 21));
   };
 
   const { addOrder, editOrder } = useOrder();
@@ -130,6 +130,7 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
         startDate,
         endDate,
       };
+      console.log('currentDateDetail', currentDateDetail);
 
       const currentUserId = {
         customerId: user.id,
@@ -203,21 +204,22 @@ export default function OrderNewEditForm({ isEdit, currentOrder }) {
                 ))}
               </RHFSelect>
               <Box m={3} />
-              <DateTimePicker
-                name="startDate"
-                label="Start Date"
-                value={startDate}
-                onChange={handleChange1}
-                renderInput={(params) => <RHFTextField {...params} />}
-              />
-              <Box m={3} />
-              <DateTimePicker
-                name="endDate"
-                label="End Date"
-                value={endDate}
-                onChange={handleChange2}
-                renderInput={(params) => <RHFTextField {...params} />}
-              />
+              <Stack spacing={3}>
+                <DateTimePicker
+                  label="Start Date"
+                  value={startDate}
+                  name="startDate"
+                  onChange={handleChange1}
+                  renderInput={(params) => <RHFTextField {...params} />}
+                />
+                <DateTimePicker
+                  label="End Date"
+                  value={endDate}
+                  name="endDate"
+                  onChange={handleChange2}
+                  renderInput={(params) => <RHFTextField {...params} />}
+                />
+              </Stack>
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
