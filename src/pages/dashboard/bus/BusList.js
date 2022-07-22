@@ -1,6 +1,8 @@
 import { paramCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+
 // @mui
 import {
   Box,
@@ -23,8 +25,6 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 import useSettings from '../../../hooks/useSettings';
 import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
 import useAuth from '../../../hooks/useAuth';
-// _mock_
-import { _userList } from '../../../_mock';
 // components
 import Page from '../../../components/Page';
 import Iconify from '../../../components/Iconify';
@@ -38,6 +38,7 @@ import { BusTableToolbar, BusTableRow } from '../../../sections/@dashboard/bus/l
 import { useDispatch, useSelector } from '../../../redux/store';
 
 import { getBuses } from '../../../redux/slices/bus';
+import useBus from '../../../hooks/useBus';
 
 // ----------------------------------------------------------------------
 
@@ -51,7 +52,9 @@ const TABLE_HEAD = [
 // ----------------------------------------------------------------------
 
 export default function BusList() {
+  const { enqueueSnackbar } = useSnackbar();
   const { user } = useAuth();
+  const { deleteBus } = useBus();
   const {
     dense,
     page,
@@ -103,12 +106,16 @@ export default function BusList() {
     const deleteRow = tableData.filter((row) => row.id !== id);
     setSelected([]);
     setTableData(deleteRow);
+    deleteBus(id);
+    enqueueSnackbar('Success Deleted!');
   };
 
   const handleDeleteRows = (selected) => {
     const deleteRows = tableData.filter((row) => !selected.includes(row.id));
     setSelected([]);
     setTableData(deleteRows);
+    deleteBus(selected);
+    enqueueSnackbar('Success Deleted!');
   };
 
   const handleEditRow = (id) => {
