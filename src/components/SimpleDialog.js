@@ -22,6 +22,7 @@ export default function SimpleDialog({ open, onClose, orderId, assignEmployees }
   const [employeeList, setEmployeeList] = useState([]);
   const [isChecked, setIsChecked] = useState([]);
   const [checkedEmployeeId, setCheckedEmployeeId] = useState([]);
+  const [assignEmployeesRes, setAssignEmployeesRes] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -33,6 +34,7 @@ export default function SimpleDialog({ open, onClose, orderId, assignEmployees }
 
   useEffect(() => {
     if (employees) {
+      setAssignEmployeesRes(assignEmployees);
       setEmployeeList(employees);
       let tmpIsChecked = new Array(employees.length);
       for (let i = 0; i < tmpIsChecked.length; i += 1) {
@@ -47,15 +49,15 @@ export default function SimpleDialog({ open, onClose, orderId, assignEmployees }
     }
   }, [employees, assignEmployees]);
 
-  // useEffect(() => {
-  //   console.log(isChecked);
-  // }, [employees, isChecked]);
-
   const handleClose = () => {
     onClose();
   };
 
   const handleChange = (id, index) => {
+    if (assignEmployeesRes) {
+      const tmpAssignEmployees = assignEmployeesRes.filter((assignEmployee) => assignEmployee.employeeId !== id);
+      setAssignEmployeesRes(tmpAssignEmployees);
+    }
     const tmpIsChecked = isChecked.slice();
     tmpIsChecked[index] = !tmpIsChecked[index];
     setIsChecked(tmpIsChecked);
@@ -75,14 +77,24 @@ export default function SimpleDialog({ open, onClose, orderId, assignEmployees }
       orderId,
     };
 
-    console.log('AAAAAAA', assEmployees);
+    // eslint-disable-next-line array-callback-return
+    assignEmployeesRes.map((assignItem) => {
+      if (assignItem.orderId === assEmployees.orderId) {
+        checkedEmployeeId.push(assignItem.employeeId);
+      }
+    });
 
-    // try {
-    //   await addAssignEmployees(assEmployees);
-    //   dispatch(getAllOrders());
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    const ResArray = {
+      checkedEmployeeId,
+      orderId,
+    };
+
+    try {
+      await addAssignEmployees(ResArray);
+      dispatch(getAllOrders());
+    } catch (err) {
+      console.log(err);
+    }
     onClose();
     setCheckedEmployeeId([]);
   };
