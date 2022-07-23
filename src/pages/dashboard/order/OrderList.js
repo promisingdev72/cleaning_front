@@ -130,8 +130,6 @@ export default function OrderList() {
     }
     if (assignedOrders) {
       if (user.roleId === 'EMPLOYEE') {
-        console.log('today', today);
-        console.log('assignedOrders', assignedOrders);
         const tempAssignOrders = assignedOrders.filter(
           (assignedOrder) => new Date(assignedOrder.startDate).toUTCString().slice(0, 16) === today
         );
