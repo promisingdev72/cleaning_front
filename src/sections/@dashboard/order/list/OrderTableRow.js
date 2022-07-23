@@ -45,6 +45,8 @@ export default function OrderTableRow({
     program,
   } = row;
 
+  console.log(row);
+
   const [openMenu, setOpenMenuActions] = useState(null);
 
   const handleOpenMenu = (event) => {

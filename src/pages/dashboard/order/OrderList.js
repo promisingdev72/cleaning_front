@@ -60,6 +60,7 @@ const TABLE_HEAD1 = [
   { id: '' },
 ];
 const TABLE_HEAD2 = [
+  { id: 'clientName', label: 'Client', align: 'left' },
   { id: 'busNumber', label: 'BUS', align: 'left' },
   { id: 'busGasCode', label: 'Gas Code', align: 'left' },
   { id: 'program', label: 'Program', align: 'left' },
