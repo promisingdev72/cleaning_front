@@ -32,6 +32,7 @@ export default function OrderTableRow({
   const { user } = useAuth();
 
   const {
+    clientNames,
     userNames,
     busGasCode,
     busNumber,
@@ -43,8 +44,6 @@ export default function OrderTableRow({
     status,
     program,
   } = row;
-
-  // console.log('startDate', new Date(startDate).toUTCString().slice(0, 22));
 
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -63,6 +62,9 @@ export default function OrderTableRow({
           <Checkbox checked={selected} onClick={onSelectRow} />
         </TableCell>
       )}
+      <TableCell align="left" sx={{ minWidth: '100px' }}>
+        {clientNames}
+      </TableCell>
       <TableCell align="left" sx={{ minWidth: '100px' }}>
         {busNumber}
       </TableCell>

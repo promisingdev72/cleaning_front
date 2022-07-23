@@ -47,6 +47,7 @@ import { OrderTableToolbar, OrderTableRow } from '../../../sections/@dashboard/o
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD1 = [
+  { id: 'clientName', label: 'Client', align: 'left' },
   { id: 'busNumber', label: 'BUS', align: 'left' },
   { id: 'busPlates', label: 'Bus Plates', align: 'left' },
   { id: 'busGasCode', label: 'Gas Code', align: 'left' },
