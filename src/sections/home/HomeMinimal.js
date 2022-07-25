@@ -110,12 +110,25 @@ export default function HomeMinimal() {
             </m.div>
           ))}
         </Box>
-        <Box>
-          <Typography variant="h2" padding={5} sx={{ textAlign: 'center' }}>
-            For a soultion
+        <Box sx={{ my: '30px' }}>
+          <Typography variant="h2" sx={{ color: 'primary.main', textAlign: 'center' }}>
+            About Us
           </Typography>
-          <Typography variant="h3" sx={{ textAlign: 'center' }}>
-            Call to +455274333 or Email to mail@gonbus.dk
+          <Typography variant="h4">
+            Bus cleaning service sisnce 2018- Buswash is a company located in: Copenhagen Denmark. Vasbygade 18, 2450
+            kobenhavn SV 7 minutes from copenhagen central station. We are a sepcial cleaning company that offers bus
+            cleaning as needed. We have at our disposal a self-driving washing machine for all types of buses for a
+            cheap price. We also have a toilet flushing spot, and acces to water. For long-term contracts or everyday
+            washing, prices can be cheaper.
+          </Typography>
+        </Box>
+        <Box sx={{ my: '30px' }}>
+          <Typography variant="h2" sx={{ color: 'primary.main', textAlign: 'center' }}>
+            Contact Us
+          </Typography>
+          <Typography variant="h4">
+            If you are interested in hearing more about our offers, you are welcome to contact us on +455274333 or
+            e-mail us: mail@gonbus.dk
           </Typography>
         </Box>
       </Box>
