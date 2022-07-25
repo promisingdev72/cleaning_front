@@ -132,7 +132,6 @@ export default function OrderList() {
       }
     }
     if (assignedOrders) {
-      // console.log(assignedOrders);
       if (user.roleId === 'EMPLOYEE') {
         const tempAssignOrders = assignedOrders.filter(
           (assignedOrder) =>
@@ -140,8 +139,6 @@ export default function OrderList() {
               new Date(assignedOrder.startDate).toUTCString().slice(0, 16) === yesterday) &&
             assignedOrder.status !== 'complete'
         );
-        console.log(tempAssignOrders);
-
         setTableData(tempAssignOrders);
       }
     }
