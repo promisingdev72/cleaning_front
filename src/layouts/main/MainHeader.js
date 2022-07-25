@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 // @mui
 import { styled, useTheme } from '@mui/material/styles';
-import { Box, AppBar, Toolbar, Container } from '@mui/material';
+import { Box, Button, AppBar, Toolbar, Container } from '@mui/material';
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop';
 import useResponsive from '../../hooks/useResponsive';
@@ -11,6 +11,7 @@ import cssStyles from '../../utils/cssStyles';
 import { HEADER } from '../../config';
 // components
 import Logo from '../../components/Logo';
+import Label from '../../components/Label';
 //
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
@@ -74,10 +75,18 @@ export default function MainHeader() {
           }}
         >
           <Logo />
-
           <Box sx={{ flexGrow: 1 }} />
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
+
+          {/* <Button
+            variant="contained"
+            target="_blank"
+            rel="noopener"
+            href="https://material-ui.com/store/items/minimal-dashboard/"
+          >
+            Purchase Now
+          </Button> */}
 
           {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
         </Container>

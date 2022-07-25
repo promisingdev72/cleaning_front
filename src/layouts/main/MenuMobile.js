@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { NavLink as RouterLink, useLocation } from 'react-router-dom';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
-import { Box, List, Link, Drawer, Collapse, ListItemText, ListItemIcon, ListItemButton } from '@mui/material';
+import { List, Drawer, ListItemText, ListItemIcon, ListItemButton } from '@mui/material';
 // config
 import { NAVBAR } from '../../config';
 // components
@@ -11,7 +11,6 @@ import Logo from '../../components/Logo';
 import Iconify from '../../components/Iconify';
 import Scrollbar from '../../components/Scrollbar';
 import { IconButtonAnimate } from '../../components/animate';
-import { NavSectionVertical } from '../../components/nav-section';
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +40,6 @@ export default function MenuMobile({ isOffset, isHome, navConfig }) {
     if (drawerOpen) {
       handleDrawerClose();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const handleOpen = () => {
@@ -92,61 +90,16 @@ export default function MenuMobile({ isOffset, isHome, navConfig }) {
 // ----------------------------------------------------------------------
 
 MenuMobileItem.propTypes = {
-  isOpen: PropTypes.bool,
   item: PropTypes.shape({
     children: PropTypes.array,
     icon: PropTypes.any,
     path: PropTypes.string,
     title: PropTypes.string,
   }),
-  onOpen: PropTypes.func,
 };
 
-function MenuMobileItem({ item, isOpen, onOpen }) {
-  const { title, path, icon, children } = item;
-
-  if (children) {
-    return (
-      <>
-        <ListItemStyle onClick={onOpen}>
-          <ListItemIcon>{icon}</ListItemIcon>
-          <ListItemText disableTypography primary={title} />
-          <Iconify
-            icon={isOpen ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-forward-fill'}
-            sx={{ width: 16, height: 16, ml: 1 }}
-          />
-        </ListItemStyle>
-
-        <Collapse in={isOpen} timeout="auto" unmountOnExit>
-          <Box sx={{ display: 'flex', flexDirection: 'column-reverse' }}>
-            <NavSectionVertical
-              navConfig={children}
-              sx={{
-                '& .MuiList-root:last-of-type .MuiListItemButton-root': {
-                  height: 200,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  bgcolor: 'background.neutral',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundImage: 'url(/assets/illustrations/illustration_dashboard.png)',
-                  '& > *:not(.MuiTouchRipple-root)': { display: 'none' },
-                },
-              }}
-            />
-          </Box>
-        </Collapse>
-      </>
-    );
-  }
-
-  if (title === 'Documentation') {
-    return (
-      <ListItemStyle href={path} target="_blank" rel="noopener" component={Link}>
-        <ListItemIcon>{icon}</ListItemIcon>
-        <ListItemText disableTypography primary={title} />
-      </ListItemStyle>
-    );
-  }
+function MenuMobileItem({ item }) {
+  const { title, path, icon } = item;
 
   return (
     <ListItemStyle
