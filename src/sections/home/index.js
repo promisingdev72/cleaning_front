@@ -1,2 +1,2 @@
 export { default as HomeHero } from './HomeHero';
-export { default as HomeAdvertisement } from './HomeAdvertisement';
+export { default as HomeMinimal } from './HomeMinimal';

@@ -1,7 +1,6 @@
-import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Stack, Link, Container, Typography } from '@mui/material';
+import { Box, Stack, Container, Typography } from '@mui/material';
 // components
 import Page from '../../components/Page';
 // sections

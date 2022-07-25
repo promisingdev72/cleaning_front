@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 // components
 import Page from '../components/Page';
 // sections
-import { HomeHero, HomeAdvertisement } from '../sections/home';
+import { HomeHero, HomeMinimal } from '../sections/home';
 
 // ----------------------------------------------------------------------
 
@@ -17,10 +17,11 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function HomePage() {
   return (
-    <Page title="Buswash Aps">
+    <Page title="The starting point for your next project">
       <HomeHero />
+
       <ContentStyle>
-        <HomeAdvertisement />
+        <HomeMinimal />
       </ContentStyle>
     </Page>
   );

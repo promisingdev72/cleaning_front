@@ -1,10 +1,6 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 // @mui
-import { Checkbox, TableRow, TableCell, MenuItem } from '@mui/material';
-// components
-import Iconify from '../../../../components/Iconify';
-import { TableMoreMenu } from '../../../../components/table';
+import { Checkbox, TableRow, TableCell } from '@mui/material';
 
 // ----------------------------------------------------------------------
 

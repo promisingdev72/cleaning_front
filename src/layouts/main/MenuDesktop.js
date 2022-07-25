@@ -2,22 +2,8 @@ import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { NavLink as RouterLink, useLocation } from 'react-router-dom';
 // @mui
-import { styled } from '@mui/material/styles';
-import { Link, Stack } from '@mui/material';
+import { Stack, Button } from '@mui/material';
 // ----------------------------------------------------------------------
-
-const LinkStyle = styled(Link)(({ theme }) => ({
-  ...theme.typography.subtitle2,
-  color: theme.palette.text.primary,
-  marginRight: theme.spacing(5),
-  transition: theme.transitions.create('opacity', {
-    duration: theme.transitions.duration.shorter,
-  }),
-  '&:hover': {
-    opacity: 0.48,
-    textDecoration: 'none',
-  },
-}));
 
 // ----------------------------------------------------------------------
 
@@ -77,7 +63,8 @@ function MenuDesktopItem({ item, isHome, isOffset }) {
   const { title, path } = item;
 
   return (
-    <LinkStyle
+    <Button
+      variant="contained"
       to={path}
       component={RouterLink}
       end={path === '/'}
@@ -90,6 +77,6 @@ function MenuDesktopItem({ item, isHome, isOffset }) {
       }}
     >
       {title}
-    </LinkStyle>
+    </Button>
   );
 }

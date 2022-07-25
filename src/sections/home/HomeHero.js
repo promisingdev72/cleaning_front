@@ -1,12 +1,9 @@
 import { m } from 'framer-motion';
-import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Button, Box, Container, Typography, Stack } from '@mui/material';
+import { Box, Container, Typography, Stack } from '@mui/material';
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
 // components
-import Iconify from '../../components/Iconify';
 import { MotionContainer, varFade } from '../../components/animate';
 
 // ----------------------------------------------------------------------
@@ -27,8 +24,8 @@ const RootStyle = styled(m.div)(({ theme }) => ({
 
 const ContentStyle = styled((props) => <Stack spacing={5} {...props} />)(({ theme }) => ({
   zIndex: 10,
-  maxWidth: 520,
-  margin: 'auto',
+  maxWidth: 800,
+  // margin: 'auto',
   textAlign: 'center',
   position: 'relative',
   paddingTop: theme.spacing(15),
@@ -52,13 +49,13 @@ const HeroImgStyle = styled(m.img)(({ theme }) => ({
   right: 0,
   bottom: 0,
   zIndex: 8,
+  height: '100%',
   width: '100%',
   margin: 'auto',
   position: 'absolute',
   [theme.breakpoints.up('lg')]: {
-    right: '8%',
-    width: 'auto',
-    height: '48vh',
+    width: '100%',
+    height: '100%',
   },
 }));
 
@@ -70,11 +67,20 @@ export default function HomeHero() {
       <RootStyle>
         <HeroOverlayStyle alt="overlay" src="/assets/overlay.svg" variants={varFade().in} />
 
-        <HeroImgStyle
-          alt="hero"
-          src="https://minimal-assets-api-dev.vercel.app/assets/images/home/hero.png"
-          variants={varFade().inUp}
-        />
+        <HeroImgStyle alt="hero" src="/assets/heroback.jpg" variants={varFade().inUp} />
+
+        <Container>
+          <ContentStyle>
+            <m.div variants={varFade().inRight}>
+              <Typography variant="h1" sx={{ color: 'common.white' }}>
+                Start a new program with
+                <Typography component="span" variant="h1" sx={{ color: 'primary.main' }}>
+                  &nbsp; BusWash
+                </Typography>
+              </Typography>
+            </m.div>
+          </ContentStyle>
+        </Container>
       </RootStyle>
       <Box sx={{ height: { md: '100vh' } }} />
     </MotionContainer>

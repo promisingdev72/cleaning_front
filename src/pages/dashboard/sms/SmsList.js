@@ -33,7 +33,7 @@ import { getUsers } from '../../../redux/slices/user';
 import Page from '../../../components/Page';
 import Scrollbar from '../../../components/Scrollbar';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
-import { TableEmptyRows, TableHeadCustom, TableNoData, TableSelectedActions } from '../../../components/table';
+import { TableEmptyRows, TableHeadCustom, TableNoData } from '../../../components/table';
 import { FormProvider, RHFTextField } from '../../../components/hook-form';
 // sections
 import { SmsTableToolbar, SmsTableRow } from '../../../sections/@dashboard/sms/list';
@@ -115,13 +115,11 @@ export default function SmsList() {
       usersOfSite.userId = selected;
       usersOfSite.sms = data.sms;
       sendSms(usersOfSite);
-      // console.log(usersOfSite);
       reset();
     } else {
       usersOfSite.phonenumber = data.phonenumber;
       usersOfSite.sms = data.sms;
       sendSms(usersOfSite);
-      // console.log(usersOfSite);
       reset();
     }
   };
@@ -130,7 +128,7 @@ export default function SmsList() {
     reset,
     setValue,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = methods;
 
   useEffect(() => {
