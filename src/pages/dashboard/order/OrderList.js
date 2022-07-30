@@ -117,10 +117,10 @@ export default function OrderList() {
   }, [assignes]);
 
   const [tableData, setTableData] = useState([]);
-  const date = new Date();
-  const today = date.toUTCString().slice(0, 16);
-  const yesterday = new Date(date);
-  yesterday.setDate(yesterday.getDate() - 1);
+  // const date = new Date();
+  // const today = date.toUTCString().slice(0, 16);
+  // const yesterday = new Date(date);
+  // yesterday.setDate(yesterday.getDate() - 1);
 
   useEffect(() => {
     if (orders) {
@@ -135,8 +135,8 @@ export default function OrderList() {
       if (user.roleId === 'EMPLOYEE') {
         const tempAssignOrders = assignedOrders.filter(
           (assignedOrder) =>
-            (new Date(assignedOrder.startDate).toUTCString().slice(0, 16) === today ||
-              new Date(assignedOrder.startDate).toUTCString().slice(0, 16) === yesterday) &&
+            // (new Date(assignedOrder.startDate).toUTCString().slice(0, 16) === today ||
+            //   new Date(assignedOrder.startDate).toUTCString().slice(0, 16) === yesterday) &&
             assignedOrder.status !== 'complete'
         );
         setTableData(tempAssignOrders);
