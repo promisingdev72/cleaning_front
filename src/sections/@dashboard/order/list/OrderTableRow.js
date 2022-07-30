@@ -131,37 +131,38 @@ export default function OrderTableRow({
                   Assign
                 </MenuItem>
               )}
-              {(user.roleId === 'EMPLOYEE' || user.roleId === 'ADMIN')(
-                <>
-                  <MenuItem
-                    onClick={() => {
-                      onStatusRow('pending');
-                      handleCloseMenu();
-                    }}
-                  >
-                    <Iconify icon={'ic:baseline-history'} />
-                    Pending
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      onStatusRow('in progress');
-                      handleCloseMenu();
-                    }}
-                  >
-                    <Iconify icon={'cil:av-timer'} />
-                    In Progress
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      onStatusRow('complete');
-                      handleCloseMenu();
-                    }}
-                  >
-                    <Iconify icon={'material-symbols:task-alt-rounded'} />
-                    Complete
-                  </MenuItem>
-                </>
-              )}
+              {user.roleId === 'EMPLOYEE' ||
+                (user.rolId === 'ADMIN' && (
+                  <>
+                    <MenuItem
+                      onClick={() => {
+                        onStatusRow('pending');
+                        handleCloseMenu();
+                      }}
+                    >
+                      <Iconify icon={'ic:baseline-history'} />
+                      Pending
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        onStatusRow('in progress');
+                        handleCloseMenu();
+                      }}
+                    >
+                      <Iconify icon={'cil:av-timer'} />
+                      In Progress
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        onStatusRow('complete');
+                        handleCloseMenu();
+                      }}
+                    >
+                      <Iconify icon={'material-symbols:task-alt-rounded'} />
+                      Complete
+                    </MenuItem>
+                  </>
+                ))}
             </>
           }
         />
