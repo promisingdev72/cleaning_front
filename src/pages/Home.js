@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 // components
 import Page from '../components/Page';
 // sections
-import { HomeHero, HomeMinimal } from '../sections/home';
+import { HomeHero, Services, About, Contact } from '../sections/home';
 
 // ----------------------------------------------------------------------
 
@@ -19,9 +19,10 @@ export default function HomePage() {
   return (
     <Page title="BusWash App">
       <HomeHero />
-
       <ContentStyle>
-        <HomeMinimal />
+        <About />
+        <Services />
+        <Contact />
       </ContentStyle>
     </Page>
   );

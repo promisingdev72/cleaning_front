@@ -72,11 +72,8 @@ export default function HomeHero() {
         <Container>
           <ContentStyle>
             <m.div variants={varFade().inRight}>
-              <Typography variant="h1" sx={{ color: 'common.white' }}>
-                Start a new program with
-                <Typography component="span" variant="h1" sx={{ color: 'primary.main' }}>
-                  &nbsp; BusWash
-                </Typography>
+              <Typography variant="h1" className="heroText">
+                We are BusWash Company in Denmark
               </Typography>
             </m.div>
           </ContentStyle>

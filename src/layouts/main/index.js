@@ -5,6 +5,7 @@ import { Box, Link, Container, Typography, Stack } from '@mui/material';
 import Logo from '../../components/Logo';
 //
 import MainHeader from './MainHeader';
+import Footer from './Footer';
 
 // ----------------------------------------------------------------------
 
@@ -24,12 +25,7 @@ export default function MainLayout() {
           bgcolor: 'background.default',
         }}
       >
-        <Container>
-          <Logo sx={{ mb: 1, mx: 'auto' }} />
-          <Typography variant="caption" component="p">
-            <Link href="#">admin@admin.com</Link>
-          </Typography>
-        </Container>
+        <Footer />
       </Box>
     </Stack>
   );
