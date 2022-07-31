@@ -67,7 +67,7 @@ export default function HomeHero() {
       <RootStyle>
         <HeroOverlayStyle alt="overlay" src="/assets/overlay.svg" variants={varFade().in} />
 
-        <HeroImgStyle alt="hero" src="/assets/heroback.jpg" variants={varFade().inUp} />
+        <HeroImgStyle alt="hero" src="/assets/heroback.png" variants={varFade().inUp} />
 
         <Container>
           <ContentStyle>
