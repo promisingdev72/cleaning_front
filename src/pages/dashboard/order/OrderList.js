@@ -74,7 +74,7 @@ const TABLE_HEAD2 = [
 export default function OrderList() {
   const { user } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
-  const { addStatus, deleteOrder } = useOrder();
+  const { addStatus, deleteOrder, addStatus2 } = useOrder();
   const [isFlag, setIsFlag] = useState();
   const [assignEmployees, setAssignEmployeeList] = useState([]);
 
@@ -202,6 +202,15 @@ export default function OrderList() {
     setIsFlag(!isFlag);
   };
 
+  const handleStatus2 = (orderId, status) => {
+    const statusData = {
+      orderId,
+      status,
+    };
+    addStatus2({ statusData });
+    setIsFlag(!isFlag);
+  };
+
   const denseHeight = dense ? 52 : 72;
 
   const isNotFound = !dataFiltered.length && !!filterName;
@@ -277,6 +286,7 @@ export default function OrderList() {
                       onSelectRow={() => onSelectRow(row.id)}
                       onAssignRow={() => handleAssign(row.id)}
                       onStatusRow={(status) => handleStatus(row.id, status)}
+                      onStatusRow2={(status) => handleStatus2(row.id, status)}
                       onDeleteRow={() => handleDeleteRow(row.id)}
                       onEditRow={() => handleEditRow(row.busNumber)}
                     />

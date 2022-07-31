@@ -83,6 +83,17 @@ export function addStatus({ statusData }) {
   };
 }
 
+export function addStatus2({ statusData }) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      await axios.post('/api/account/addstatus2', statusData);
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
 export function deleteOrder(orderId) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());

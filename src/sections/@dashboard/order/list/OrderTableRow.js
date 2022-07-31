@@ -16,6 +16,7 @@ OrderTableRow.propTypes = {
   onEditRow: PropTypes.func,
   onAssignRow: PropTypes.func,
   onStatusRow: PropTypes.func,
+  onStatusRow2: PropTypes.func,
   onSelectRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
 };
@@ -26,6 +27,7 @@ export default function OrderTableRow({
   onEditRow,
   onAssignRow,
   onStatusRow,
+  onStatusRow2,
   onSelectRow,
   onDeleteRow,
 }) {
@@ -121,15 +123,44 @@ export default function OrderTableRow({
                 </MenuItem>
               )}
               {user.roleId === 'ADMIN' && (
-                <MenuItem
-                  onClick={() => {
-                    onAssignRow();
-                    handleCloseMenu();
-                  }}
-                >
-                  <Iconify icon={'clarity:assign-user-solid'} />
-                  Assign
-                </MenuItem>
+                <>
+                  <MenuItem
+                    onClick={() => {
+                      onAssignRow();
+                      handleCloseMenu();
+                    }}
+                  >
+                    <Iconify icon={'clarity:assign-user-solid'} />
+                    Assign
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      onStatusRow2('pending');
+                      handleCloseMenu();
+                    }}
+                  >
+                    <Iconify icon={'ic:baseline-history'} />
+                    Pending
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      onStatusRow2('in progress');
+                      handleCloseMenu();
+                    }}
+                  >
+                    <Iconify icon={'cil:av-timer'} />
+                    In Progress
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      onStatusRow2('complete');
+                      handleCloseMenu();
+                    }}
+                  >
+                    <Iconify icon={'material-symbols:task-alt-rounded'} />
+                    Complete
+                  </MenuItem>
+                </>
               )}
               {user.roleId === 'EMPLOYEE' && (
                 <>
